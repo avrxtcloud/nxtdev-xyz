@@ -1,4 +1,4 @@
-# nxtdev.xyz
+# nxtdev.xyz 
 
 Claim up to 2 free subdomains under `nxtdev.xyz` and fully manage DNS records inside a single Cloudflare zone.
 
