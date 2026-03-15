@@ -18,7 +18,7 @@ export function Th(props: React.ThHTMLAttributes<HTMLTableCellElement>) {
   return (
     <th
       className={cn(
-        "border-b border-zinc-200/70 px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-zinc-600 dark:border-white/10 dark:text-zinc-300",
+        "border-b border-zinc-200/70 px-2 py-2 text-left text-xs font-semibold uppercase tracking-wide text-zinc-600 sm:px-3 dark:border-white/10 dark:text-zinc-300",
         className,
       )}
       {...rest}
@@ -31,7 +31,7 @@ export function Td(props: React.TdHTMLAttributes<HTMLTableCellElement>) {
   return (
     <td
       className={cn(
-        "border-b border-zinc-200/70 px-3 py-2 align-top text-zinc-900 dark:border-white/10 dark:text-zinc-50",
+        "border-b border-zinc-200/70 px-2 py-2 align-top text-zinc-900 sm:px-3 dark:border-white/10 dark:text-zinc-50",
         className,
       )}
       {...rest}

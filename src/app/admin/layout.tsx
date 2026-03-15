@@ -12,9 +12,9 @@ export default async function AdminLayout({
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8">
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h1 className="text-xl font-semibold tracking-tight">Admin</h1>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <Link className="rounded-md px-3 py-2 text-sm hover:bg-zinc-100/70 dark:hover:bg-white/10" href="/admin/users">
             Users
           </Link>
