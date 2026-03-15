@@ -1,0 +1,17 @@
+paypal-login
+secure-bank
+apple-id
+crypto-wallet
+verify-account
+signin-secure
+account-verify
+bank-login
+billing-update
+recover-password
+webmail-login
+steam-gift
+discord-nitro
+metamask
+coinbase
+binance
+
