@@ -1,79 +1,53 @@
+import DocsContainer from "@/components/docs-container";
+import { env } from "@/lib/env";
+
 export default function TermsPage() {
   return (
-    <main className="mx-auto max-w-3xl px-4 py-12">
-      <h1 className="text-3xl font-semibold tracking-tight">Terms of Service</h1>
-      <p className="mt-2 text-xs text-zinc-500">Effective date: March 15, 2026</p>
-
-      <div className="mt-6 space-y-6 text-sm text-zinc-600 dark:text-zinc-300">
-        <section className="space-y-2">
-          <h2 className="text-base font-semibold text-zinc-900 dark:text-zinc-50">
-            1. Service overview
-          </h2>
-          <p>
-            We provide free subdomains and DNS management tools for developers.
-            By using this service, you agree to these Terms and the Abuse Policy.
+    <DocsContainer
+      title="Terms of Service"
+      subtitle="Last updated: March 15, 2026"
+      backLink="/"
+    >
+      <div className="space-y-12">
+        <section className="space-y-4">
+          <h2 className="text-2xl font-bold text-zinc-900 dark:text-white">1. Acceptance of Terms</h2>
+          <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
+            By accessing or using {env.ROOT_DOMAIN}, you agree to be bound by these Terms of Service. If you do not agree to these terms, you may not use our service. We reserve the right to modify these terms at any time.
           </p>
         </section>
 
-        <section className="space-y-2">
-          <h2 className="text-base font-semibold text-zinc-900 dark:text-zinc-50">
-            2. Accounts
-          </h2>
-          <ul className="list-disc space-y-2 pl-5">
-            <li>You must provide accurate account information.</li>
-            <li>You are responsible for activity under your account and subdomains.</li>
-            <li>We may require additional verification if abuse is suspected.</li>
-          </ul>
-        </section>
-
-        <section className="space-y-2">
-          <h2 className="text-base font-semibold text-zinc-900 dark:text-zinc-50">
-            3. Acceptable use
-          </h2>
-          <p>You may not use the service to:</p>
-          <ul className="list-disc space-y-2 pl-5">
-            <li>Phish, impersonate, or deceive others.</li>
-            <li>Host or distribute malware, exploits, or harmful code.</li>
-            <li>Operate spam or bulk messaging infrastructure.</li>
-            <li>Commit fraud, illegal activity, or rights infringement.</li>
-            <li>Attempt to bypass safety controls or rate limits.</li>
-          </ul>
-        </section>
-
-        <section className="space-y-2">
-          <h2 className="text-base font-semibold text-zinc-900 dark:text-zinc-50">
-            4. Enforcement
-          </h2>
-          <ul className="list-disc space-y-2 pl-5">
-            <li>We may suspend or delete subdomains and DNS records at any time.</li>
-            <li>We may suspend or ban accounts for abuse or risk.</li>
-            <li>We may cooperate with law enforcement where required.</li>
-          </ul>
-        </section>
-
-        <section className="space-y-2">
-          <h2 className="text-base font-semibold text-zinc-900 dark:text-zinc-50">
-            5. Availability and changes
-          </h2>
-          <p>
-            The service is provided “as is” without warranties. We may change or
-            discontinue features at any time.
+        <section className="space-y-4">
+          <h2 className="text-2xl font-bold text-zinc-900 dark:text-white">2. Service Description</h2>
+          <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
+            {env.ROOT_DOMAIN} provides free subdomains and DNS management tools for developers. The service is provided "as is" and "as available" without warranties of any kind.
           </p>
         </section>
 
-        <section className="space-y-2">
-          <h2 className="text-base font-semibold text-zinc-900 dark:text-zinc-50">
-            6. Contact
-          </h2>
-          <p>
-            For abuse reports, use <span className="font-mono">/report</span>. For
-            support, contact <span className="font-mono">support@nxtdev.xyz</span>.
+        <section className="space-y-4">
+          <h2 className="text-2xl font-bold text-zinc-900 dark:text-white">3. User Responsibilities</h2>
+          <div className="prose prose-zinc dark:prose-invert">
+            <ul>
+              <li>You are responsible for all activity that occurs under your subdomain.</li>
+              <li>You must comply with our Abuse Policy at all times.</li>
+              <li>You may not use the service for any illegal or unauthorized purpose.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section className="space-y-4">
+          <h2 className="text-2xl font-bold text-zinc-900 dark:text-white">4. Termination</h2>
+          <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
+            We reserve the right to terminate or suspend your access to the service immediately, without prior notice or liability, for any reason, including without limitation if you breach the Terms.
           </p>
-          <p className="text-xs text-zinc-500">
-            This page is provided for product use and is not legal advice.
+        </section>
+
+        <section className="space-y-4">
+          <h2 className="text-2xl font-bold text-zinc-900 dark:text-white">5. Limitation of Liability</h2>
+          <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
+            In no event shall {env.ROOT_DOMAIN} or its maintainers be liable for any damages arising out of the use or inability to use the service.
           </p>
         </section>
       </div>
-    </main>
+    </DocsContainer>
   );
 }

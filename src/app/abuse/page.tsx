@@ -1,57 +1,54 @@
+import DocsContainer from "@/components/docs-container";
+
 export default function AbusePolicyPage() {
   return (
-    <main className="mx-auto max-w-3xl px-4 py-12">
-      <h1 className="text-3xl font-semibold tracking-tight">Abuse Policy</h1>
-      <p className="mt-2 text-xs text-zinc-500">Effective date: March 15, 2026</p>
-
-      <div className="mt-6 space-y-6 text-sm text-zinc-600 dark:text-zinc-300">
-        <section className="space-y-2">
-          <h2 className="text-base font-semibold text-zinc-900 dark:text-zinc-50">
-            Zero‑tolerance abuse categories
-          </h2>
-          <ul className="list-disc space-y-2 pl-5">
-            <li>Phishing, impersonation, credential theft.</li>
-            <li>Malware distribution, exploit hosting, command‑and‑control.</li>
-            <li>Spam infrastructure, bulk messaging, or email abuse.</li>
-            <li>Fraud, scams, illegal activity, or harmful deception.</li>
-            <li>Copyright/DMCA violations and repeat infringement.</li>
+    <DocsContainer
+      title="Abuse Policy"
+      subtitle="Last updated: March 15, 2026"
+      backLink="/"
+    >
+      <div className="space-y-12">
+        <section className="space-y-4">
+          <h2 className="text-2xl font-bold text-zinc-900 dark:text-white">Zero-tolerance Categories</h2>
+          <p className="text-zinc-600 dark:text-zinc-400">
+            We maintain a strict zero-tolerance policy for activities that harm users or the integrity of the internet. The following activities will result in immediate suspension:
+          </p>
+          <ul className="grid sm:grid-cols-2 gap-4 list-none pl-0">
+            {[
+              "Phishing & Impersonation",
+              "Malware & Exploit Hosting",
+              "Spam & Bulk Messaging",
+              "Fraud & Deception",
+              "Copyright Violations",
+              "Illegal Activity"
+            ].map(item => (
+              <li key={item} className="p-4 border border-zinc-100 dark:border-zinc-800 rounded-xl bg-zinc-50 dark:bg-zinc-900/50 flex items-center gap-3">
+                <div className="h-2 w-2 rounded-full bg-red-500"></div>
+                <span className="font-semibold text-zinc-700 dark:text-zinc-300">{item}</span>
+              </li>
+            ))}
           </ul>
         </section>
 
-        <section className="space-y-2">
-          <h2 className="text-base font-semibold text-zinc-900 dark:text-zinc-50">
-            Automated protections
-          </h2>
-          <ul className="list-disc space-y-2 pl-5">
-            <li>Subdomain labels may be blocked by phishing keyword patterns.</li>
-            <li>A/AAAA targets may be blocked by IP reputation checks.</li>
-            <li>High‑risk subdomains may be automatically suspended.</li>
-          </ul>
+        <section className="space-y-4">
+          <h2 className="text-2xl font-bold text-zinc-900 dark:text-white">Automated Protections</h2>
+          <div className="prose prose-zinc dark:prose-invert">
+            <p>Our systems continuously monitor all subdomains for suspicious behavior:</p>
+            <ul>
+              <li><strong>Keyword Filtering:</strong> Subdomain labels are checked against known phishing patterns.</li>
+              <li><strong>IP Reputation:</strong> A/AAAA targets are verified via AbuseIPDB and other signals.</li>
+              <li><strong>Risk Scoring:</strong> Every domain accumulates a risk score based on its history and records.</li>
+            </ul>
+          </div>
         </section>
 
-        <section className="space-y-2">
-          <h2 className="text-base font-semibold text-zinc-900 dark:text-zinc-50">
-            Reporting abuse
-          </h2>
-          <p>
-            File a report at <span className="font-mono">/report</span> with the
-            domain and a short description. If possible, include evidence such
-            as URLs, headers, screenshots, or timestamps.
+        <section className="space-y-4">
+          <h2 className="text-2xl font-bold text-zinc-900 dark:text-white">Reporting & Enforcement</h2>
+          <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
+            To report abuse, please visit our <a href="/report" className="text-blue-600 dark:text-blue-400 font-bold hover:underline">Specialized Reporting Page</a>. We take every report seriously and investigate promptly. Actions include record deletion, subdomain suspension, and account termination.
           </p>
         </section>
-
-        <section className="space-y-2">
-          <h2 className="text-base font-semibold text-zinc-900 dark:text-zinc-50">
-            Enforcement actions
-          </h2>
-          <ul className="list-disc space-y-2 pl-5">
-            <li>Delete individual DNS records.</li>
-            <li>Suspend or delete a subdomain.</li>
-            <li>Suspend or ban an account.</li>
-            <li>Preserve logs and cooperate with valid legal requests.</li>
-          </ul>
-        </section>
       </div>
-    </main>
+    </DocsContainer>
   );
 }

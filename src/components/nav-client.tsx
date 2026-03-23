@@ -45,140 +45,130 @@ export function NavClient(props: { rootDomain: string }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-zinc-200/70 bg-white/80 backdrop-blur dark:border-white/10 dark:bg-zinc-950/60">
-      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
-        <Link href="/" className="font-semibold tracking-tight">
-          <span className="inline-flex items-center gap-2">
-            <Image
-              src="/logo.png"
-              alt="nxtdev"
-              width={28}
-              height={28}
-              priority
-              className="rounded-md"
-            />
-            <span className="bg-gradient-to-r from-zinc-900 to-zinc-600 bg-clip-text text-transparent dark:from-white dark:to-zinc-300">
-              {props.rootDomain}
+    <header className="sticky top-0 z-[100] border-b border-zinc-100/80 bg-white/70 backdrop-blur-xl dark:border-white/5 dark:bg-zinc-950/70 transition-all duration-300">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
+        <div className="flex items-center gap-8">
+          <Link href="/" className="transition-transform hover:scale-105 active:scale-95">
+            <span className="inline-flex items-center gap-2">
+              <Image
+                src="/logo.png"
+                alt="nxtdev"
+                width={40}
+                height={40}
+                priority
+                className="rounded-xl shadow-sm border border-zinc-100 dark:border-zinc-800"
+              />
             </span>
-          </span>
-        </Link>
-
-        <nav className="hidden items-center gap-2 md:flex">
-          <Link
-            className="px-3 py-2 text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-zinc-50"
-            href="/docs"
-          >
-            Docs
-          </Link>
-          <Link
-            className="px-3 py-2 text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-zinc-50"
-            href="/abuse"
-          >
-            Abuse
-          </Link>
-          <Link
-            className="px-3 py-2 text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-zinc-50"
-            href="/report"
-          >
-            Report
           </Link>
 
+          <nav className="hidden items-center gap-1 md:flex">
+            {[
+              { label: "Docs", href: "/docs" },
+              { label: "Abuse", href: "/abuse" },
+              { label: "Report", href: "/report" },
+              { label: "Status", href: "/status" },
+            ].map((link) => (
+              <Link
+                key={link.href}
+                className="rounded-xl px-4 py-2 text-sm font-bold text-zinc-500 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-zinc-50 hover:bg-zinc-100/50 dark:hover:bg-zinc-900/50 transition-all font-sans tracking-tight"
+                href={link.href}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
+
+        <div className="flex items-center gap-3">
           <Show when="signed-out">
+            <div className="hidden sm:block">
+              <SignInButton mode="modal">
+                <Button variant="ghost" className="rounded-xl font-bold text-sm text-zinc-600 dark:text-zinc-400">
+                  Sign in
+                </Button>
+              </SignInButton>
+            </div>
             <SignInButton mode="modal">
-              <Button variant="secondary" size="sm">
-                Sign in
+              <Button className="rounded-xl font-black text-sm px-6 h-10 shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30 transition-all">
+                Start for free
               </Button>
             </SignInButton>
           </Show>
           <Show when="signed-in">
-            <Link href="/dashboard">
-              <Button variant="secondary" size="sm">
+            <Link href="/dashboard" className="hidden sm:block">
+              <Button variant="secondary" className="rounded-xl font-bold text-sm h-10 border-zinc-200/50 dark:border-zinc-800">
                 Dashboard
               </Button>
             </Link>
-            <UserButton />
-            <SignOutButton>
-              <Button variant="ghost" size="sm">
-                Sign out
-              </Button>
-            </SignOutButton>
+            <div className="scale-110 active:scale-95 transition-transform">
+              <UserButton appearance={{ elements: { userButtonAvatarBox: "h-9 w-9 border-2 border-white dark:border-zinc-800 shadow-sm" } }} />
+            </div>
           </Show>
-        </nav>
 
-        <div className="md:hidden">
           <Button
             variant="ghost"
-            size="sm"
-            type="button"
+            size="icon"
+            className="md:hidden rounded-xl h-10 w-10 text-zinc-500"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-label={open ? "Close menu" : "Open menu"}
           >
-            {open ? <IconX /> : <IconMenu />}
+            {open ? <IconX className="w-5 h-5" /> : <IconMenu className="w-5 h-5" />}
           </Button>
         </div>
       </div>
 
       {open ? (
-        <div className="md:hidden">
-          <div className="mx-auto max-w-6xl px-4 pb-4">
-            <div className="grid gap-2 rounded-xl border border-zinc-200/70 bg-white/80 p-3 backdrop-blur dark:border-white/10 dark:bg-zinc-950/60">
+        <div className="fixed inset-x-0 top-16 z-50 p-4 md:hidden animate-[fade-in-down_200ms_ease-out]">
+          <div className="grid gap-2 rounded-[2rem] border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-6 shadow-2xl shadow-zinc-200/50 dark:shadow-none">
+            {[
+              { label: "Documentation", href: "/docs" },
+              { label: "Abuse Policy", href: "/abuse" },
+              { label: "Report Abuse", href: "/report" },
+              { label: "System Status", href: "/status" },
+            ].map((link) => (
               <Link
-                className="rounded-lg px-3 py-2 text-sm text-zinc-700 hover:bg-zinc-100/70 dark:text-zinc-200 dark:hover:bg-white/10"
-                href="/docs"
+                key={link.href}
+                className="flex items-center justify-between rounded-2xl px-4 py-4 text-base font-black text-zinc-900 dark:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-all"
+                href={link.href}
                 onClick={() => setOpen(false)}
               >
-                Docs
+                {link.label}
+                <svg className="w-5 h-5 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" /></svg>
               </Link>
-              <Link
-                className="rounded-lg px-3 py-2 text-sm text-zinc-700 hover:bg-zinc-100/70 dark:text-zinc-200 dark:hover:bg-white/10"
-                href="/abuse"
-                onClick={() => setOpen(false)}
-              >
-                Abuse
-              </Link>
-              <Link
-                className="rounded-lg px-3 py-2 text-sm text-zinc-700 hover:bg-zinc-100/70 dark:text-zinc-200 dark:hover:bg-white/10"
-                href="/report"
-                onClick={() => setOpen(false)}
-              >
-                Report
-              </Link>
-              <Link
-                className="rounded-lg px-3 py-2 text-sm text-zinc-700 hover:bg-zinc-100/70 dark:text-zinc-200 dark:hover:bg-white/10"
-                href="/status"
-                onClick={() => setOpen(false)}
-              >
-                Status
-              </Link>
+            ))}
 
-              <div className="mt-2 flex flex-wrap gap-2 border-t border-zinc-200/70 pt-3 dark:border-white/10">
-                <Show when="signed-out">
-                  <SignInButton mode="modal">
-                    <Button className="w-full" variant="secondary" size="sm">
-                      Sign in
-                    </Button>
-                  </SignInButton>
-                </Show>
-                <Show when="signed-in">
-                  <Link className="w-full" href="/dashboard" onClick={() => setOpen(false)}>
-                    <Button className="w-full" variant="secondary" size="sm">
-                      Dashboard
-                    </Button>
-                  </Link>
-                  <div className="flex w-full items-center justify-between rounded-lg border border-zinc-200/70 bg-white/60 px-3 py-2 dark:border-white/10 dark:bg-zinc-950/40">
-                    <div className="text-sm text-zinc-700 dark:text-zinc-200">
-                      Account
-                    </div>
-                    <UserButton />
-                  </div>
-                  <SignOutButton>
-                    <Button className="w-full" variant="ghost" size="sm">
-                      Sign out
-                    </Button>
-                  </SignOutButton>
-                </Show>
-              </div>
+            <div className="mt-4 flex flex-col gap-3 border-t border-zinc-100 dark:border-zinc-800 pt-6">
+              <Show when="signed-out">
+                <SignInButton mode="modal">
+                  <Button className="w-full h-14 rounded-2xl font-black text-lg" size="lg">
+                    Start for free
+                  </Button>
+                </SignInButton>
+                <SignInButton mode="modal">
+                  <Button className="w-full h-14 rounded-2xl font-bold text-lg" variant="secondary" size="lg">
+                    Sign in
+                  </Button>
+                </SignInButton>
+              </Show>
+              <Show when="signed-in">
+                <Link href="/dashboard" onClick={() => setOpen(false)}>
+                  <Button className="w-full h-14 rounded-2xl font-black text-lg" size="lg">
+                    Dashboard
+                  </Button>
+                </Link>
+                <div className="flex h-14 items-center justify-between rounded-2xl bg-zinc-50 dark:bg-zinc-800 px-4">
+                  <span className="text-base font-bold text-zinc-900 dark:text-zinc-100">
+                    Your Account
+                  </span>
+                  <UserButton />
+                </div>
+                <SignOutButton>
+                  <Button className="w-full h-14 rounded-2xl font-bold text-lg" variant="ghost" size="lg">
+                    Sign out
+                  </Button>
+                </SignOutButton>
+              </Show>
             </div>
           </div>
         </div>

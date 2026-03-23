@@ -1,106 +1,166 @@
+import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { env } from "@/lib/env";
 
 export default function DocsPage() {
+  const sections = [
+    {
+      title: "Quick Start",
+      description: "Get up and running with your own free subdomain in minutes.",
+      href: "/docs/Quick-start",
+      icon: (
+        <svg
+          className="w-8 h-8 text-blue-500"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M13 10V3L4 14h7v7l9-11h-7z"
+          />
+        </svg>
+      ),
+    },
+    {
+      title: "Limits",
+      description: "Understand usage policies and record quotas for your domains.",
+      href: "/docs/Limits",
+      icon: (
+        <svg
+          className="w-8 h-8 text-orange-500"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+          />
+        </svg>
+      ),
+    },
+    {
+      title: "Record Types",
+      description: "All supported DNS record types and their configuration.",
+      href: "/docs/Record-types",
+      icon: (
+        <svg
+          className="w-8 h-8 text-purple-500"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+          />
+        </svg>
+      ),
+    },
+    {
+      title: "NS Delegation",
+      description: "How to delegate your subdomain's DNS to external providers.",
+      href: "/docs/nsdelegation",
+      icon: (
+        <svg
+          className="w-8 h-8 text-emerald-500"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
+          />
+        </svg>
+      ),
+    },
+    {
+      title: "Support",
+      description: "Need help? Contact our support team for specialized assistance.",
+      href: "/docs/support",
+      icon: (
+        <svg
+          className="w-8 h-8 text-rose-500"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"
+          />
+        </svg>
+      ),
+    },
+  ];
+
   return (
-    <main className="mx-auto max-w-4xl px-4 py-12">
-      <div className="space-y-2">
-        <h1 className="text-3xl font-semibold tracking-tight">Docs</h1>
-        <p className="text-sm text-zinc-600 dark:text-zinc-300">
-          {env.ROOT_DOMAIN} lets authenticated users claim free subdomains and
-          manage DNS records inside a single Cloudflare zone.
+    <main className="mx-auto max-w-6xl px-4 py-16 sm:py-24 lg:py-32">
+      <div className="flex flex-col items-center text-center space-y-8 mb-20 lg:mb-28">
+        <div className="rounded-full bg-blue-100/50 dark:bg-blue-900/20 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-blue-700 dark:text-blue-400 border border-blue-100 dark:border-blue-800/50 shadow-sm animate-bounce-subtle">
+          Knowledge Base
+        </div>
+        <h1 className="text-4xl font-black tracking-tight text-zinc-900 dark:text-white sm:text-6xl lg:text-7xl max-w-4xl leading-[1.1]">
+          Master <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">{env.ROOT_DOMAIN}</span>
+        </h1>
+        <p className="text-lg sm:text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl leading-relaxed font-medium px-4">
+          Everything you need to know about managing your free DNS records and claiming subdomains effortlessly.
         </p>
       </div>
 
-      <div className="mt-8 grid gap-4">
-        <Card>
-          <div className="text-sm font-semibold">Quick start</div>
-          <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm text-zinc-600 dark:text-zinc-300">
-            <li>Create an account and sign in.</li>
-            <li>
-              Claim a base label (example:{" "}
-              <span className="font-mono">alice</span>) to get{" "}
-              <span className="font-mono">alice.{env.ROOT_DOMAIN}</span>.
-            </li>
-            <li>
-              Add DNS records for hosts like <span className="font-mono">@</span>{" "}
-              (apex), <span className="font-mono">api</span>, or{" "}
-              <span className="font-mono">blog</span>.
-            </li>
-            <li>Use “Check propagation” to see what public resolvers return.</li>
-          </ol>
-        </Card>
-
-        <Card>
-          <div className="text-sm font-semibold">Limits</div>
-          <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-zinc-600 dark:text-zinc-300">
-            <li>Maximum base subdomains per user: 2.</li>
-            <li>Maximum DNS records per base subdomain: 100 (includes SRV and delegated NS).</li>
-          </ul>
-        </Card>
-
-        <Card>
-          <div className="text-sm font-semibold">Record types</div>
-          <div className="mt-3 text-sm text-zinc-600 dark:text-zinc-300">
-            Supported DNS records:{" "}
-            <span className="font-mono">A</span>,{" "}
-            <span className="font-mono">AAAA</span>,{" "}
-            <span className="font-mono">CNAME</span>,{" "}
-            <span className="font-mono">TXT</span>,{" "}
-            <span className="font-mono">MX</span>,{" "}
-            <span className="font-mono">SRV</span>,{" "}
-            <span className="font-mono">NS</span> (delegation only).
-          </div>
-        </Card>
-
-        <Card>
-          <div className="text-sm font-semibold">Host naming rules</div>
-          <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-zinc-600 dark:text-zinc-300">
-            <li>
-              Use <span className="font-mono">@</span> for the apex of your base
-              subdomain (example: <span className="font-mono">alice.{env.ROOT_DOMAIN}</span>).
-            </li>
-            <li>
-              Use relative names like <span className="font-mono">api</span> to
-              target <span className="font-mono">api.alice.{env.ROOT_DOMAIN}</span>.
-            </li>
-            <li>
-              You cannot create records outside your base domain; the server validates this.
-            </li>
-          </ul>
-        </Card>
-
-        <Card>
-          <div className="text-sm font-semibold">Delegation (NS)</div>
-          <p className="mt-3 text-sm text-zinc-600 dark:text-zinc-300">
-            If you add delegated nameservers (NS) at your base domain, internal
-            DNS editing becomes read‑only. To switch back, remove all delegated
-            nameservers.
-          </p>
-        </Card>
-
-        <Card>
-          <div className="text-sm font-semibold">Safety checks</div>
-          <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-zinc-600 dark:text-zinc-300">
-            <li>Phishing/impersonation keyword patterns are blocked.</li>
-            <li>
-              <span className="font-mono">A</span>/<span className="font-mono">AAAA</span>{" "}
-              targets are checked for IP reputation; high‑risk IPs are rejected.
-            </li>
-            <li>
-              Subdomains accumulate a risk score. High risk may lead to automatic suspension.
-            </li>
-          </ul>
-        </Card>
-
-        <Card>
-          <div className="text-sm font-semibold">Need help?</div>
-          <p className="mt-3 text-sm text-zinc-600 dark:text-zinc-300">
-            Use the <span className="font-mono">/report</span> page for abuse
-            reports. For account issues, contact support at{" "}
-            <span className="font-mono">support@nxtdev.xyz</span>.
-          </p>
-        </Card>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        {sections.map((section) => (
+          <Link key={section.href} href={section.href} className="group relative">
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-3xl opacity-0 group-hover:opacity-10 dark:group-hover:opacity-20 transition duration-300 blur"></div>
+            <Card className="relative h-full p-8 lg:p-10 space-y-6 hover:border-zinc-300 dark:hover:border-zinc-700 transition-all duration-300 hover:bg-white dark:hover:bg-zinc-900 cursor-pointer shadow-sm hover:shadow-xl rounded-3xl border border-zinc-100 dark:border-zinc-800">
+              <div className="p-4 bg-zinc-50 dark:bg-zinc-800/50 rounded-2xl w-fit shadow-inner border border-zinc-100/50 dark:border-zinc-700/50 transition-all duration-300 group-hover:scale-110 group-hover:bg-white dark:group-hover:bg-zinc-800">
+                {section.icon}
+              </div>
+              <div className="space-y-3">
+                <h3 className="text-2xl font-bold text-zinc-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                  {section.title}
+                </h3>
+                <p className="text-base text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                  {section.description}
+                </p>
+              </div>
+              <div className="pt-4 flex items-center text-sm font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">
+                Explore Doc
+                <svg
+                  className="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2.5}
+                    d="M13 7l5 5m0 0l-5 5m5-5H6"
+                  />
+                </svg>
+              </div>
+            </Card>
+          </Link>
+        ))}
       </div>
     </main>
   );

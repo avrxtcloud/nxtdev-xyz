@@ -50,79 +50,106 @@ export default async function DomainsPage() {
   );
 
   return (
-    <div className="grid gap-4">
-      <Card>
-        <div className="flex items-center justify-between gap-4">
+    <div className="grid gap-8">
+      <Card className="p-8 rounded-[2.5rem] border-zinc-100/50 dark:border-zinc-800 shadow-xl shadow-zinc-200/20 dark:shadow-none">
+        <div className="flex items-center justify-between gap-6 mb-8">
           <div>
-            <div className="text-sm font-semibold">Claim a subdomain</div>
-            <div className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">
-              Choose a base label like{" "}
-              <span className="font-mono">alice</span>.
-            </div>
+            <h2 className="text-2xl font-black text-zinc-900 dark:text-white tracking-tight">Claim a Subdomain</h2>
+            <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400 font-medium leading-relaxed">
+              Connect your next project with a professional <span className="font-mono text-blue-600 dark:text-blue-400">@{env.ROOT_DOMAIN}</span> address.
+            </p>
           </div>
-          <div className="text-xs text-zinc-500">{enriched.length}/2 used</div>
+          <div className="flex flex-col items-end gap-1 shrink-0">
+            <div className="text-2xl font-black text-zinc-900 dark:text-white">{enriched.length}/2</div>
+            <div className="text-[10px] uppercase font-black tracking-widest text-zinc-400">Slots Used</div>
+          </div>
         </div>
-        <ClaimSubdomainForm
-          rootDomain={env.ROOT_DOMAIN}
-          usedCount={enriched.length}
-          isGithubVerified={isGithubVerified}
-          domainCreationEnabled={flags.domainCreationEnabled}
-          maintenanceMessage={flags.maintenanceMessage}
-          claimAction={claimSubdomainAction}
-        />
+
+        <div className="bg-zinc-50 dark:bg-zinc-900/50 rounded-2xl p-6 mb-8 border border-zinc-100 dark:border-zinc-800">
+          <ClaimSubdomainForm
+            rootDomain={env.ROOT_DOMAIN}
+            usedCount={enriched.length}
+            isGithubVerified={isGithubVerified}
+            domainCreationEnabled={flags.domainCreationEnabled}
+            maintenanceMessage={flags.maintenanceMessage}
+            claimAction={claimSubdomainAction}
+          />
+        </div>
       </Card>
 
-      <Card>
-        <div className="text-sm font-semibold">Your subdomains</div>
-        <div className="mt-4 grid gap-3">
+      <section className="space-y-6">
+        <div className="flex items-center justify-between px-2">
+          <h3 className="text-lg font-black text-zinc-900 dark:text-white uppercase tracking-widest">Your Infrastructure</h3>
+          <div className="h-px flex-1 mx-6 bg-zinc-100 dark:bg-zinc-800 hidden sm:block"></div>
+        </div>
+
+        <div className="grid gap-6">
           {enriched.length === 0 ? (
-            <div className="text-sm text-zinc-600 dark:text-zinc-300">
-              No subdomains yet.
+            <div className="flex flex-col items-center justify-center p-20 rounded-[2.5rem] border-2 border-dashed border-zinc-200 dark:border-zinc-800 text-center">
+              <div className="h-16 w-16 bg-zinc-50 dark:bg-zinc-900 rounded-2xl flex items-center justify-center mb-4 text-zinc-400">
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-1.343 3-3s-1.343-3-3-3m0 12c-1.657 0-3-1.343-3-3s1.343-3 3-3m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+              </div>
+              <div className="text-zinc-900 dark:text-white font-bold mb-1">No subdomains found</div>
+              <p className="text-sm text-zinc-500 font-medium">Claim your first subdomain above to get started.</p>
             </div>
           ) : (
             enriched.map((s) => (
-              <div
+              <Card
                 key={s.id}
-                className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-zinc-200 p-3 dark:border-zinc-800"
+                className="p-6 rounded-[2rem] border-zinc-100/50 dark:border-zinc-800 shadow-sm transition-all hover:shadow-lg group"
               >
-                <div>
-                  <div className="flex items-center gap-2">
-                    <div className="font-mono text-sm">{s.baseFqdn}</div>
-                    {s.status === "active" ? (
-                      <Badge tone="ok">Active</Badge>
-                    ) : (
-                      <Badge tone="bad">Suspended</Badge>
-                    )}
-                    {s.delegatedCount > 0 ? (
-                      <Badge tone="warn">Delegated</Badge>
-                    ) : null}
+                <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3">
+                      <div className="text-xl font-black text-zinc-900 dark:text-white tracking-tight">{s.baseFqdn}</div>
+                      {s.status === "active" ? (
+                        <Badge tone="ok" className="rounded-full px-3 py-0.5">Active</Badge>
+                      ) : (
+                        <Badge tone="bad" className="rounded-full px-3 py-0.5">Suspended</Badge>
+                      )}
+                      {s.delegatedCount > 0 ? (
+                        <Badge tone="warn" className="rounded-full px-3 py-0.5">Delegated</Badge>
+                      ) : null}
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs font-bold text-zinc-500 uppercase tracking-widest">
+                      <div className="flex items-center gap-2">
+                        <span className="h-1.5 w-1.5 rounded-full bg-blue-500"></span>
+                        <span>{s.dnsCount + s.delegatedCount} / 100 Records</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="h-1.5 w-1.5 rounded-full bg-orange-500"></span>
+                        <span>Risk: {s.riskScore}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="h-1.5 w-1.5 rounded-full bg-zinc-300"></span>
+                        <span>Created {new Date(s.createdAt).toLocaleDateString()}</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="mt-1 text-xs text-zinc-500">
-                    Risk score: {s.riskScore} · Records:{" "}
-                    {s.dnsCount + s.delegatedCount}/100
+
+                  <div className="flex flex-wrap items-center gap-3">
+                    <Link href={`/dashboard/domains/${s.id}/records`} className="flex-1 sm:flex-none">
+                      <Button variant="secondary" size="md" className="w-full sm:w-auto rounded-2xl group-hover:bg-blue-600 group-hover:text-white transition-all">
+                        DNS Records
+                      </Button>
+                    </Link>
+                    <Link href={`/dashboard/domains/${s.id}/nameservers`} className="flex-1 sm:flex-none">
+                      <Button variant="secondary" size="md" className="w-full sm:w-auto rounded-2xl">
+                        Nameservers
+                      </Button>
+                    </Link>
+                    <DeleteSubdomainButton
+                      baseFqdn={s.baseFqdn}
+                      action={deleteSubdomainAction.bind(null, s.id)}
+                    />
                   </div>
                 </div>
-                <div className="flex gap-2">
-                  <Link href={`/dashboard/domains/${s.id}/records`}>
-                    <Button variant="secondary" size="sm">
-                      Records
-                    </Button>
-                  </Link>
-                  <Link href={`/dashboard/domains/${s.id}/nameservers`}>
-                    <Button variant="secondary" size="sm">
-                      Nameservers
-                    </Button>
-                  </Link>
-                  <DeleteSubdomainButton
-                    baseFqdn={s.baseFqdn}
-                    action={deleteSubdomainAction.bind(null, s.id)}
-                  />
-                </div>
-              </div>
+              </Card>
             ))
           )}
         </div>
-      </Card>
+      </section>
     </div>
   );
 }
