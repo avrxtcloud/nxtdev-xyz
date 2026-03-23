@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Show, SignUpButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { env } from "@/lib/env";
 import { AnnouncementBanner } from "@/components/announcement-banner";
 
@@ -93,7 +94,7 @@ export default function Home() {
           <h2 className="text-3xl font-black tracking-tight sm:text-5xl text-zinc-900 dark:text-white">One platform, endless possibilities.</h2>
           <p className="text-lg text-zinc-600 dark:text-zinc-400 font-medium">Everything you need to build and scale your next project.</p>
         </div>
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <Card className="p-10 rounded-[2.5rem] border-zinc-100/50 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-all border-b-4 border-b-blue-500">
             <h3 className="text-2xl font-black text-zinc-900 dark:text-white mb-4">Websites</h3>
             <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
@@ -112,6 +113,17 @@ export default function Home() {
               Experimental support for MX, TXT, and SRV records allows you to host mail and game servers for free.
             </p>
           </Card>
+          <Link href="/email-routing" className="group">
+            <Card className="h-full p-10 rounded-[2.5rem] border-zinc-100/50 dark:border-zinc-800 bg-blue-600/5 hover:bg-blue-600/10 dark:bg-blue-900/10 dark:hover:bg-blue-900/20 transition-all border-b-4 border-b-blue-600 border-dashed group-hover:border-solid">
+              <h3 className="text-2xl font-black text-zinc-900 dark:text-white mb-4 flex items-center gap-2">
+                Masking
+                <Badge tone="ok" className="text-[10px]">New</Badge>
+              </h3>
+              <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
+                Protect your privacy. Create disposable @nxtdev.xyz aliases that forward to your real address.
+              </p>
+            </Card>
+          </Link>
         </div>
       </div>
     </main>
