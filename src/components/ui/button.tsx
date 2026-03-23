@@ -6,12 +6,13 @@ import { cn } from "@/components/ui/cn";
 type ButtonVariant = "primary" | "secondary" | "ghost" | "danger" | "outline";
 type ButtonSize = "sm" | "md" | "lg" | "icon";
 
-export function Button(
-  props: React.ButtonHTMLAttributes<HTMLButtonElement> & {
+export const Button = React.forwardRef<
+  HTMLButtonElement,
+  React.ButtonHTMLAttributes<HTMLButtonElement> & {
     variant?: ButtonVariant;
     size?: ButtonSize;
-  },
-) {
+  }
+>((props, ref) => {
   const { className, variant = "primary", size = "md", ...rest } = props;
 
   const base =
@@ -38,6 +39,12 @@ export function Button(
   };
 
   return (
-    <button className={cn(base, sizes[size], variants[variant], className)} {...rest} />
+    <button
+      ref={ref}
+      className={cn(base, sizes[size], variants[variant], className)}
+      {...rest}
+    />
   );
-}
+});
+
+Button.displayName = "Button";
