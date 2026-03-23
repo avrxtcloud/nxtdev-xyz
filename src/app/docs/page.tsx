@@ -1,107 +1,76 @@
+import Link from "next/link";
 import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { env } from "@/lib/env";
+import { DocsHeader } from "./_components/docs-header";
+import { DOC_SECTIONS } from "./_components/docs-links";
 
-export default function DocsPage() {
+function IconArrow(props: { className?: string }) {
   return (
-    <main className="mx-auto max-w-4xl px-4 py-12">
-      <div className="space-y-2">
-        <h1 className="text-3xl font-semibold tracking-tight">Docs</h1>
-        <p className="text-sm text-zinc-600 dark:text-zinc-300">
-          {env.ROOT_DOMAIN} lets authenticated users claim free subdomains and
-          manage DNS records inside a single Cloudflare zone.
-        </p>
-      </div>
-
-      <div className="mt-8 grid gap-4">
-        <Card>
-          <div className="text-sm font-semibold">Quick start</div>
-          <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm text-zinc-600 dark:text-zinc-300">
-            <li>Create an account and sign in.</li>
-            <li>
-              Claim a base label (example:{" "}
-              <span className="font-mono">alice</span>) to get{" "}
-              <span className="font-mono">alice.{env.ROOT_DOMAIN}</span>.
-            </li>
-            <li>
-              Add DNS records for hosts like <span className="font-mono">@</span>{" "}
-              (apex), <span className="font-mono">api</span>, or{" "}
-              <span className="font-mono">blog</span>.
-            </li>
-            <li>Use “Check propagation” to see what public resolvers return.</li>
-          </ol>
-        </Card>
-
-        <Card>
-          <div className="text-sm font-semibold">Limits</div>
-          <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-zinc-600 dark:text-zinc-300">
-            <li>Maximum base subdomains per user: 2.</li>
-            <li>Maximum DNS records per base subdomain: 100 (includes SRV and delegated NS).</li>
-          </ul>
-        </Card>
-
-        <Card>
-          <div className="text-sm font-semibold">Record types</div>
-          <div className="mt-3 text-sm text-zinc-600 dark:text-zinc-300">
-            Supported DNS records:{" "}
-            <span className="font-mono">A</span>,{" "}
-            <span className="font-mono">AAAA</span>,{" "}
-            <span className="font-mono">CNAME</span>,{" "}
-            <span className="font-mono">TXT</span>,{" "}
-            <span className="font-mono">MX</span>,{" "}
-            <span className="font-mono">SRV</span>,{" "}
-            <span className="font-mono">NS</span> (delegation only).
-          </div>
-        </Card>
-
-        <Card>
-          <div className="text-sm font-semibold">Host naming rules</div>
-          <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-zinc-600 dark:text-zinc-300">
-            <li>
-              Use <span className="font-mono">@</span> for the apex of your base
-              subdomain (example: <span className="font-mono">alice.{env.ROOT_DOMAIN}</span>).
-            </li>
-            <li>
-              Use relative names like <span className="font-mono">api</span> to
-              target <span className="font-mono">api.alice.{env.ROOT_DOMAIN}</span>.
-            </li>
-            <li>
-              You cannot create records outside your base domain; the server validates this.
-            </li>
-          </ul>
-        </Card>
-
-        <Card>
-          <div className="text-sm font-semibold">Delegation (NS)</div>
-          <p className="mt-3 text-sm text-zinc-600 dark:text-zinc-300">
-            If you add delegated nameservers (NS) at your base domain, internal
-            DNS editing becomes read‑only. To switch back, remove all delegated
-            nameservers.
-          </p>
-        </Card>
-
-        <Card>
-          <div className="text-sm font-semibold">Safety checks</div>
-          <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-zinc-600 dark:text-zinc-300">
-            <li>Phishing/impersonation keyword patterns are blocked.</li>
-            <li>
-              <span className="font-mono">A</span>/<span className="font-mono">AAAA</span>{" "}
-              targets are checked for IP reputation; high‑risk IPs are rejected.
-            </li>
-            <li>
-              Subdomains accumulate a risk score. High risk may lead to automatic suspension.
-            </li>
-          </ul>
-        </Card>
-
-        <Card>
-          <div className="text-sm font-semibold">Need help?</div>
-          <p className="mt-3 text-sm text-zinc-600 dark:text-zinc-300">
-            Use the <span className="font-mono">/report</span> page for abuse
-            reports. For account issues, contact support at{" "}
-            <span className="font-mono">support@nxtdev.xyz</span>.
-          </p>
-        </Card>
-      </div>
-    </main>
+    <svg
+      viewBox="0 0 20 20"
+      width="16"
+      height="16"
+      fill="currentColor"
+      className={props.className}
+      aria-hidden="true"
+    >
+      <path d="M7.5 4.5a1 1 0 0 1 1.4 0l5 5a1 1 0 0 1 0 1.4l-5 5a1 1 0 1 1-1.4-1.4L11.8 11H3a1 1 0 1 1 0-2h8.8L7.5 5.9a1 1 0 0 1 0-1.4z" />
+    </svg>
   );
 }
+
+export default function DocsIndexPage() {
+  return (
+    <div className="space-y-10">
+      <DocsHeader
+        title="Documentation"
+        badge={{ label: "DNS + subdomains", tone: "neutral" }}
+        description={
+          <>
+            {env.ROOT_DOMAIN} lets authenticated users claim free subdomains and manage DNS records
+            inside a single Cloudflare zone. Pick a topic below to get started.
+          </>
+        }
+      />
+
+      <div className="grid gap-8">
+        {DOC_SECTIONS.map((section) => (
+          <section key={section.title} className="space-y-3">
+            <div className="text-xs font-semibold tracking-wide text-zinc-500 dark:text-zinc-400">
+              {section.title}
+            </div>
+            <div className="grid gap-3 md:grid-cols-2">
+              {section.items.map((item) => (
+                <Link key={item.href} href={item.href} className="group">
+                  <Card className="flex h-full items-start justify-between gap-4">
+                    <div className="min-w-0">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <div className="text-sm font-semibold">{item.title}</div>
+                        {item.badge ? <Badge tone="ok">{item.badge}</Badge> : null}
+                      </div>
+                      <div className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">
+                        {item.description}
+                      </div>
+                    </div>
+                    <IconArrow className="mt-1 shrink-0 text-zinc-400 transition-transform group-hover:translate-x-0.5 group-hover:text-zinc-700 dark:group-hover:text-zinc-200" />
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+
+      <Card>
+        <div className="text-sm font-semibold">Need help?</div>
+        <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-300">
+          For account issues, contact <span className="font-mono">support@nxtdev.xyz</span>. For
+          abuse reports, use <Link className="underline" href="/report">/report</Link>. For service
+          status, open <Link className="underline" href="/status">/status</Link>.
+        </p>
+      </Card>
+    </div>
+  );
+}
+

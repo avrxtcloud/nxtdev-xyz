@@ -47,19 +47,17 @@ export function NavClient(props: { rootDomain: string }) {
   return (
     <header className="sticky top-0 z-50 border-b border-zinc-200/70 bg-white/80 backdrop-blur dark:border-white/10 dark:bg-zinc-950/60">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
-        <Link href="/" className="font-semibold tracking-tight">
+        <Link href="/" className="inline-flex items-center">
           <span className="inline-flex items-center gap-2">
             <Image
               src="/logo.png"
               alt="nxtdev"
-              width={28}
-              height={28}
+              width={40}
+              height={40}
               priority
-              className="rounded-md"
+              className="rounded-lg"
             />
-            <span className="bg-gradient-to-r from-zinc-900 to-zinc-600 bg-clip-text text-transparent dark:from-white dark:to-zinc-300">
-              {props.rootDomain}
-            </span>
+            <span className="sr-only">{props.rootDomain}</span>
           </span>
         </Link>
 
