@@ -7,7 +7,7 @@ export default function DocsPage() {
     {
       title: "Quick Start",
       description: "Get up and running with your own free subdomain in minutes.",
-      href: "/docs/Quick-start",
+      href: "/docs/quick-start",
       icon: (
         <svg
           className="w-8 h-8 text-blue-500"
@@ -28,7 +28,7 @@ export default function DocsPage() {
     {
       title: "Limits",
       description: "Understand usage policies and record quotas for your domains.",
-      href: "/docs/Limits",
+      href: "/docs/limits",
       icon: (
         <svg
           className="w-8 h-8 text-orange-500"
@@ -49,7 +49,7 @@ export default function DocsPage() {
     {
       title: "Record Types",
       description: "All supported DNS record types and their configuration.",
-      href: "/docs/Record-types",
+      href: "/docs/record-types",
       icon: (
         <svg
           className="w-8 h-8 text-purple-500"
