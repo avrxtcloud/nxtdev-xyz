@@ -63,7 +63,7 @@ export default async function DashboardLayout({
           </p>
           {!isGithubVerified ? (
             <div className="inline-flex items-center gap-3 bg-orange-50 dark:bg-orange-950/20 px-4 py-2 rounded-2xl border border-orange-100 dark:border-orange-900/40">
-              <Badge variant="outline" className="text-orange-700 bg-orange-100 dark:text-orange-300 dark:bg-orange-900/40 border-none font-bold text-[10px] uppercase tracking-wider">Unverified</Badge>
+              <Badge tone="warn" className="text-orange-700 bg-orange-100 dark:text-orange-300 dark:bg-orange-900/40 border-none font-bold text-[10px] uppercase tracking-wider">Unverified</Badge>
               <Link className="text-sm font-bold text-orange-800 dark:text-orange-200 hover:underline underline-offset-4" href="/dashboard/verify">
                 Verify with GitHub →
               </Link>
