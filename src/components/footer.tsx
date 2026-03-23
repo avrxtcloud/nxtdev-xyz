@@ -49,14 +49,14 @@ export function Footer() {
         <div className="mt-20 pt-10 border-t border-zinc-100 dark:border-zinc-800 flex flex-col md:flex-row items-center justify-between gap-6 text-xs font-bold text-zinc-400 uppercase tracking-widest">
           <div className="flex flex-col md:flex-row items-center gap-6">
             <div>© {new Date().getFullYear()} nxtdev.xyz • All rights reserved.</div>
-            <div className="opacity-80 hover:opacity-100 transition-opacity">
+            <div className="flex items-center overflow-hidden rounded-lg bg-black p-0.5 shadow-sm ring-1 ring-zinc-800 transition-all hover:ring-zinc-700">
               <iframe
                 src="https://status.nxtdev.xyz/badge?theme=dark"
                 width="250"
                 height="30"
                 frameBorder="0"
                 scrolling="no"
-                style={{ colorScheme: 'normal' }}
+                style={{ colorScheme: 'normal', display: 'block' }}
               />
             </div>
           </div>
