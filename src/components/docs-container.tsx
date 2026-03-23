@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import Link from "next/link";
-import { MoveLeft } from "lucide-react"; // Wait, I don't have lucide, but I'll use a svg then
 
 export default function DocsContainer({
     title,
