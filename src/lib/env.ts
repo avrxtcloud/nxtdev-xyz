@@ -54,4 +54,14 @@ export const env = {
     .split(",")
     .map((e) => e.trim().toLowerCase())
     .filter(Boolean),
+
+  get RESEND_API_KEY() {
+    return required("RESEND_API_KEY");
+  },
+  get RESEND_AUDIENCE_ID() {
+    return required("RESEND_AUDIENCE_ID");
+  },
+  get RESEND_FROM_EMAIL() {
+    return required("RESEND_FROM_EMAIL");
+  },
 } as const;
