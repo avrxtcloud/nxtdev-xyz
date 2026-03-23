@@ -1,72 +1,62 @@
-import Link from "next/link";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import DocsContainer from "@/components/docs-container";
 import { env } from "@/lib/env";
-import { DocsHeader } from "../_components/docs-header";
 
-function Mono(props: { children: React.ReactNode }) {
-  return <span className="font-mono text-[0.95em]">{props.children}</span>;
+export default function NSDelegation() {
+    return (
+        <DocsContainer
+            title="NS Delegation"
+            subtitle={`Delegate your subdomain's DNS to external providers with the NS record type.`}
+        >
+            <div className="space-y-12">
+                <section className="space-y-6">
+                    <h2 className="text-2xl font-bold text-zinc-900 dark:text-white underline decoration-zinc-100 dark:decoration-zinc-800 underline-offset-8 decoration-4 mb-4">What is NS Delegation?</h2>
+                    <p className="text-zinc-600 dark:text-zinc-400">
+                        If you want to use our subdomain with your own custom nameservers (like Cloudflare, Netlify, or your own self-hosted nameservers), you can use the NS delegation feature.
+                    </p>
+
+                    <div className="p-6 border border-zinc-100 dark:border-zinc-800 rounded-2xl shadow-sm bg-white dark:bg-zinc-900/50 space-y-4">
+                        <div className="flex items-center gap-3">
+                            <div className="p-2 bg-blue-100 dark:bg-blue-900/40 rounded-lg text-blue-600 dark:text-blue-300">
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <h3 className="text-lg font-bold text-zinc-900 dark:text-white">Important Note</h3>
+                        </div>
+                        <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                            When you add delegation at the apex of your subdomain (e.g., <code className="bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded">alice.{env.ROOT_DOMAIN}</code>), internal DNS editing for your other records becomes **read-only** to prevent conflicts.
+                        </p>
+                        <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                            To switch back to managing your records on our platform, simply remove all delegated NS records first.
+                        </p>
+                    </div>
+                </section>
+
+                <section className="space-y-6">
+                    <h2 className="text-2xl font-bold text-zinc-900 dark:text-white">How to setup Nameserver Delegation</h2>
+
+                    <div className="space-y-6 bg-zinc-50 dark:bg-zinc-900/50 p-8 border border-zinc-100 dark:border-zinc-800 rounded-3xl">
+                        <ol className="list-decimal pl-5 space-y-6 text-zinc-600 dark:text-zinc-400">
+                            <li>Log in to your dashboard and navigate to your subdomain settings.</li>
+                            <li>Navigate to the **Record Management** section.</li>
+                            <li>Add one or more **NS** records pointing to your external providers' nameservers (e.g., <code className="bg-white dark:bg-zinc-800 px-1.5 py-0.5 rounded shadow-sm">ns1.example.com</code>).</li>
+                            <li>Save your changes. It may take up to 24-48 hours for global DNS changes to fully propagate across all resolvers.</li>
+                        </ol>
+                    </div>
+                </section>
+
+                <section className="space-y-6">
+                    <h2 className="text-2xl font-bold text-zinc-900 dark:text-white">Troubleshooting</h2>
+                    <ul className="list-disc pl-5 space-y-4 text-zinc-600 dark:text-zinc-400">
+                        <li>
+                            <strong>Internal records are not resolving:</strong> If you've delegated your domain, our internal platform records will no longer be served by the global DNS system. You must manage them on your external provider's interface.
+                        </li>
+                        <li>
+                            <strong>Reverting Delegation:</strong> If you want to switch back to managing your records on the {env.ROOT_DOMAIN} platform, you must delete all NS delegation records from your dashboard.
+                        </li>
+                    </ul>
+                </section>
+            </div>
+        </DocsContainer>
+    );
 }
-
-export default function NsDelegationPage() {
-  return (
-    <div className="space-y-10">
-      <DocsHeader
-        title="NS delegation"
-        badge={{ label: "Advanced", tone: "warn" }}
-        description={
-          <>
-            Delegate your base subdomain (for example <Mono>alice.{env.ROOT_DOMAIN}</Mono>) to
-            external nameservers. When delegation is enabled, internal DNS editing becomes
-            read-only.
-          </>
-        }
-      />
-
-      <div className="grid gap-4">
-        <Card>
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <div className="text-sm font-semibold">When to use delegation</div>
-            <Badge tone="warn">Use carefully</Badge>
-          </div>
-          <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-zinc-600 dark:text-zinc-300">
-            <li>You want to manage all DNS from another provider (your own nameservers).</li>
-            <li>You need DNS features not exposed by the editor.</li>
-            <li>
-              You understand that enabling delegation disables editing records here until you remove
-              delegation.
-            </li>
-          </ul>
-        </Card>
-
-        <Card>
-          <div className="text-sm font-semibold">How it works</div>
-          <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm text-zinc-600 dark:text-zinc-300">
-            <li>Open your Dashboard → Nameserver Settings for your base subdomain.</li>
-            <li>Add your external nameservers (example: <Mono>ns1.example.net</Mono>).</li>
-            <li>
-              We publish <Mono>NS</Mono> records at the base domain and lock the DNS editor to
-              prevent conflicts.
-            </li>
-          </ol>
-          <div className="mt-4 rounded-xl border border-amber-200/70 bg-amber-50/70 p-4 text-sm text-amber-900 dark:border-amber-500/20 dark:bg-amber-500/10 dark:text-amber-200">
-            Make sure your external DNS is answering for your domain before enabling delegation, or
-            you may cause downtime.
-          </div>
-        </Card>
-
-        <Card>
-          <div className="text-sm font-semibold">Switching back</div>
-          <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-300">
-            To re-enable the built-in DNS editor, remove all delegated nameservers. Once delegation
-            is fully removed, you can edit records again.
-          </p>
-          <p className="mt-4 text-sm text-zinc-600 dark:text-zinc-300">
-            Record limits still apply while delegating. See <Link className="underline" href="/docs/limits">Limits</Link>.
-          </p>
-        </Card>
-      </div>
-    </div>
-  );
-}
-
