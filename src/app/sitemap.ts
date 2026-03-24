@@ -15,7 +15,18 @@ const baseUrl = baseUrlRaw.replace(/\/+$/, "");
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  const routes = ["/", "/docs", "/terms", "/privacy", "/abuse", "/report", "/status"];
+  const routes = [
+    "/",
+    "/blog",
+    "/blog/how-to-optimize-your-subdomain-for-seo",
+    "/blog/why-dns-security-matters-for-developers",
+    "/docs",
+    "/terms",
+    "/privacy",
+    "/abuse",
+    "/report",
+    "/status",
+  ];
 
   return routes.map((path) => ({
     url: `${baseUrl}${path}`,

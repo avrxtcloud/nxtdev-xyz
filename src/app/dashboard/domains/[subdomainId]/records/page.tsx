@@ -89,72 +89,70 @@ export default async function RecordsPage({
           </div>
         ) : (
           <Card className="rounded-[2.5rem] border-zinc-100/50 dark:border-zinc-800 shadow-xl shadow-zinc-200/20 dark:shadow-none overflow-hidden">
-            <div className="overflow-x-auto">
-              <Table>
-                <thead>
-                  <tr className="bg-zinc-50/50 dark:bg-zinc-900/50 border-b border-zinc-100 dark:border-zinc-800">
-                    <Th className="py-5 font-black text-zinc-400 uppercase tracking-widest text-[10px]">Type</Th>
-                    <Th className="py-5 font-black text-zinc-400 uppercase tracking-widest text-[10px]">Host Label</Th>
-                    <Th className="py-5 font-black text-zinc-400 uppercase tracking-widest text-[10px]">Content / Target</Th>
-                    <Th className="py-5 font-black text-zinc-400 uppercase tracking-widest text-[10px]">TTL</Th>
-                    <Th className="py-5 font-black text-zinc-400 uppercase tracking-widest text-[10px]">Options</Th>
-                    <Th className="py-5 text-right font-black text-zinc-400 uppercase tracking-widest text-[10px]">Actions</Th>
+            <Table className="min-w-[800px]">
+              <thead>
+                <tr className="bg-zinc-50/50 dark:bg-zinc-900/50 border-b border-zinc-100 dark:border-zinc-800">
+                  <Th className="py-5 font-black text-zinc-400 uppercase tracking-widest text-[10px]">Type</Th>
+                  <Th className="py-5 font-black text-zinc-400 uppercase tracking-widest text-[10px]">Host Label</Th>
+                  <Th className="py-5 font-black text-zinc-400 uppercase tracking-widest text-[10px]">Content / Target</Th>
+                  <Th className="py-5 font-black text-zinc-400 uppercase tracking-widest text-[10px]">TTL</Th>
+                  <Th className="py-5 font-black text-zinc-400 uppercase tracking-widest text-[10px]">Options</Th>
+                  <Th className="py-5 text-right font-black text-zinc-400 uppercase tracking-widest text-[10px]">Actions</Th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800">
+                {records.map((r) => (
+                  <tr key={r.id} className="group hover:bg-zinc-50/50 dark:hover:bg-zinc-900/30 transition-colors">
+                    <Td className="py-5">
+                      <span className="font-black font-mono text-blue-600 dark:text-blue-400">{r.type}</span>
+                    </Td>
+                    <Td className="py-5">
+                      <span className="font-bold text-zinc-900 dark:text-white truncate block max-w-[200px]">{r.fqdn}</span>
+                    </Td>
+                    <Td className="py-5">
+                      <div className="max-w-[340px] break-words font-medium text-zinc-600 dark:text-zinc-400 text-xs leading-relaxed">
+                        {r.content}
+                        {r.type === "MX" && r.priority !== null ? (
+                          <span className="ml-2 inline-flex items-center rounded-md bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 font-bold text-zinc-500">
+                            {r.priority}
+                          </span>
+                        ) : null}
+                      </div>
+                    </Td>
+                    <Td className="py-5 font-bold text-zinc-500 text-xs">{r.ttl}</Td>
+                    <Td className="py-5">
+                      {r.proxied ? (
+                        <div className="flex items-center gap-1.5 text-orange-500 font-bold text-[10px] uppercase tracking-wider">
+                          <span className="h-1.5 w-1.5 rounded-full bg-orange-500 animate-pulse"></span>
+                          Proxied
+                        </div>
+                      ) : (
+                        <div className="text-zinc-400 font-bold text-[10px] uppercase tracking-wider">DNS Only</div>
+                      )}
+                    </Td>
+                    <Td className="py-5 text-right">
+                      <div className="flex justify-end items-center gap-2">
+                        <Link href={`/dashboard/domains/${subdomain.id}/records/${r.id}`}>
+                          <Button variant="ghost" size="sm" className="rounded-xl h-8 text-xs">Edit</Button>
+                        </Link>
+                        <PropagationButton recordId={r.id} />
+                        <form action={deleteRecordAction.bind(null, subdomain.id, r.id)} className="inline">
+                          <SubmitButton
+                            variant="danger"
+                            size="sm"
+                            className="rounded-xl h-8 px-3 text-xs sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
+                            disabled={delegated || subdomain.status !== "active"}
+                            pendingText="..."
+                          >
+                            Delete
+                          </SubmitButton>
+                        </form>
+                      </div>
+                    </Td>
                   </tr>
-                </thead>
-                <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800">
-                  {records.map((r) => (
-                    <tr key={r.id} className="group hover:bg-zinc-50/50 dark:hover:bg-zinc-900/30 transition-colors">
-                      <Td className="py-5">
-                        <span className="font-black font-mono text-blue-600 dark:text-blue-400">{r.type}</span>
-                      </Td>
-                      <Td className="py-5">
-                        <span className="font-bold text-zinc-900 dark:text-white truncate block max-w-[200px]">{r.fqdn}</span>
-                      </Td>
-                      <Td className="py-5">
-                        <div className="max-w-[340px] break-words font-medium text-zinc-600 dark:text-zinc-400 text-xs leading-relaxed">
-                          {r.content}
-                          {r.type === "MX" && r.priority !== null ? (
-                            <span className="ml-2 inline-flex items-center rounded-md bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 font-bold text-zinc-500">
-                              {r.priority}
-                            </span>
-                          ) : null}
-                        </div>
-                      </Td>
-                      <Td className="py-5 font-bold text-zinc-500 text-xs">{r.ttl}</Td>
-                      <Td className="py-5">
-                        {r.proxied ? (
-                          <div className="flex items-center gap-1.5 text-orange-500 font-bold text-[10px] uppercase tracking-wider">
-                            <span className="h-1.5 w-1.5 rounded-full bg-orange-500 animate-pulse"></span>
-                            Proxied
-                          </div>
-                        ) : (
-                          <div className="text-zinc-400 font-bold text-[10px] uppercase tracking-wider">DNS Only</div>
-                        )}
-                      </Td>
-                      <Td className="py-5 text-right">
-                        <div className="flex justify-end items-center gap-2">
-                          <Link href={`/dashboard/domains/${subdomain.id}/records/${r.id}`}>
-                            <Button variant="ghost" size="sm" className="rounded-xl h-8 text-xs">Edit</Button>
-                          </Link>
-                          <PropagationButton recordId={r.id} />
-                          <form action={deleteRecordAction.bind(null, subdomain.id, r.id)} className="inline">
-                            <SubmitButton
-                              variant="danger"
-                              size="sm"
-                              className="rounded-xl h-8 px-3 text-xs opacity-0 group-hover:opacity-100 transition-opacity"
-                              disabled={delegated || subdomain.status !== "active"}
-                              pendingText="..."
-                            >
-                              Delete
-                            </SubmitButton>
-                          </form>
-                        </div>
-                      </Td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            </div>
+                ))}
+              </tbody>
+            </Table>
           </Card>
         )}
       </section>

@@ -63,6 +63,7 @@ export function NavClient(props: { rootDomain: string }) {
 
           <nav className="hidden items-center gap-1 md:flex">
             {[
+              { label: "Blog", href: "/blog" },
               { label: "Docs", href: "/docs" },
               { label: "Abuse", href: "/abuse" },
               { label: "Report", href: "/report" },
@@ -122,6 +123,7 @@ export function NavClient(props: { rootDomain: string }) {
         <div className="fixed inset-x-0 top-16 z-50 p-4 md:hidden animate-[fade-in-down_200ms_ease-out]">
           <div className="grid gap-2 rounded-[2rem] border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-6 shadow-2xl shadow-zinc-200/50 dark:shadow-none">
             {[
+              { label: "Blog", href: "/blog" },
               { label: "Documentation", href: "/docs" },
               { label: "Abuse Policy", href: "/abuse" },
               { label: "Report Abuse", href: "/report" },
