@@ -18,6 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [
     "/",
     "/blog",
+    "/blog/what-is-nxtdev.xyz",
     "/blog/how-to-optimize-your-subdomain-for-seo",
     "/blog/why-dns-security-matters-for-developers",
     "/docs",

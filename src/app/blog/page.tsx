@@ -10,6 +10,14 @@ export const metadata: Metadata = {
 
 const posts = [
     {
+        title: "What is nxtdev.xyz?",
+        description: "Learn about our mission to provide developers with professional subdomains and enterprise-grade DNS infrastructure.",
+        slug: "what-is-nxtdev.xyz",
+        date: "March 24, 2026",
+        category: "Platform",
+        gradient: "from-green-500 to-emerald-600",
+    },
+    {
         title: "How to Optimize Your Subdomain for SEO",
         description: "Learn the best practices for setting up your nxtdev.xyz subdomain to rank higher on Google search results.",
         slug: "how-to-optimize-your-subdomain-for-seo",
