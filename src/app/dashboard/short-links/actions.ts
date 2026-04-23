@@ -79,7 +79,9 @@ export async function updateShortLinkAction(state: any, formData: FormData) {
   }
 }
 
-export async function deleteShortLinkAction(id: string, shortioLinkId: string, state: any, formData?: FormData) {
+export async function deleteShortLinkAction(state: any, formData: FormData) {
+  const id = formData.get("id") as string;
+  const shortioLinkId = formData.get("shortioLinkId") as string;
   try {
     await getOrCreateAppUser();
 
