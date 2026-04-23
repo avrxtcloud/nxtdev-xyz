@@ -74,6 +74,12 @@ export default async function DashboardLayout({
           <Link className="rounded-xl px-4 py-2 text-sm font-bold text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all" href="/dashboard/domains">
             Domains
           </Link>
+          <Link className="rounded-xl px-4 py-2 text-sm font-bold text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all" href="/dashboard/short-links">
+            Short Links
+          </Link>
+          <Link className="rounded-xl px-4 py-2 text-sm font-bold text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all" href="/dashboard/api-keys">
+            API Keys
+          </Link>
           <Link className="rounded-xl px-4 py-2 text-sm font-bold text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all" href="/dashboard/reports">
             Reports
           </Link>

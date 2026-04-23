@@ -154,3 +154,33 @@ create table if not exists public."Announcement" (
 create index if not exists "Announcement_published_idx" on public."Announcement" ("published");
 create index if not exists "Announcement_startsAt_idx" on public."Announcement" ("startsAt");
 create index if not exists "Announcement_endsAt_idx" on public."Announcement" ("endsAt");
+
+-- Short Links (Short.io integration)
+create table if not exists "ShortLink" (
+  "id" text primary key,
+  "userId" text not null,
+  "originalUrl" text not null,
+  "shortSlug" text not null unique,
+  "shortUrl" text not null,
+  "shortioLinkId" text not null,
+  "createdAt" timestamptz not null default now(),
+  "updatedAt" timestamptz not null default now(),
+  constraint "ShortLink_userId_fkey"
+    foreign key ("userId") references "User"("id") on delete cascade
+);
+create index if not exists "ShortLink_userId_idx" on "ShortLink" ("userId");
+create index if not exists "ShortLink_shortSlug_idx" on "ShortLink" ("shortSlug");
+
+-- API Keys (DDNS tokens)
+create table if not exists "ApiKey" (
+  "id" text primary key,
+  "userId" text not null,
+  "key" text not null unique,
+  "name" text not null,
+  "createdAt" timestamptz not null default now(),
+  "lastUsedAt" timestamptz null,
+  constraint "ApiKey_userId_fkey"
+    foreign key ("userId") references "User"("id") on delete cascade
+);
+create index if not exists "ApiKey_userId_idx" on "ApiKey" ("userId");
+create index if not exists "ApiKey_key_idx" on "ApiKey" ("key");
