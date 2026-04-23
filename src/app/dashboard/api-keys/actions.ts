@@ -23,7 +23,6 @@ export async function createApiKeyAction(formData: FormData) {
   if (error) throw new Error(error.message);
 
   revalidatePath("/dashboard/api-keys");
-  return { key }; // Return key once for display
 }
 
 export async function deleteApiKeyAction(id: string) {
