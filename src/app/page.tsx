@@ -94,7 +94,7 @@ export default function Home() {
           <h2 className="text-3xl font-black tracking-tight sm:text-5xl text-zinc-900 dark:text-white">One platform, endless possibilities.</h2>
           <p className="text-lg text-zinc-600 dark:text-zinc-400 font-medium">Everything you need to build and scale your next project.</p>
         </div>
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-8 sm:grid-cols-2 xl:grid-cols-5">
           <Card className="p-10 rounded-[2.5rem] border-zinc-100/50 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-all border-b-4 border-b-blue-500">
             <h3 className="text-2xl font-black text-zinc-900 dark:text-white mb-4">Websites</h3>
             <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
@@ -107,6 +107,17 @@ export default function Home() {
               Deploy backends with ease. Support for A/AAAA records and reverse proxying through global CDNs.
             </p>
           </Card>
+          <Link href="/DynamicDns" className="group">
+            <Card className="h-full p-10 rounded-[2.5rem] border-zinc-100/50 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-all border-b-4 border-b-emerald-500 group-hover:scale-[1.02]">
+              <h3 className="text-2xl font-black text-zinc-900 dark:text-white mb-4 flex items-center gap-2">
+                Dynamic DNS
+                <Badge tone="ok" className="text-[10px]">Sync</Badge>
+              </h3>
+              <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
+                Keep your home server online 24/7 with our Cloudflare Edge-powered DDNS API. Auto-sync to dashboard.
+              </p>
+            </Card>
+          </Link>
           <Card className="p-10 rounded-[2.5rem] border-zinc-100/50 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-all border-b-4 border-b-purple-500">
             <h3 className="text-2xl font-black text-zinc-900 dark:text-white mb-4">Infrastructure</h3>
             <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
