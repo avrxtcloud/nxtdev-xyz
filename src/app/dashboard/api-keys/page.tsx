@@ -1,12 +1,10 @@
+import Link from "next/link";
 import { getOrCreateAppUser } from "@/lib/auth";
 import { supabaseAdmin } from "@/db/supabaseAdmin";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { SubmitButton } from "@/components/ui/submit-button";
-import { deleteApiKeyAction, createApiKeyAction } from "./actions";
-import Link from "next/link";
+import { CreateApiKeyForm } from "./_components/create-form";
+import { DeleteApiKeyButton } from "./_components/delete-button";
 
 export default async function ApiKeysPage() {
   const { appUser } = await getOrCreateAppUser();
@@ -31,17 +29,7 @@ export default async function ApiKeysPage() {
           </div>
         </div>
 
-        <div className="bg-zinc-50 dark:bg-zinc-900/50 rounded-2xl p-6 border border-zinc-100 dark:border-zinc-800">
-            <form action={createApiKeyAction} className="flex flex-col sm:flex-row gap-4">
-              <div className="flex-1 space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Key Name</label>
-                <Input name="name" placeholder="e.g. My Home Server" required />
-              </div>
-              <div className="sm:pt-6">
-                <SubmitButton pendingText="Generating..." className="rounded-xl px-8 h-10 font-black uppercase tracking-widest text-[10px] shadow-lg shadow-blue-500/20">Generate Key</SubmitButton>
-              </div>
-            </form>
-        </div>
+        <CreateApiKeyForm />
       </Card>
 
       <section className="space-y-6">
@@ -61,7 +49,7 @@ export default async function ApiKeysPage() {
                   <div className="space-y-1">
                     <div className="font-bold text-zinc-900 dark:text-white">{k.name}</div>
                     <div className="flex items-center gap-3">
-                       <code className="text-[10px] font-mono text-zinc-400">nxt_****************</code>
+                       <code className="text-[10px] font-mono text-zinc-400">{k.key.substring(0, 8)}****************</code>
                        <div className="text-[10px] text-zinc-500 font-medium">Created {new Date(k.createdAt).toLocaleDateString()}</div>
                        {k.lastUsedAt && (
                          <Badge tone="ok" className="text-[8px] px-2 py-0">Last used {new Date(k.lastUsedAt).toLocaleDateString()}</Badge>
@@ -69,9 +57,7 @@ export default async function ApiKeysPage() {
                     </div>
                   </div>
 
-                  <form action={deleteApiKeyAction.bind(null, k.id)}>
-                    <SubmitButton variant="danger" size="sm" pendingText="..." className="rounded-xl h-8 text-[9px] uppercase font-black px-4">Revoke</SubmitButton>
-                  </form>
+                  <DeleteApiKeyButton id={k.id} />
                 </Card>
              ))
            )}
@@ -84,13 +70,12 @@ export default async function ApiKeysPage() {
                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             </div>
             <div>
-               <h4 className="text-sm font-bold text-blue-900 dark:text-blue-100 italic">API Usage Guide</h4>
+               <h4 className="text-sm font-bold text-blue-900 dark:text-blue-100">Quick Endpoint Reference</h4>
                <p className="mt-1 text-xs text-blue-800 dark:text-blue-300 font-medium leading-relaxed">
-                 Use your API key with our update endpoint: <br/>
-                 <code className="bg-blue-100 dark:bg-blue-900/60 px-1 rounded">GET /api/ddns?key=YOUR_KEY&label=YOUR_LABEL&ip=YOUR_IP</code>
+                 Route: <code className="bg-blue-100 dark:bg-blue-900/60 px-1 rounded">https://api.nxtdev.xyz/update?key=YOUR_KEY&domain=YOUR_DOMAIN&ip=YOUR_IP</code>
                </p>
-               <Link href="/docs/api" className="mt-2 inline-block text-[10px] font-black uppercase tracking-widest text-blue-600 hover:underline">
-                 View full API docs →
+               <Link href="/DDNS" className="mt-2 inline-block text-[10px] font-black uppercase tracking-widest text-blue-600 hover:underline">
+                 View Setup Guide →
                </Link>
             </div>
          </div>
