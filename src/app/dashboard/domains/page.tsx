@@ -141,7 +141,7 @@ export default async function DomainsPage() {
                     </Link>
                     <DeleteSubdomainButton
                       baseFqdn={s.baseFqdn}
-                      action={deleteSubdomainAction.bind(null, s.id)}
+                      id={s.id}
                     />
                   </div>
                 </div>

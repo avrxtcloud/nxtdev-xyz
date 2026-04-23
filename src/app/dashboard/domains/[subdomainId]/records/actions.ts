@@ -8,7 +8,6 @@ import {
   updateUserDnsRecord,
 } from "@/lib/services/dns";
 import { assertDnsEditingEnabled } from "@/lib/system/flags";
-import { redirect } from "next/navigation";
 
 function getString(fd: FormData, key: string): string {
   return String(fd.get(key) ?? "").trim();
@@ -67,53 +66,80 @@ function parseRecordFormData(fd: FormData) {
   };
 }
 
-export async function createRecordAction(subdomainId: string, fd: FormData) {
-  const { appUser, isAdmin, isGithubVerified } = await getOrCreateAppUser();
-  if (!isGithubVerified) redirect("/dashboard/verify");
-  await assertDnsEditingEnabled({ isAdmin });
-  await createUserDnsRecord({
-    actorUserId: appUser.id,
-    userId: appUser.id,
-    subdomainId,
-    input: parseRecordFormData(fd),
-  });
-  revalidatePath(`/dashboard/domains/${subdomainId}/records`);
-  revalidatePath(`/dashboard/domains`);
+export async function createRecordAction(subdomainId: string, state: any, fd: FormData) {
+  try {
+    const { appUser, isAdmin, isGithubVerified } = await getOrCreateAppUser();
+    if (!isGithubVerified) {
+       return { error: "Please verify your account first." };
+    }
+    await assertDnsEditingEnabled({ isAdmin });
+    await createUserDnsRecord({
+      actorUserId: appUser.id,
+      userId: appUser.id,
+      subdomainId,
+      input: parseRecordFormData(fd),
+    });
+    revalidatePath(`/dashboard/domains/${subdomainId}/records`);
+    revalidatePath(`/dashboard/domains`);
+    return { success: true };
+  } catch (err: any) {
+    console.error("Create Record Error:", err);
+    return { error: err.message || "Failed to create DNS record" };
+  }
 }
 
 export async function updateRecordAction(
   subdomainId: string,
   recordId: string,
+  state: any,
   fd: FormData,
 ) {
-  const { appUser, isAdmin, isGithubVerified } = await getOrCreateAppUser();
-  if (!isGithubVerified) redirect("/dashboard/verify");
-  await assertDnsEditingEnabled({ isAdmin });
-  await updateUserDnsRecord({
-    actorUserId: appUser.id,
-    userId: appUser.id,
-    subdomainId,
-    recordId,
-    input: parseRecordFormData(fd),
-  });
-  revalidatePath(`/dashboard/domains/${subdomainId}/records`);
-  revalidatePath(`/dashboard/domains/${subdomainId}/records/${recordId}`);
-  revalidatePath(`/dashboard/domains`);
+  try {
+    const { appUser, isAdmin, isGithubVerified } = await getOrCreateAppUser();
+    if (!isGithubVerified) {
+      return { error: "Please verify your account first." };
+    }
+    await assertDnsEditingEnabled({ isAdmin });
+    await updateUserDnsRecord({
+      actorUserId: appUser.id,
+      userId: appUser.id,
+      subdomainId,
+      recordId,
+      input: parseRecordFormData(fd),
+    });
+    revalidatePath(`/dashboard/domains/${subdomainId}/records`);
+    revalidatePath(`/dashboard/domains/${subdomainId}/records/${recordId}`);
+    revalidatePath(`/dashboard/domains`);
+    return { success: true };
+  } catch (err: any) {
+    console.error("Update Record Error:", err);
+    return { error: err.message || "Failed to update DNS record" };
+  }
 }
 
 export async function deleteRecordAction(
   subdomainId: string,
   recordId: string,
+  state: any,
+  fd?: FormData
 ) {
-  const { appUser, isAdmin, isGithubVerified } = await getOrCreateAppUser();
-  if (!isGithubVerified) redirect("/dashboard/verify");
-  await assertDnsEditingEnabled({ isAdmin });
-  await deleteUserDnsRecord({
-    actorUserId: appUser.id,
-    userId: appUser.id,
-    subdomainId,
-    recordId,
-  });
-  revalidatePath(`/dashboard/domains/${subdomainId}/records`);
-  revalidatePath(`/dashboard/domains`);
+  try {
+    const { appUser, isAdmin, isGithubVerified } = await getOrCreateAppUser();
+    if (!isGithubVerified) {
+      return { error: "Please verify your account first." };
+    }
+    await assertDnsEditingEnabled({ isAdmin });
+    await deleteUserDnsRecord({
+      actorUserId: appUser.id,
+      userId: appUser.id,
+      subdomainId,
+      recordId,
+    });
+    revalidatePath(`/dashboard/domains/${subdomainId}/records`);
+    revalidatePath(`/dashboard/domains`);
+    return { success: true };
+  } catch (err: any) {
+    console.error("Delete Record Error:", err);
+    return { error: err.message || "Failed to delete DNS record" };
+  }
 }

@@ -10,12 +10,12 @@ import { Badge } from "@/components/ui/badge";
 import { Table, Td, Th } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { SubmitButton } from "@/components/ui/submit-button";
-import { CreateRecordForm } from "@/app/dashboard/domains/[subdomainId]/records/CreateRecordForm";
-import { PropagationButton } from "@/app/dashboard/domains/[subdomainId]/records/PropagationButton";
+import { CreateRecordForm } from "./CreateRecordForm";
+import { PropagationButton } from "./PropagationButton";
+import { DeleteRecordButton } from "./DeleteRecordButton";
 import {
   createRecordAction,
-  deleteRecordAction,
-} from "@/app/dashboard/domains/[subdomainId]/records/actions";
+} from "./actions";
 import { getSystemFlags } from "@/lib/system/flags";
 
 export default async function RecordsPage({
@@ -138,17 +138,12 @@ export default async function RecordsPage({
                               <Button variant="ghost" size="sm" className="rounded-xl h-8 text-xs">Edit</Button>
                             </Link>
                             <PropagationButton recordId={r.id} />
-                            <form action={deleteRecordAction.bind(null, subdomain.id, r.id)} className="inline">
-                              <SubmitButton
-                                variant="danger"
-                                size="sm"
-                                className="rounded-xl h-8 px-3 text-xs sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
-                                disabled={delegated || subdomain.status !== "active"}
-                                pendingText="..."
-                              >
-                                Delete
-                              </SubmitButton>
-                            </form>
+                            <DeleteRecordButton
+                              subdomainId={subdomain.id}
+                              recordId={r.id}
+                              fqdn={r.fqdn}
+                              disabled={delegated || subdomain.status !== "active"}
+                            />
                           </div>
                         </Td>
                       </tr>
@@ -190,17 +185,12 @@ export default async function RecordsPage({
                           <Button variant="ghost" size="sm" className="h-8 text-[10px] font-black uppercase tracking-widest">Edit</Button>
                         </Link>
                         <PropagationButton recordId={r.id} />
-                        <form action={deleteRecordAction.bind(null, subdomain.id, r.id)}>
-                          <SubmitButton
-                            variant="danger"
-                            size="sm"
-                            className="h-8 px-3 text-[10px] font-black uppercase tracking-widest"
-                            disabled={delegated || subdomain.status !== "active"}
-                            pendingText="..."
-                          >
-                            Delete
-                          </SubmitButton>
-                        </form>
+                        <DeleteRecordButton
+                          subdomainId={subdomain.id}
+                          recordId={r.id}
+                          fqdn={r.fqdn}
+                          disabled={delegated || subdomain.status !== "active"}
+                        />
                       </div>
                     </div>
                   </div>

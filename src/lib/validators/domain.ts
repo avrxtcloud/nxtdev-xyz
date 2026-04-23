@@ -13,7 +13,7 @@ const labelBaseSchema = z
 
 export const subdomainLabelSchema = labelBaseSchema.min(
   4,
-  "Must be at least 4 characters",
+  "Domain Must Be 4 Letter's or Longer",
 );
 
 // Admin-only: allow reserving short labels (e.g., "a") while still enforcing character rules.
