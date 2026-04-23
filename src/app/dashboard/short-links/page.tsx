@@ -4,9 +4,8 @@ import { supabaseAdmin } from "@/db/supabaseAdmin";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { SubmitButton } from "@/components/ui/submit-button";
-import { createShortLinkAction, deleteShortLinkAction, updateShortLinkAction } from "./actions";
+import { CreateShortLinkForm } from "./_components/create-form";
+import { DeleteLinkButton } from "./_components/delete-button";
 
 export default async function ShortLinksPage() {
   const { appUser } = await getOrCreateAppUser();
@@ -42,15 +41,7 @@ export default async function ShortLinksPage() {
                Maximum limit of 4 links reached. Delete one to create another.
              </div>
            ) : (
-            <form action={createShortLinkAction} className="flex flex-col sm:flex-row sm:items-end gap-4">
-              <div className="flex-1 space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Destination URL</label>
-                <Input name="originalUrl" placeholder="https://your-long-url.com/..." required className="rounded-xl" />
-              </div>
-              <div className="sm:pt-6">
-                <SubmitButton pendingText="Creating..." className="rounded-xl px-10 h-10 font-black uppercase tracking-widest text-[10px] shadow-lg shadow-blue-500/20">Shorten</SubmitButton>
-              </div>
-            </form>
+            <CreateShortLinkForm />
            )}
         </div>
       </Card>
@@ -92,14 +83,9 @@ export default async function ShortLinksPage() {
                        <Link href={`/dashboard/short-links/${link.id}`} className="flex-1 sm:flex-none">
                          <Button variant="secondary" size="md" className="w-full sm:w-auto rounded-2xl group-hover:bg-blue-600 group-hover:text-white transition-all">Edit</Button>
                        </Link>
-                       <form action={deleteShortLinkAction.bind(null, link.id, link.shortioLinkId)} className="flex-1 sm:flex-none">
-                         <SubmitButton variant="danger" size="md" pendingText="..." className="w-full sm:w-auto rounded-2xl">Delete</SubmitButton>
-                       </form>
+                       <DeleteLinkButton id={link.id} shortioLinkId={link.shortioLinkId} />
                     </div>
                   </div>
-
-                  {/* Hidden Edit Form (shown on anchor hash or managed via client if we had one, but let's keep it simple with a conditional or separate dialog later) */}
-                  {/* For now, I'll just make Edit a placeholder or a simple inline toggle if I had state. Since this is server component, I'll use a separate page for Edit to keep it clean */}
                 </Card>
              ))
            )}

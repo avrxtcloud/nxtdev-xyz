@@ -1,10 +1,7 @@
 import { getOrCreateAppUser } from "@/lib/auth";
 import { supabaseAdmin } from "@/db/supabaseAdmin";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { SubmitButton } from "@/components/ui/submit-button";
-import { updateShortLinkAction } from "../actions";
+import { UpdateShortLinkForm } from "../_components/update-form";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -39,19 +36,7 @@ export default async function EditShortLinkPage({
           </p>
         </div>
 
-        <form action={updateShortLinkAction.bind(null, link.id, link.shortioLinkId)} className="space-y-6">
-          <div className="space-y-2">
-            <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">New Destination URL</label>
-            <Input name="originalUrl" defaultValue={link.originalUrl} placeholder="https://example.com/new-dest" required />
-          </div>
-          
-          <div className="flex justify-end gap-3 pt-4">
-            <Link href="/dashboard/short-links">
-              <Button variant="secondary" type="button" className="rounded-xl px-6 h-12 uppercase font-black tracking-widest text-[10px]">Cancel</Button>
-            </Link>
-            <SubmitButton pendingText="Saving..." className="rounded-xl px-8 h-12 font-black uppercase tracking-widest text-xs shadow-lg shadow-blue-500/20">Save Changes</SubmitButton>
-          </div>
-        </form>
+        <UpdateShortLinkForm link={link} />
       </Card>
     </div>
   );
