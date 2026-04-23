@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { getOrCreateAppUser } from "@/lib/auth";
 import { supabaseAdmin } from "@/db/supabaseAdmin";
-import { crypto } from "node:crypto";
+import crypto from "node:crypto";
 
 export async function createApiKeyAction(formData: FormData) {
   const { appUser } = await getOrCreateAppUser();
