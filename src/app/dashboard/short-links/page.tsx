@@ -42,20 +42,13 @@ export default async function ShortLinksPage() {
                Maximum limit of 4 links reached. Delete one to create another.
              </div>
            ) : (
-            <form action={createShortLinkAction} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
+            <form action={createShortLinkAction} className="flex flex-col sm:flex-row sm:items-end gap-4">
+              <div className="flex-1 space-y-2">
                 <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Destination URL</label>
-                <Input name="originalUrl" placeholder="https://example.com/very-long-link" required />
+                <Input name="originalUrl" placeholder="https://your-long-url.com/..." required className="rounded-xl" />
               </div>
-              <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Custom Slug (optional)</label>
-                <div className="flex items-center">
-                  <div className="bg-zinc-200 dark:bg-zinc-700 h-10 px-3 flex items-center rounded-l-xl text-xs font-mono text-zinc-500 border-r dark:border-zinc-600">go.nxtdev.xyz/</div>
-                  <Input name="customSlug" placeholder="my-link" className="rounded-l-none" />
-                </div>
-              </div>
-              <div className="md:col-span-2 flex justify-end">
-                <SubmitButton pendingText="Creating..." className="rounded-xl px-8 h-12 font-black uppercase tracking-widest text-xs shadow-lg shadow-blue-500/20">Create Link</SubmitButton>
+              <div className="sm:pt-6">
+                <SubmitButton pendingText="Creating..." className="rounded-xl px-10 h-10 font-black uppercase tracking-widest text-[10px] shadow-lg shadow-blue-500/20">Shorten</SubmitButton>
               </div>
             </form>
            )}

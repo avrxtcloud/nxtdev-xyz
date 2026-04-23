@@ -1,23 +1,24 @@
 /**
  * nxtdev.xyz DDNS API Worker
  * 
- * Endpoint: GET /api/ddns?key=...&label=...&ip=...
- * 
- * Flow:
- * 1. Verify API Key against Supabase
- * 2. Find Subdomain by label + userId
- * 3. Update A/AAAA record in Cloudflare
+ * Endpoint: GET https://api.nxtdev.xyz/update?key=...&domain=...&ip=...
  */
 
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    
+    // Only handle /update
+    if (url.pathname !== "/update") {
+      return new Response("nxtdev DDNS API - Usage: /update?key=...&domain=...&ip=...", { status: 404 });
+    }
+
     const key = url.searchParams.get("key");
-    const label = url.searchParams.get("label");
+    const domain = url.searchParams.get("domain");
     const ip = url.searchParams.get("ip");
 
-    if (!key || !label || !ip) {
-      return new Response("Missing parameters (key, label, ip)", { status: 400 });
+    if (!key || !domain || !ip) {
+      return new Response("Missing parameters (key, domain, ip)", { status: 400 });
     }
 
     // 1. Verify API Key
@@ -34,13 +35,14 @@ export default {
     }
     const userId = keys[0].userId;
 
-    // 2. Find Subdomain
-    const subRes = await fetch(`${supabaseUrl}/rest/v1/Subdomain?userId=eq.${userId}&label=eq.${label}&select=id,baseFqdn`, {
+    // 2. Find Subdomain and verify ownership
+    // We check if the provided domain matches a baseFqdn owned by the user
+    const subRes = await fetch(`${supabaseUrl}/rest/v1/Subdomain?userId=eq.${userId}&baseFqdn=eq.${domain}&select=id,baseFqdn`, {
       headers: { "apikey": supabaseKey, "Authorization": `Bearer ${supabaseKey}` }
     });
     const subdomains = await subRes.json();
     if (!subdomains || subdomains.length === 0) {
-      return new Response("Subdomain not found or not owned by you", { status: 404 });
+      return new Response("Domain not found or not owned by you. Ensure the domain is exactly as shown in your dashboard.", { status: 404 });
     }
     const subdomain = subdomains[0];
 
@@ -48,19 +50,19 @@ export default {
     const cfToken = env.CLOUDFLARE_API_TOKEN;
     const cfZoneId = env.CLOUDFLARE_ZONE_ID;
 
-    // Find the record ID first (assuming it exists)
+    // Find the A record for this domain
     const recordSearch = await fetch(`https://api.cloudflare.com/client/v4/zones/${cfZoneId}/dns_records?name=${subdomain.baseFqdn}&type=A`, {
       headers: { "Authorization": `Bearer ${cfToken}` }
     });
     const records = await recordSearch.json();
     
     if (!records.success || records.result.length === 0) {
-       return new Response("DNS Record for subdomain not found in Cloudflare. Please create it manually first.", { status: 404 });
+       return new Response("DNS A record for this domain not found in Cloudflare. Please create an A record in the dashboard first.", { status: 404 });
     }
 
     const recordId = records.result[0].id;
 
-    // Update the record
+    // Update the A record
     const updateRes = await fetch(`https://api.cloudflare.com/client/v4/zones/${cfZoneId}/dns_records/${recordId}`, {
       method: "PATCH",
       headers: { 

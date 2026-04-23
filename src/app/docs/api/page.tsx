@@ -56,26 +56,28 @@ export default function ApiGuidePage() {
 
         <EndpointCard
           method="GET"
-          path="/ddns"
+          path="/update"
+          baseUrl="https://api.nxtdev.xyz"
           description="Update your subdomain's A record dynamically (Dynamic DNS)."
           params={[
             { name: "key", type: "string", description: "Your API Key (nxt_...)" },
-            { name: "label", type: "string", description: "The subdomain label (e.g. 'home')" },
+            { name: "domain", type: "string", description: "The full subdomain (e.g. 'home.nxtdev.xyz')" },
             { name: "ip", type: "string", description: "The new IP address to point to" }
           ]}
-          example="/api/ddns?key=nxt_yourkey&label=home&ip=1.1.1.1"
+          example="https://api.nxtdev.xyz/update?key=nxt_key&domain=home.nxtdev.xyz&ip=1.1.1.1"
         />
       </div>
     </div>
   );
 }
 
-function EndpointCard({ method, path, description, params, example }: {
+function EndpointCard({ method, path, description, params, example, baseUrl }: {
   method: "GET" | "POST";
   path: string;
   description: string;
   params?: { name: string; type: string; description: string }[];
   example?: string;
+  baseUrl?: string;
 }) {
   return (
     <Card className="p-8 rounded-[2.5rem] border-zinc-100 dark:border-zinc-800 overflow-hidden relative">
@@ -85,7 +87,10 @@ function EndpointCard({ method, path, description, params, example }: {
             <Badge tone={method === "GET" ? "ok" : "warn"} className="rounded-lg px-3 py-1 font-black text-[10px] uppercase tracking-widest">
               {method}
             </Badge>
-            <code className="text-xl font-black text-zinc-900 dark:text-white font-mono">{path}</code>
+            <div className="flex flex-col">
+              {baseUrl && <span className="text-[10px] font-mono text-zinc-500">{baseUrl}</span>}
+              <code className="text-xl font-black text-zinc-900 dark:text-white font-mono">{path}</code>
+            </div>
           </div>
           
           <p className="text-zinc-600 dark:text-zinc-400 font-medium leading-relaxed max-w-xl">

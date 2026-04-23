@@ -8,7 +8,6 @@ import { createShortLink, deleteShortLink, updateShortLink } from "@/lib/service
 export async function createShortLinkAction(formData: FormData) {
   const { appUser } = await getOrCreateAppUser();
   const originalUrl = formData.get("originalUrl") as string;
-  const customSlug = formData.get("customSlug") as string;
 
   if (!originalUrl) throw new Error("Original URL is required");
 
@@ -22,7 +21,7 @@ export async function createShortLinkAction(formData: FormData) {
   if ((count ?? 0) >= 4) throw new Error("You have reached the limit of 4 short links.");
 
   // Create on Short.io
-  const shortioRes = await createShortLink(originalUrl, customSlug || undefined);
+  const shortioRes = await createShortLink(originalUrl);
 
   // Save to DB
   const { error: dbErr } = await supabaseAdmin.from("ShortLink").insert({
