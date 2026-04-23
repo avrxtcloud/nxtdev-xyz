@@ -22,7 +22,8 @@ export function Footer() {
             <nav className="flex flex-col gap-4 font-bold text-zinc-600 dark:text-zinc-400">
               <Link className="hover:text-zinc-950 dark:hover:text-zinc-100 transition-colors" href="/docs">Documentation</Link>
               <Link className="hover:text-zinc-950 dark:hover:text-zinc-100 transition-colors" href="/dashboard">Dashboard</Link>
-              <Link className="hover:text-zinc-950 dark:hover:text-zinc-100 transition-colors" href="/DDNS">Dynamic DNS</Link>
+              <Link className="hover:text-zinc-950 dark:hover:text-zinc-100 transition-colors" href="/DynamicDns">Dynamic DNS</Link>
+              <Link className="hover:text-zinc-950 dark:hover:text-zinc-100 transition-colors" href="/DDNS">Setup Guide</Link>
               <Link className="hover:text-zinc-950 dark:hover:text-zinc-100 transition-colors" href="/status">System Status</Link>
               <Link className="hover:text-zinc-950 dark:hover:text-zinc-100 transition-colors" href="/subscribe">Newsletter</Link>
             </nav>
