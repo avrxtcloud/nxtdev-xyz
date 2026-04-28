@@ -58,3 +58,14 @@ api-proxy
 cash
 domain
 subdomain
+team
+developer
+subscribe
+unsubscribe
+resend
+lookup
+shield
+documentation
+myran
+kunna
+thayoli
