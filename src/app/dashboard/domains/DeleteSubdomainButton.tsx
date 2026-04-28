@@ -1,40 +1,44 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useActionState, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
+import { deleteSubdomainAction } from "./actions";
 
-export function DeleteSubdomainButton(props: {
-  baseFqdn: string;
-  action: () => Promise<void>;
-  disabled?: boolean;
-}) {
-  const [pending, startTransition] = useTransition();
+export function DeleteSubdomainButton({ baseFqdn, id }: { baseFqdn: string; id: string }) {
   const [open, setOpen] = useState(false);
+  
+  // Bind the id to the action
+  const deleteActionWithId = deleteSubdomainAction.bind(null, id);
+  const [state, formAction] = useActionState(deleteActionWithId, null);
 
   return (
     <>
-      <Button
-        variant="danger"
-        size="sm"
-        disabled={pending || props.disabled}
-        onClick={() => setOpen(true)}
-      >
-        {pending ? "Deleting..." : "Delete"}
-      </Button>
+      <div className="flex flex-col gap-1">
+        <Button
+          variant="danger"
+          size="sm"
+          className="rounded-2xl h-9 px-6 font-black uppercase tracking-widest text-[10px]"
+          onClick={() => setOpen(true)}
+        >
+          Delete
+        </Button>
+        {state?.error && (
+          <p className="text-[9px] text-red-500 font-bold text-center w-full max-w-[100px] leading-tight mt-1">{state.error}</p>
+        )}
+      </div>
+
       <ConfirmDialog
         open={open}
-        title={`Delete ${props.baseFqdn}?`}
-        description="This will remove all DNS records for this subdomain and free up your slot so you can claim a new one."
+        title={`Delete ${baseFqdn}?`}
+        description="This will remove all DNS records for this subdomain and free up your slot so you can claim a new one. This action is irreversible."
         confirmText="Delete subdomain"
         destructive
-        loading={pending}
-        onClose={() => (pending ? null : setOpen(false))}
+        onClose={() => setOpen(false)}
         onConfirm={() => {
-          startTransition(async () => {
-            await props.action();
-            setOpen(false);
-          });
+          // Manual invocation with any casting for types
+          (formAction as any)(new FormData());
+          setOpen(false);
         }}
       />
     </>

@@ -22,6 +22,7 @@
 html,
 body {
   height: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -29,6 +30,17 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system,
     Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+.font-mono,
+code {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+pre {
+  max-width: 100%;
+  overflow-x: auto;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -44,6 +56,7 @@ body {
     opacity: 0;
     transform: translateY(6px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -54,7 +67,40 @@ body {
   0% {
     background-position: 200% 0;
   }
+
   100% {
     background-position: -200% 0;
   }
+}
+
+@keyframes bounce-subtle {
+
+  0%,
+  100% {
+    transform: translateY(-2px);
+  }
+
+  50% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-down {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-bounce-subtle {
+  animation: bounce-subtle 3s ease-in-out infinite;
+}
+
+.animate-fade-in-down {
+  animation: fade-in-down 200ms ease-out;
 }

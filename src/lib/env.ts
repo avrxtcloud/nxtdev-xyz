@@ -54,4 +54,21 @@ export const env = {
     .split(",")
     .map((e) => e.trim().toLowerCase())
     .filter(Boolean),
+
+  get RESEND_API_KEY() {
+    return required("RESEND_API_KEY");
+  },
+  get RESEND_AUDIENCE_ID() {
+    return required("RESEND_AUDIENCE_ID");
+  },
+  get RESEND_FROM_EMAIL() {
+    return required("RESEND_FROM_EMAIL");
+  },
+
+  get SHORTIO_API_KEY() {
+    return required("SHORTIO_API_KEY");
+  },
+  get SHORTIO_DOMAIN() {
+    return optional("SHORTIO_DOMAIN") ?? "go.nxtdev.xyz";
+  },
 } as const;
