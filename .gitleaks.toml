@@ -1,0 +1,27 @@
+# .gitleaks.toml
+title = "nxtdev secret scan rules"
+
+[[rules]]
+  id = "cloudflare-api-token"
+  description = "Cloudflare API Token"
+  regex = '''CF_API_TOKEN\s*=\s*['"]?[A-Za-z0-9_-]{40}'''
+
+[[rules]]
+  id = "cloudflare-zone-id"
+  description = "Cloudflare Zone ID"
+  regex = '''CF_ZONE_ID\s*=\s*['"]?[a-f0-9]{32}'''
+
+[[rules]]
+  id = "supabase-service-key"
+  description = "Supabase Service Role Key"
+  regex = '''eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\.[A-Za-z0-9_-]+'''
+
+[[rules]]
+  id = "resend-api-key"
+  description = "Resend API Key"
+  regex = '''re_[A-Za-z0-9]{32}'''
+
+[[rules]]
+  id = "verify-secret"
+  description = "Internal Verify Secret"
+  regex = '''VERIFY_SECRET\s*=\s*['"]?.{16,}'''
