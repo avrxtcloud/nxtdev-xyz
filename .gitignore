@@ -23,6 +23,7 @@
 # misc
 .DS_Store
 *.pem
+Thumbs.db
 
 # debug
 npm-debug.log*
@@ -33,10 +34,14 @@ dev*.log
 *.out.log
 *.err.log
 
-# env files
+# env files (never commit any .env variant)
 .env
 .env.local
 .env.*.local
+.env.production
+.env.staging
+.env.development
+.env.test
 
 # vercel
 .vercel
@@ -44,3 +49,45 @@ dev*.log
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# ————————————————————————————————————————
+# nxtdev specific additions below
+# ————————————————————————————————————————
+
+# secrets & keys (extra safety net)
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+secrets.json
+secrets.*.json
+
+# wrangler (Cloudflare Workers)
+.wrangler/
+wrangler.toml.local
+
+# supabase local
+supabase/.branches
+supabase/.temp
+
+# powerdns
+*.zone.bak
+pdns.conf
+pdns.local.conf
+
+# editor & OS
+.idea/
+.vscode/settings.json
+*.swp
+*.swo
+*~
+
+# temp & cache
+.cache/
+.temp/
+tmp/
+
+# pm2 (if you ever run locally)
+ecosystem.config.local.js
+.pm2/
