@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NxtDev — Audit Report</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0c10;
+    --surface: #111318;
+    --border: #1e2330;
+    --accent: #00e5ff;
+    --accent2: #7c3aed;
+    --warn: #f59e0b;
+    --danger: #ef4444;
+    --success: #10b981;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: linear-gradient(135deg, #0f1623 0%, #0a0c10 60%);
+    border-bottom: 1px solid var(--border);
+    padding: 40px 48px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(0,229,255,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .logo-area h1 {
+    font-family: var(--mono);
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    color: #fff;
+  }
+  .logo-area h1 span { color: var(--accent); }
+  .logo-area p {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 4px;
+    font-family: var(--mono);
+  }
+  .header-meta {
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+  .header-meta strong { color: var(--text); }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .stat-card {
+    background: var(--surface);
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .stat-card .label {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+  }
+  .stat-card .value {
+    font-family: var(--mono);
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .stat-card .value.warn { color: var(--warn); }
+  .stat-card .value.danger { color: var(--danger); }
+  .stat-card .value.success { color: var(--success); }
+  .stat-card .sub {
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 32px 48px 64px;
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 32px;
+  }
+  @media (max-width: 1100px) {
+    .main { grid-template-columns: 1fr; padding: 24px 20px; }
+    .header { padding: 28px 20px 24px; }
+  }
+
+  /* ── SECTION TITLES ── */
+  .section-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── TABLE ── */
+  .table-wrap {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--surface);
+  }
+  .table-toolbar {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .search-box {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 6px 12px;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 12px;
+    width: 220px;
+    outline: none;
+    transition: border-color .2s;
+  }
+  .search-box:focus { border-color: var(--accent); }
+  .filter-btn {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 5px 12px;
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 11px;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .filter-btn:hover, .filter-btn.active { border-color: var(--accent); color: var(--accent); }
+  .row-count {
+    margin-left: auto;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  table { width: 100%; border-collapse: collapse; }
+  thead th {
+    background: #0d1017;
+    padding: 10px 14px;
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+  }
+  thead th:hover { color: var(--accent); }
+  tbody tr {
+    border-bottom: 1px solid rgba(30,35,48,0.6);
+    transition: background .1s;
+  }
+  tbody tr:hover { background: rgba(0,229,255,0.03); }
+  tbody tr:last-child { border-bottom: none; }
+  td {
+    padding: 9px 14px;
+    font-family: var(--mono);
+    font-size: 12px;
+    vertical-align: middle;
+  }
+  td.time {
+    color: var(--muted);
+    white-space: nowrap;
+    font-size: 11px;
+  }
+  td.actor {
+    color: #94a3b8;
+    max-width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  td.target {
+    color: var(--muted);
+    max-width: 260px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 11px;
+  }
+
+  /* Action badges */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+    border: 1px solid transparent;
+  }
+  .badge-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .b-subdomain   { background: rgba(124,58,237,0.1);  border-color: rgba(124,58,237,0.3);  color: #a78bfa; }
+  .b-subdomain .badge-dot { background: #7c3aed; }
+  .b-dns         { background: rgba(0,229,255,0.08);  border-color: rgba(0,229,255,0.25);  color: #67e8f9; }
+  .b-dns .badge-dot { background: var(--accent); }
+  .b-admin       { background: rgba(245,158,11,0.1);  border-color: rgba(245,158,11,0.3);  color: #fbbf24; }
+  .b-admin .badge-dot { background: var(--warn); }
+  .b-abuse       { background: rgba(239,68,68,0.1);   border-color: rgba(239,68,68,0.3);   color: #f87171; }
+  .b-abuse .badge-dot { background: var(--danger); }
+  .b-risk        { background: rgba(239,68,68,0.15);  border-color: rgba(239,68,68,0.4);   color: #fca5a5; }
+  .b-risk .badge-dot { background: #ef4444; }
+
+  /* ── SIDEBAR ── */
+  .sidebar { display: flex; flex-direction: column; gap: 24px; }
+
+  .panel {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    overflow: hidden;
+  }
+  .panel-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    background: #0d1017;
+  }
+  .panel-body { padding: 16px; }
+
+  /* Actor list */
+  .actor-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(30,35,48,0.5);
+    gap: 8px;
+  }
+  .actor-item:last-child { border-bottom: none; }
+  .actor-name {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: #94a3b8;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 180px;
+  }
+  .actor-count {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+  .actor-bar-wrap {
+    flex: 1;
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    min-width: 40px;
+  }
+  .actor-bar { height: 100%; background: var(--accent); border-radius: 2px; opacity: 0.6; }
+
+  /* Action breakdown */
+  .action-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 0;
+    gap: 8px;
+  }
+  .action-row:not(:last-child) { border-bottom: 1px solid rgba(30,35,48,0.5); }
+  .action-label { font-family: var(--mono); font-size: 11px; color: #94a3b8; }
+  .action-num { font-family: var(--mono); font-size: 12px; font-weight: 600; }
+
+  /* Timeline chart */
+  .timeline {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 64px;
+    padding: 0 2px;
+  }
+  .tl-bar-wrap {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 4px;
+  }
+  .tl-bar {
+    width: 100%;
+    background: rgba(0,229,255,0.35);
+    border-radius: 2px 2px 0 0;
+    min-height: 2px;
+    transition: background .2s;
+    position: relative;
+    cursor: pointer;
+  }
+  .tl-bar:hover { background: var(--accent); }
+  .tl-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--muted);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 28px;
+    text-overflow: ellipsis;
+  }
+
+  .no-results {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-top">
+    <div class="logo-area">
+      <h1>NxtDev <span>//</span> Audit Log</h1>
+      <p>System-wide activity report · All actors · All event types</p>
+    </div>
+    <div class="header-meta">
+      <div><strong>Generated</strong> · 2026-05-19</div>
+      <div><strong>Period</strong> · 2026-03-11 → 2026-05-18</div>
+      <div><strong>Source</strong> · nxtdevauditreport.docx</div>
+    </div>
+  </div>
+</header>
+
+<div class="stats-bar" id="statsBar">
+  <div class="stat-card">
+    <span class="label">Total Events</span>
+    <span class="value" id="statTotal">—</span>
+    <span class="sub">across all actors</span>
+  </div>
+  <div class="stat-card">
+    <span class="label">Unique Actors</span>
+    <span class="value success" id="statActors">—</span>
+    <span class="sub">email identities</span>
+  </div>
+  <div class="stat-card">
+    <span class="label">Admin Actions</span>
+    <span class="value warn" id="statAdmin">—</span>
+    <span class="sub">privileged ops</span>
+  </div>
+  <div class="stat-card">
+    <span class="label">Abuse Reports</span>
+    <span class="value danger" id="statAbuse">—</span>
+    <span class="sub">submitted + managed</span>
+  </div>
+  <div class="stat-card">
+    <span class="label">Subdomain Ops</span>
+    <span class="value" id="statSubdomain">—</span>
+    <span class="sub">claim / delete / suspend</span>
+  </div>
+  <div class="stat-card">
+    <span class="label">DNS Changes</span>
+    <span class="value" id="statDns">—</span>
+    <span class="sub">create / update / delete</span>
+  </div>
+</div>
+
+<div class="main">
+  <!-- LEFT: Table -->
+  <div>
+    <p class="section-title">Event Log</p>
+    <div class="table-wrap">
+      <div class="table-toolbar">
+        <input class="search-box" type="text" placeholder="Search actor or action…" id="searchInput" />
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="subdomain">Subdomain</button>
+        <button class="filter-btn" data-filter="dns">DNS</button>
+        <button class="filter-btn" data-filter="admin">Admin</button>
+        <button class="filter-btn" data-filter="abuse">Abuse</button>
+        <button class="filter-btn" data-filter="risk">Risk</button>
+        <span class="row-count" id="rowCount"></span>
+      </div>
+      <div style="overflow-x:auto; max-height: 680px; overflow-y: auto;">
+        <table id="auditTable">
+          <thead>
+            <tr>
+              <th data-col="time">Timestamp</th>
+              <th data-col="actor">Actor</th>
+              <th data-col="action">Action</th>
+              <th data-col="target">Target</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+      <div class="no-results" id="noResults" style="display:none">No matching events found.</div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Sidebar -->
+  <div class="sidebar">
+
+    <div>
+      <p class="section-title">Activity Timeline</p>
+      <div class="panel">
+        <div class="panel-header">Events by Date (grouped)</div>
+        <div class="panel-body">
+          <div class="timeline" id="timeline"></div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p class="section-title">Top Actors</p>
+      <div class="panel">
+        <div class="panel-header">By event count</div>
+        <div class="panel-body" id="actorList"></div>
+      </div>
+    </div>
+
+    <div>
+      <p class="section-title">Action Breakdown</p>
+      <div class="panel">
+        <div class="panel-header">Category totals</div>
+        <div class="panel-body" id="actionBreakdown"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const RAW = [
+  ["2026-05-18T17:58:44.483Z","arunmohan.6017@gmail.com","subdomain.suspend","subdomain:9829df2e-186e-4fc0-b9f1-5d679cd97a32"],
+  ["2026-05-18T17:58:40.445Z","arunmohan.6017@gmail.com","subdomain.suspend","subdomain:73e94a9e-f15b-44c4-93ac-5535cc982c73"],
+  ["2026-05-18T10:00:26.849Z","edidownloadstudio@proton.me","subdomain.delete","subdomain:4413227c-02c4-4c25-8c00-000e83785ba9"],
+  ["2026-05-18T09:59:39.228Z","edidownloadstudio@proton.me","subdomain.claim","subdomain:4413227c-02c4-4c25-8c00-000e83785ba9"],
+  ["2026-05-17T17:54:46.501Z","mishalmuhammedk21@gmail.com","admin.user.set_status","user:2c450a0b-d1f9-4aae-86e6-b1f10c372ca9"],
+  ["2026-05-17T17:50:10.306Z","arunmohan.6017@gmail.com","admin.user.set_status","user:a24d1065-6c62-44ba-be46-7e61ea7e38cb"],
+  ["2026-05-17T17:50:06.839Z","arunmohan.6017@gmail.com","admin.user.set_status","user:a24d1065-6c62-44ba-be46-7e61ea7e38cb"],
+  ["2026-05-17T14:55:40.832Z","edidownloadstudio@proton.me","subdomain.delete","subdomain:ece0b7cd-22ea-4775-afeb-a01b1bbae531"],
+  ["2026-05-17T14:54:56.651Z","edidownloadstudio@proton.me","subdomain.claim","subdomain:ece0b7cd-22ea-4775-afeb-a01b1bbae531"],
+  ["2026-05-17T13:59:10.733Z","edidownloadstudio@gmail.com","subdomain.delete","subdomain:558e4509-ac34-4027-a64d-3fc1bb69b869"],
+  ["2026-05-17T13:59:02.703Z","edidownloadstudio@gmail.com","subdomain.claim","subdomain:558e4509-ac34-4027-a64d-3fc1bb69b869"],
+  ["2026-05-17T01:01:26.868Z","suporte.phantompix@gmail.com","dns.delegation.add","delegated_ns:ac48a1d3-a93e-4fc0-a55c-83ff62fc4938"],
+  ["2026-05-17T01:01:18.312Z","suporte.phantompix@gmail.com","dns.delegation.add","delegated_ns:46dd4aaa-8ffe-4c59-ba37-88b16f1a96dc"],
+  ["2026-05-17T01:01:07.106Z","suporte.phantompix@gmail.com","dns.delegation.add","delegated_ns:577cebbd-5e51-42ae-ad46-b5c183eed655"],
+  ["2026-05-16T18:27:09.024Z","arunmohan.6017@gmail.com","dns.delete","dns_record:d1a4f9b4-52a5-4f5d-9a6e-87f9b8666e17"],
+  ["2026-05-16T18:27:00.160Z","arunmohan.6017@gmail.com","dns.delete","dns_record:c78eb6e0-ae0b-4390-a38c-5638750a8454"],
+  ["2026-05-16T18:24:11.884Z","arunmohan.6017@gmail.com","dns.update","dns_record:c78eb6e0-ae0b-4390-a38c-5638750a8454"],
+  ["2026-05-16T18:23:03.742Z","arunmohan.6017@gmail.com","dns.update","dns_record:c78eb6e0-ae0b-4390-a38c-5638750a8454"],
+  ["2026-05-16T18:22:41.350Z","arunmohan.6017@gmail.com","dns.update","dns_record:c78eb6e0-ae0b-4390-a38c-5638750a8454"],
+  ["2026-05-16T18:21:07.301Z","arunmohan.6017@gmail.com","dns.create","dns_record:c78eb6e0-ae0b-4390-a38c-5638750a8454"],
+  ["2026-05-16T18:13:19.032Z","arunmohan.6017@gmail.com","risk.bump","subdomain:4d447014-47c6-481b-95a0-5193d4273bf8"],
+  ["2026-05-16T15:25:48.029Z","bandettoe@gmail.com","subdomain.claim","subdomain:73e94a9e-f15b-44c4-93ac-5535cc982c73"],
+  ["2026-05-16T15:22:37.694Z","bandettoe@gmail.com","subdomain.claim_blocked","user:5fb6e02c-1e5f-4af4-9398-0ccdeecc0b61"],
+  ["2026-05-16T15:21:34.173Z","bandettoe@gmail.com","subdomain.claim","subdomain:9829df2e-186e-4fc0-b9f1-5d679cd97a32"],
+  ["2026-05-16T15:03:19.271Z","avrxtdev@gmail.com","subdomain.delete","subdomain:aee2581d-2c96-48a8-b4d6-4d9d557d212d"],
+  ["2026-05-13T16:59:40.462Z","public","abuse.report.create","abuse_report:3c2f0307-f1de-4d75-8f04-041fc0020e06"],
+  ["2026-05-13T16:57:59.647Z","arunmohan.6017@gmail.com","subdomain.claim","subdomain:c9b6ba1d-407c-48bd-a811-c56101236d08"],
+  ["2026-05-13T16:55:36.990Z","avrxtdev@gmail.com","subdomain.delete","subdomain:e22ed318-c883-4d96-9d74-9cd910a96790"],
+  ["2026-05-13T16:55:12.454Z","avrxtdev@gmail.com","subdomain.claim","subdomain:e22ed318-c883-4d96-9d74-9cd910a96790"],
+  ["2026-05-13T16:53:56.250Z","arunmohan.6017@gmail.com","subdomain.claim_blocked","user:a473bd8b-0987-4b65-b596-ec3c5061aa40"],
+  ["2026-05-13T16:53:38.710Z","avrxtdev@gmail.com","subdomain.claim_blocked","user:cc0d9cef-1714-4ef2-99fc-b3392c1cfba9"],
+  ["2026-05-13T16:51:29.496Z","avrxtdev@gmail.com","subdomain.delete","subdomain:90442240-c6de-430e-8350-41c5e08f37c2"],
+  ["2026-05-13T16:50:52.616Z","avrxtdev@gmail.com","subdomain.claim","subdomain:90442240-c6de-430e-8350-41c5e08f37c2"],
+  ["2026-05-13T16:50:46.081Z","avrxtdev@gmail.com","subdomain.delete","subdomain:e8432f5b-9869-43f9-bd89-807609613062"],
+  ["2026-05-13T16:50:30.714Z","avrxtdev@gmail.com","subdomain.claim","subdomain:e8432f5b-9869-43f9-bd89-807609613062"],
+  ["2026-05-13T16:50:20.064Z","avrxtdev@gmail.com","subdomain.delete","subdomain:47767026-dede-4d3d-94cb-5dcc1e374143"],
+  ["2026-05-13T16:50:11.977Z","avrxtdev@gmail.com","subdomain.claim","subdomain:aee2581d-2c96-48a8-b4d6-4d9d557d212d"],
+  ["2026-05-13T16:49:39.682Z","avrxtdev@gmail.com","subdomain.delete","subdomain:05da9dde-5e30-415a-8c77-d3f86105c2b3"],
+  ["2026-05-13T16:49:30.972Z","avrxtdev@gmail.com","subdomain.claim","subdomain:47767026-dede-4d3d-94cb-5dcc1e374143"],
+  ["2026-05-13T16:42:42.334Z","arunmohan.6017@gmail.com","dns.create","dns_record:d1a4f9b4-52a5-4f5d-9a6e-87f9b8666e17"],
+  ["2026-05-13T16:40:42.084Z","avrxtdev@gmail.com","subdomain.claim","subdomain:05da9dde-5e30-415a-8c77-d3f86105c2b3"],
+  ["2026-05-13T16:40:03.450Z","avrxtdev@gmail.com","subdomain.unsuspend","subdomain:4d447014-47c6-481b-95a0-5193d4273bf8"],
+  ["2026-05-13T16:36:53.989Z","avrxtdev@gmail.com","subdomain.suspend","subdomain:4d447014-47c6-481b-95a0-5193d4273bf8"],
+  ["2026-05-13T16:36:09.223Z","cybropvt@gmail.com","subdomain.delete","subdomain:c5b90f66-6feb-4f74-8919-98e29ae687db"],
+  ["2026-05-13T16:35:55.857Z","arunmohan.6017@gmail.com","subdomain.claim","subdomain:4d447014-47c6-481b-95a0-5193d4273bf8"],
+  ["2026-05-13T16:35:45.617Z","cybropvt@gmail.com","subdomain.claim","subdomain:c5b90f66-6feb-4f74-8919-98e29ae687db"],
+  ["2026-05-13T16:34:45.477Z","cybropvt@gmail.com","subdomain.delete","subdomain:91dffb7e-8686-4d7e-9aff-9b673ec1b98d"],
+  ["2026-05-13T16:34:37.422Z","cybropvt@gmail.com","subdomain.claim","subdomain:91dffb7e-8686-4d7e-9aff-9b673ec1b98d"],
+  ["2026-05-13T16:34:30.643Z","cybropvt@gmail.com","subdomain.delete","subdomain:bf77e102-7697-4d3a-bdb0-3349f3972825"],
+  ["2026-05-13T16:33:47.543Z","cybropvt@gmail.com","subdomain.claim","subdomain:bf77e102-7697-4d3a-bdb0-3349f3972825"],
+  ["2026-05-13T16:33:38.268Z","cybropvt@gmail.com","subdomain.delete","subdomain:8606d2fc-0e3e-4a30-b9f6-f2593d61e514"],
+  ["2026-05-13T16:33:10.921Z","cybropvt@gmail.com","subdomain.claim","subdomain:8606d2fc-0e3e-4a30-b9f6-f2593d61e514"],
+  ["2026-05-13T16:33:00.892Z","cybropvt@gmail.com","subdomain.delete","subdomain:ec26c21c-4af4-495b-bd33-b34bd9a12e3b"],
+  ["2026-05-13T16:19:35.809Z","cybropvt@gmail.com","subdomain.claim","subdomain:ec26c21c-4af4-495b-bd33-b34bd9a12e3b"],
+  ["2026-05-13T16:19:27.445Z","cybropvt@gmail.com","subdomain.delete","subdomain:7ed236a8-9226-417c-b63c-2ab5cc3f67e6"],
+  ["2026-05-13T13:01:43.926Z","anything.9f@gmail.com","dns.update","dns_record:acd14b7e-37c8-4008-9680-b94eb92c27b1"],
+  ["2026-05-13T13:01:30.648Z","anything.9f@gmail.com","dns.update","dns_record:acd14b7e-37c8-4008-9680-b94eb92c27b1"],
+  ["2026-05-13T12:57:40.650Z","anything.9f@gmail.com","dns.create","dns_record:acd14b7e-37c8-4008-9680-b94eb92c27b1"],
+  ["2026-05-13T12:56:30.040Z","anything.9f@gmail.com","subdomain.claim","subdomain:bbfc9ce6-d543-467b-b901-6fa2805f0067"],
+  ["2026-05-12T16:12:23.880Z","avrxtdev@gmail.com","subdomain.suspend","subdomain:7ed236a8-9226-417c-b63c-2ab5cc3f67e6"],
+  ["2026-05-12T16:12:03.202Z","avrxtdev@gmail.com","subdomain.suspend","subdomain:c21cea93-73d3-4b7a-aa2f-28b0f16359a2"],
+  ["2026-05-12T16:11:22.648Z","avrxtdev@gmail.com","subdomain.suspend","subdomain:02b85178-7ec2-4609-85ee-9578ff85f0e3"],
+  ["2026-05-11T12:38:09.858Z","cybropvt@gmail.com","subdomain.claim","subdomain:7ed236a8-9226-417c-b63c-2ab5cc3f67e6"],
+  ["2026-05-11T12:37:59.274Z","cybropvt@gmail.com","subdomain.delete","subdomain:1b3041f7-1398-4563-9fdb-2def8f37293a"],
+  ["2026-05-11T12:37:49.449Z","cybropvt@gmail.com","subdomain.claim","subdomain:a7bdd258-27c0-4287-b67d-abb0ed8e07b0"],
+  ["2026-05-11T03:59:56.587Z","codename1121111@gmail.com","risk.bump","subdomain:99e55f98-bae5-4db3-b137-e5ffa1298efc"],
+  ["2026-05-11T03:56:55.157Z","codename1121111@gmail.com","subdomain.claim","subdomain:99e55f98-bae5-4db3-b137-e5ffa1298efc"],
+  ["2026-05-10T09:31:43.297Z","debuger404@proton.me","subdomain.delete","subdomain:dd2ba86a-814f-417d-8035-484760904b80"],
+  ["2026-05-09T19:34:10.037Z","debuger404@proton.me","dns.create","dns_record:b3615b7b-662b-4281-b279-26c07a1643a7"],
+  ["2026-05-09T19:32:19.830Z","debuger404@proton.me","subdomain.claim","subdomain:dd2ba86a-814f-417d-8035-484760904b80"],
+  ["2026-05-08T17:08:47.623Z","diyoubaousseni93@gmail.com","subdomain.claim","subdomain:52358d8b-3a4f-445d-ad0a-329c2058c79d"],
+  ["2026-05-08T08:50:06.733Z","efoujian@gmail.com","dns.create","dns_record:5cf31009-eeb5-445f-9e97-62235e5fe04b"],
+  ["2026-05-08T08:46:01.859Z","efoujian@gmail.com","subdomain.claim","subdomain:c21cea93-73d3-4b7a-aa2f-28b0f16359a2"],
+  ["2026-05-08T08:36:21.132Z","efoujian@gmail.com","subdomain.claim_blocked","user:d7bcbba9-ab89-47cb-83db-694e92f7fd91"],
+  ["2026-05-08T08:35:27.376Z","efoujian@gmail.com","subdomain.claim_blocked","user:d7bcbba9-ab89-47cb-83db-694e92f7fd91"],
+  ["2026-05-07T18:22:13.378Z","avrxtdev@gmail.com","admin.user.set_status","user:67892fe7-c062-4311-8add-eeb3b41e48e7"],
+  ["2026-05-07T18:19:00.103Z","avrxtdev@gmail.com","subdomain.delete","subdomain:f2224f6a-8b4d-4a72-ab3d-dc30dcb39b89"],
+  ["2026-05-05T19:13:44.414Z","avrxtdev@gmail.com","subdomain.unsuspend","subdomain:ceba62cc-4441-4df4-b5fd-a671c0ed3559"],
+  ["2026-05-02T11:03:27.042Z","yaswanthkumarkolla@yahoo.com","subdomain.claim","subdomain:02b85178-7ec2-4609-85ee-9578ff85f0e3"],
+  ["2026-05-02T08:02:25.100Z","yaswanthkumarkolla@yahoo.com","dns.update","dns_record:ea25ca43-dc1f-4e47-9b78-a00bf0ffd549"],
+  ["2026-05-02T07:55:22.766Z","yaswanthkumarkolla@yahoo.com","dns.create","dns_record:ea25ca43-dc1f-4e47-9b78-a00bf0ffd549"],
+  ["2026-05-02T07:54:48.601Z","yaswanthkumarkolla@yahoo.com","dns.delete","dns_record:d628f032-456c-4312-9166-5e5574c64e73"],
+  ["2026-05-02T07:52:21.402Z","yaswanthkumarkolla@yahoo.com","dns.update","dns_record:d628f032-456c-4312-9166-5e5574c64e73"],
+  ["2026-05-02T07:49:58.428Z","yaswanthkumarkolla@yahoo.com","dns.create","dns_record:d628f032-456c-4312-9166-5e5574c64e73"],
+  ["2026-05-02T07:48:50.980Z","yaswanthkumarkolla@yahoo.com","subdomain.claim","subdomain:a9af4750-7ce5-4ed7-91ef-0e7141c9c5ea"],
+  ["2026-05-02T07:48:18.573Z","yaswanthkumarkolla@yahoo.com","subdomain.delete","subdomain:785f3555-92ba-4408-940a-c5478a7ca2b8"],
+  ["2026-05-02T07:40:28.123Z","yaswanthkumarkolla@yahoo.com","dns.create","dns_record:1c522b6f-f6f5-41b0-9060-faf819f04852"],
+  ["2026-05-02T04:05:49.108Z","yaswanthkumarkolla@yahoo.com","subdomain.claim","subdomain:785f3555-92ba-4408-940a-c5478a7ca2b8"],
+  ["2026-04-30T03:25:49.848Z","nleesanniia@gmail.com","dns.delegation.add","delegated_ns:0e3b46ce-d8a3-485b-873c-dd3caed679e9"],
+  ["2026-04-30T03:25:06.037Z","nleesanniia@gmail.com","subdomain.claim","subdomain:be08bae7-2a71-4f55-aaae-88128f35b980"],
+  ["2026-04-30T03:24:43.105Z","nleesanniia@gmail.com","subdomain.claim_blocked","user:f99febec-cbf6-49da-aa57-694e021ae1f8"],
+  ["2026-04-29T14:15:41.907Z","avrxtdev@gmail.com","admin.settings.update","system:-"],
+  ["2026-04-29T14:12:57.318Z","avrxtdev@gmail.com","admin.user.set_status","user:67892fe7-c062-4311-8add-eeb3b41e48e7"],
+  ["2026-04-29T14:12:13.049Z","avrxtdev@gmail.com","admin.subdomain.purge_records","subdomain:e77f1e46-a1ba-48a6-9e24-b4c40bfb5ba8"],
+  ["2026-04-29T14:10:56.207Z","avrxtdev@gmail.com","admin.subdomain.purge_records","subdomain:247826e5-6328-4f4a-8a29-8ab8886e35f7"],
+  ["2026-04-29T14:10:46.885Z","avrxtdev@gmail.com","subdomain.suspend","subdomain:49f01d30-6fae-41d4-9004-2250620916db"],
+  ["2026-04-29T14:10:43.511Z","avrxtdev@gmail.com","admin.subdomain.purge_records","subdomain:49f01d30-6fae-41d4-9004-2250620916db"],
+  ["2026-04-29T14:10:18.696Z","avrxtdev@gmail.com","subdomain.suspend","subdomain:ceba62cc-4441-4df4-b5fd-a671c0ed3559"],
+  ["2026-04-29T14:10:13.776Z","avrxtdev@gmail.com","admin.subdomain.purge_records","subdomain:ceba62cc-4441-4df4-b5fd-a671c0ed3559"],
+  ["2026-04-29T14:06:59.990Z","avrxtdev@gmail.com","subdomain.suspend","subdomain:fdd882e5-3397-45f1-8048-3d5b0657ba40"],
+  ["2026-04-29T14:06:43.611Z","avrxtdev@gmail.com","subdomain.suspend","subdomain:a98bdbd5-746b-4b3a-bb08-30fa6c347f94"],
+  ["2026-04-29T14:06:22.805Z","avrxtdev@gmail.com","admin.subdomain.purge_records","subdomain:02769db9-c26e-4b5a-95b7-4a47bcf51d79"],
+  ["2026-04-29T14:03:21.839Z","avrxtdev@gmail.com","admin.settings.update","system:-"],
+  ["2026-04-28T17:07:48.829Z","cybropvt@gmail.com","subdomain.delete","subdomain:15c94ad5-ca3b-40a9-84f5-cc26477dd7e3"],
+  ["2026-04-28T17:07:23.636Z","cybropvt@gmail.com","subdomain.claim","subdomain:1b3041f7-1398-4563-9fdb-2def8f37293a"],
+  ["2026-04-28T17:06:03.931Z","cybropvt@gmail.com","dns.delete","dns_record:0fc1764b-d872-4dd1-a041-97e2097928df"],
+  ["2026-04-28T17:04:35.232Z","cybropvt@gmail.com","dns.create","dns_record:0fc1764b-d872-4dd1-a041-97e2097928df"],
+  ["2026-04-28T17:03:48.161Z","cybropvt@gmail.com","subdomain.claim","subdomain:15c94ad5-ca3b-40a9-84f5-cc26477dd7e3"],
+  ["2026-04-28T17:02:16.120Z","cybropvt@gmail.com","subdomain.delete","subdomain:55f4d57c-a216-4411-b394-8557600d6d18"],
+  ["2026-04-28T17:01:52.931Z","cybropvt@gmail.com","risk.bump","subdomain:55f4d57c-a216-4411-b394-8557600d6d18"],
+  ["2026-04-28T17:01:06.216Z","cybropvt@gmail.com","risk.bump","subdomain:55f4d57c-a216-4411-b394-8557600d6d18"],
+  ["2026-04-28T17:00:42.571Z","cybropvt@gmail.com","risk.bump","subdomain:55f4d57c-a216-4411-b394-8557600d6d18"],
+  ["2026-04-28T16:59:59.106Z","cybropvt@gmail.com","risk.bump","subdomain:55f4d57c-a216-4411-b394-8557600d6d18"],
+  ["2026-04-28T15:51:48.169Z","avrxtdev@gmail.com","subdomain.claim_blocked","user:cc0d9cef-1714-4ef2-99fc-b3392c1cfba9"],
+  ["2026-04-28T15:51:32.269Z","avrxtdev@gmail.com","subdomain.claim_blocked","user:cc0d9cef-1714-4ef2-99fc-b3392c1cfba9"],
+  ["2026-04-28T12:59:02.467Z","avrxtdev@gmail.com","subdomain.delete","subdomain:4213d0ab-3ff1-49f6-8bc2-73d1f92e1734"],
+  ["2026-04-28T11:55:58.046Z","cybropvt@gmail.com","subdomain.claim_blocked","user:67892fe7-c062-4311-8add-eeb3b41e48e7"],
+  ["2026-04-28T04:05:02.328Z","anything.9f@gmail.com","dns.update","dns_record:05beafb6-617b-4d1a-ad8b-facd29a5e9ca"],
+  ["2026-04-28T04:03:11.291Z","anything.9f@gmail.com","dns.create","dns_record:05beafb6-617b-4d1a-ad8b-facd29a5e9ca"],
+  ["2026-04-28T03:27:44.261Z","anything.9f@gmail.com","subdomain.delete","subdomain:0c97cc1a-9494-44eb-8e1d-aabe73b81ff1"],
+  ["2026-04-28T03:18:02.753Z","anything.9f@gmail.com","subdomain.claim","subdomain:02769db9-c26e-4b5a-95b7-4a47bcf51d79"],
+  ["2026-04-28T02:20:32.096Z","anything.9f@gmail.com","dns.delegation.add","delegated_ns:6293f0e4-7b86-437f-b504-3311903641c9"],
+  ["2026-04-28T02:20:22.481Z","anything.9f@gmail.com","dns.delegation.add","delegated_ns:68373df5-0b13-4288-b46c-31f93bfd1f66"],
+  ["2026-04-28T02:20:06.804Z","anything.9f@gmail.com","dns.delegation.switch_back","subdomain:0c97cc1a-9494-44eb-8e1d-aabe73b81ff1"],
+  ["2026-04-28T02:06:53.286Z","anything.9f@gmail.com","dns.delegation.add","delegated_ns:2a28b20c-fde8-4180-b2f0-f11234ad49d0"],
+  ["2026-04-28T02:06:44.023Z","anything.9f@gmail.com","dns.delegation.add","delegated_ns:10446e97-aa96-4296-8094-6381d33811e2"],
+  ["2026-04-28T02:06:37.485Z","anything.9f@gmail.com","dns.delegation.remove","delegated_ns:a3b8e9f7-dc26-498e-9f72-fb74ac8b6644"],
+  ["2026-04-28T02:06:34.422Z","anything.9f@gmail.com","dns.delegation.remove","delegated_ns:8c591a5e-fba7-499c-a1ee-95f4a054a518"],
+  ["2026-04-27T08:07:45.380Z","mishalmuhammedk21@gmail.com","admin.announcement.delete","announcement:cf016fd9-94db-4b5f-9432-f47ca1b0f877"],
+  ["2026-04-27T08:06:56.469Z","mishalmuhammedk21@gmail.com","admin.announcement.toggle","announcement:cf016fd9-94db-4b5f-9432-f47ca1b0f877"],
+  ["2026-04-27T08:06:43.860Z","mishalmuhammedk21@gmail.com","admin.announcement.create","announcement:cf016fd9-94db-4b5f-9432-f47ca1b0f877"],
+  ["2026-04-27T08:05:06.213Z","mishalmuhammedk21@gmail.com","admin.report.delete","abuse_report:2873ca43-b50e-44bb-8820-0abaf7976aa8"],
+  ["2026-04-27T08:04:58.709Z","mishalmuhammedk21@gmail.com","admin.report.set_status","abuse_report:2873ca43-b50e-44bb-8820-0abaf7976aa8"],
+  ["2026-04-27T08:04:28.445Z","public","abuse.report.create","abuse_report:2873ca43-b50e-44bb-8820-0abaf7976aa8"],
+  ["2026-04-27T08:01:01.270Z","mishalmuhammedk21@gmail.com","admin.report.delete","abuse_report:d8dcf968-c95f-4ec2-af6b-3eec5231b976"],
+  ["2026-04-27T08:00:55.553Z","mishalmuhammedk21@gmail.com","admin.report.set_status","abuse_report:d8dcf968-c95f-4ec2-af6b-3eec5231b976"],
+  ["2026-04-27T07:58:23.545Z","public","abuse.report.create","abuse_report:d8dcf968-c95f-4ec2-af6b-3eec5231b976"],
+  ["2026-04-27T05:32:58.105Z","ta474314@gmail.com","subdomain.claim","subdomain:8bd8ec04-718b-4824-b43d-9f44fa098e1b"],
+  ["2026-04-26T13:10:53.173Z","avrxtdev@gmail.com","subdomain.claim","subdomain:4213d0ab-3ff1-49f6-8bc2-73d1f92e1734"],
+  ["2026-04-24T22:47:49.382Z","hafixstudio@gmail.com","subdomain.claim","subdomain:9e957d6b-20c2-47d5-a38b-1e7aca6082fb"],
+  ["2026-04-24T17:02:13.245Z","anything.9f@gmail.com","dns.delegation.add","delegated_ns:8c591a5e-fba7-499c-a1ee-95f4a054a518"],
+  ["2026-04-24T17:02:03.067Z","anything.9f@gmail.com","dns.delegation.add","delegated_ns:a3b8e9f7-dc26-498e-9f72-fb74ac8b6644"],
+  ["2026-04-24T17:01:08.212Z","anything.9f@gmail.com","dns.create","dns_record:c33e02f8-0e79-4cd2-a1e5-841b0af71c61"],
+  ["2026-04-24T16:44:00.753Z","anything.9f@gmail.com","subdomain.delete","subdomain:06b29746-72f8-49ce-b66e-52e246265f1e"],
+  ["2026-04-24T16:43:40.997Z","anything.9f@gmail.com","subdomain.claim","subdomain:0c97cc1a-9494-44eb-8e1d-aabe73b81ff1"],
+  ["2026-04-23T18:19:25.083Z","avrxtdev@gmail.com","subdomain.delete","subdomain:09837c0b-5e2b-420c-aac1-60acec8df33a"],
+  ["2026-04-23T18:18:41.855Z","avrxtdev@gmail.com","admin.report.set_status","abuse_report:66a649e7-fe2b-44eb-9b36-e57c0ab7663d"],
+  ["2026-04-23T18:18:40.372Z","avrxtdev@gmail.com","admin.report.set_status","abuse_report:ac4e6f1d-80c1-4431-8402-7fbbe3cc8fde"],
+  ["2026-04-23T18:18:38.802Z","avrxtdev@gmail.com","admin.report.set_status","abuse_report:12d9b369-f068-49c2-8dda-e15fd8060fd5"],
+  ["2026-04-23T18:18:32.264Z","avrxtdev@gmail.com","admin.report.delete","abuse_report:f50690e2-3019-4b78-a0b8-69faa93318b3"],
+  ["2026-04-23T18:18:23.779Z","avrxtdev@gmail.com","admin.report.set_status","abuse_report:f50690e2-3019-4b78-a0b8-69faa93318b3"],
+  ["2026-04-23T18:18:02.246Z","avrxtdev@gmail.com","admin.dns.delete","dns_record:6c9561af-a5cd-4d24-b9da-4460773e00d7"],
+  ["2026-04-23T16:30:33.391Z","mishalmuhammedk21@gmail.com","subdomain.claim","subdomain:0ec4b0ab-b4cf-4e7e-8d9e-491ade5a24d6"],
+  ["2026-04-23T12:36:18.734Z","avrxtdev@gmail.com","dns.create","dns_record:6c9561af-a5cd-4d24-b9da-4460773e00d7"],
+  ["2026-04-23T12:03:02.666Z","avrxtdev@gmail.com","dns.delete","dns_record:a92c0733-0be1-443b-a1a1-3edcecc0e499"],
+  ["2026-04-23T12:01:29.306Z","avrxtdev@gmail.com","dns.update","dns_record:a92c0733-0be1-443b-a1a1-3edcecc0e499"],
+  ["2026-04-23T11:47:22.035Z","avrxtdev@gmail.com","dns.create","dns_record:a92c0733-0be1-443b-a1a1-3edcecc0e499"],
+  ["2026-04-23T11:45:48.075Z","avrxtdev@gmail.com","risk.bump","subdomain:09837c0b-5e2b-420c-aac1-60acec8df33a"],
+  ["2026-04-23T11:40:43.777Z","avrxtdev@gmail.com","subdomain.claim","subdomain:09837c0b-5e2b-420c-aac1-60acec8df33a"],
+  ["2026-04-18T16:58:01.729Z","avrxtdev@gmail.com","dns.delete","dns_record:a937c8fc-1c9e-4401-a15a-866cf1dc5615"],
+  ["2026-04-18T16:56:50.539Z","avrxtdev@gmail.com","dns.create","dns_record:a937c8fc-1c9e-4401-a15a-866cf1dc5615"],
+  ["2026-04-18T16:54:58.881Z","avrxtdev@gmail.com","admin.reservation.release","subdomain:f2224f6a-8b4d-4a72-ab3d-dc30dcb39b89"],
+  ["2026-04-18T16:54:38.504Z","avrxtdev@gmail.com","admin.reservation.create","reserved_subdomain:df1c9c81-b4b5-40fa-9522-73e435fd8bc1"],
+  ["2026-04-18T16:52:07.522Z","avrxtdev@gmail.com","subdomain.delete","subdomain:edca1210-8e5d-4016-8016-6925a73805e1"],
+  ["2026-04-18T07:52:23.275Z","public","abuse.report.create","abuse_report:66a649e7-fe2b-44eb-9b36-e57c0ab7663d"],
+  ["2026-04-17T18:26:57.689Z","avrxtdev@gmail.com","admin.subdomain.purge_records","subdomain:a98bdbd5-746b-4b3a-bb08-30fa6c347f94"],
+  ["2026-04-17T18:26:52.805Z","avrxtdev@gmail.com","subdomain.unsuspend","subdomain:a98bdbd5-746b-4b3a-bb08-30fa6c347f94"],
+  ["2026-04-17T18:26:48.132Z","avrxtdev@gmail.com","admin.subdomain.purge_records","subdomain:a98bdbd5-746b-4b3a-bb08-30fa6c347f94"],
+  ["2026-04-17T18:20:56.908Z","avrxtdev@gmail.com","admin.reservation.release","subdomain:b50bd924-c4de-4887-8167-2f0fa29f06d7"],
+  ["2026-04-17T18:19:04.755Z","avrxtdev@gmail.com","admin.reservation.create","reserved_subdomain:5ed81e75-ada9-4333-8e91-8a34d43ce440"],
+  ["2026-04-17T03:08:57.591Z","anything.9f@gmail.com","dns.delegation.add","delegated_ns:b2b788ae-8f04-4867-86e7-1d30c72b3326"],
+  ["2026-04-17T03:08:48.674Z","anything.9f@gmail.com","dns.delegation.add","delegated_ns:b0fbff08-7fdc-4fbe-b17e-f7e2773c2087"],
+  ["2026-04-17T01:30:57.232Z","anything.9f@gmail.com","dns.delete","dns_record:4dd7fa28-df5a-4d35-a440-bf894d3b36f0"],
+  ["2026-04-17T01:30:52.807Z","anything.9f@gmail.com","dns.delete","dns_record:5a799dbd-b882-4c53-909d-0dd6128642df"],
+  ["2026-04-16T21:42:11.097Z","anything.9f@gmail.com","dns.update","dns_record:4dd7fa28-df5a-4d35-a440-bf894d3b36f0"],
+  ["2026-04-16T21:40:30.747Z","anything.9f@gmail.com","dns.update","dns_record:4dd7fa28-df5a-4d35-a440-bf894d3b36f0"],
+  ["2026-04-16T21:40:16.242Z","anything.9f@gmail.com","dns.update","dns_record:4dd7fa28-df5a-4d35-a440-bf894d3b36f0"],
+  ["2026-04-16T21:39:04.471Z","anything.9f@gmail.com","dns.update","dns_record:4dd7fa28-df5a-4d35-a440-bf894d3b36f0"],
+  ["2026-04-16T21:37:32.676Z","anything.9f@gmail.com","dns.create","dns_record:5a799dbd-b882-4c53-909d-0dd6128642df"],
+  ["2026-04-16T21:34:53.747Z","anything.9f@gmail.com","dns.create","dns_record:4dd7fa28-df5a-4d35-a440-bf894d3b36f0"],
+  ["2026-04-16T21:23:48.849Z","anything.9f@gmail.com","subdomain.delete","subdomain:02bcf2b3-2273-4cb9-b17f-3f55a3ca10a6"],
+  ["2026-04-16T21:23:34.943Z","anything.9f@gmail.com","subdomain.claim","subdomain:06b29746-72f8-49ce-b66e-52e246265f1e"],
+  ["2026-04-16T21:01:30.501Z","anything.9f@gmail.com","dns.update","dns_record:cec9877a-6b6d-4f68-b66d-1e9efe57e619"],
+  ["2026-04-16T21:00:57.350Z","anything.9f@gmail.com","dns.create","dns_record:cec9877a-6b6d-4f68-b66d-1e9efe57e619"],
+  ["2026-04-16T19:54:02.500Z","anything.9f@gmail.com","dns.update","dns_record:65e9035c-22b1-4a86-9fa5-990d7984d622"],
+  ["2026-04-16T19:53:50.676Z","anything.9f@gmail.com","dns.update","dns_record:65e9035c-22b1-4a86-9fa5-990d7984d622"],
+  ["2026-04-16T19:53:06.951Z","anything.9f@gmail.com","dns.create","dns_record:65e9035c-22b1-4a86-9fa5-990d7984d622"],
+  ["2026-04-16T19:14:20.235Z","anything.9f@gmail.com","subdomain.delete","subdomain:52d1d7e9-2e81-47db-94ce-3fb48a5b653b"],
+  ["2026-04-16T19:14:04.911Z","anything.9f@gmail.com","subdomain.claim","subdomain:02bcf2b3-2273-4cb9-b17f-3f55a3ca10a6"],
+  ["2026-04-16T18:34:45.066Z","anything.9f@gmail.com","dns.delegation.add","delegated_ns:dbb65c4f-1dec-4a4d-9695-5567b057dfaa"],
+  ["2026-04-16T18:34:35.737Z","anything.9f@gmail.com","dns.delegation.add","delegated_ns:5de20b2f-1582-4a85-8477-e5ba6ce29f33"],
+  ["2026-04-16T18:34:27.921Z","anything.9f@gmail.com","dns.delegation.switch_back","subdomain:52d1d7e9-2e81-47db-94ce-3fb48a5b653b"],
+  ["2026-04-16T18:34:13.065Z","anything.9f@gmail.com","dns.delegation.add","delegated_ns:db8a5736-fa81-4edd-b8d7-7f1eb02efc1c"],
+  ["2026-04-16T18:34:03.741Z","anything.9f@gmail.com","dns.delegation.switch_back","subdomain:52d1d7e9-2e81-47db-94ce-3fb48a5b653b"],
+  ["2026-04-16T18:33:57.906Z","anything.9f@gmail.com","dns.delegation.add","delegated_ns:ac4d4647-fb3c-49b5-bd7f-33e5d62ba7a9"],
+  ["2026-04-16T18:33:41.524Z","anything.9f@gmail.com","dns.delegation.add","delegated_ns:e66eef7a-9fd5-4066-a9de-d0e053445b88"],
+  ["2026-04-16T18:32:58.376Z","anything.9f@gmail.com","dns.delete","dns_record:64768071-b17c-4a42-9c6b-2234dcca7519"],
+  ["2026-04-15T20:45:15.945Z","avrxtdev@gmail.com","admin.settings.update","system:-"],
+  ["2026-04-15T20:45:10.919Z","avrxtdev@gmail.com","admin.settings.update","system:-"],
+  ["2026-04-15T20:44:05.604Z","avrxtdev@gmail.com","admin.settings.update","system:-"],
+  ["2026-04-15T20:43:29.904Z","avrxtdev@gmail.com","admin.announcement.toggle","announcement:2680b20c-2675-4301-850a-063d6e332d8c"],
+  ["2026-04-15T20:43:26.724Z","avrxtdev@gmail.com","admin.announcement.toggle","announcement:be239f9a-7052-488a-93bf-f65f9a5ce91b"],
+  ["2026-04-15T20:42:19.643Z","avrxtdev@gmail.com","admin.announcement.create","announcement:2680b20c-2675-4301-850a-063d6e332d8c"],
+  ["2026-04-15T20:40:35.826Z","avrxtdev@gmail.com","admin.announcement.toggle","announcement:be239f9a-7052-488a-93bf-f65f9a5ce91b"],
+  ["2026-04-15T20:40:28.155Z","avrxtdev@gmail.com","admin.announcement.create","announcement:be239f9a-7052-488a-93bf-f65f9a5ce91b"],
+  ["2026-04-15T20:39:55.889Z","avrxtdev@gmail.com","admin.announcement.toggle","announcement:b2f74df9-67c8-4ea3-8bf3-7da62dd776c8"],
+  ["2026-04-15T20:38:53.572Z","avrxtdev@gmail.com","admin.announcement.delete","announcement:57771ee9-cbdf-4bb6-a54a-3de23348b2aa"],
+  ["2026-04-15T20:38:46.924Z","avrxtdev@gmail.com","admin.announcement.create","announcement:b2f74df9-67c8-4ea3-8bf3-7da62dd776c8"],
+  ["2026-04-15T20:38:19.172Z","avrxtdev@gmail.com","admin.announcement.toggle","announcement:57771ee9-cbdf-4bb6-a54a-3de23348b2aa"],
+  ["2026-04-15T20:37:35.762Z","avrxtdev@gmail.com","admin.announcement.create","announcement:57771ee9-cbdf-4bb6-a54a-3de23348b2aa"],
+  ["2026-04-15T20:31:14.321Z","avrxtdev@gmail.com","admin.announcement.delete","announcement:39b31876-a49a-45ce-b0f0-72e3a9f0e8ff"],
+  ["2026-04-15T20:31:07.413Z","avrxtdev@gmail.com","admin.announcement.toggle","announcement:39b31876-a49a-45ce-b0f0-72e3a9f0e8ff"],
+  ["2026-04-15T20:03:44.162Z","avrxtdev@gmail.com","subdomain.claim_reserved","subdomain:7582d40e-c964-4bbb-992c-23cc390c3400"],
+  ["2026-04-15T20:03:28.591Z","avrxtdev@gmail.com","subdomain.delete","subdomain:b73e5acd-7694-4c44-bfbb-36ee782ee4c7"],
+  ["2026-04-15T20:02:22.756Z","avrxtdev@gmail.com","admin.announcement.create","announcement:39b31876-a49a-45ce-b0f0-72e3a9f0e8ff"],
+  ["2026-04-12T00:49:44.081Z","anything.9f@gmail.com","dns.create","dns_record:64768071-b17c-4a42-9c6b-2234dcca7519"],
+  ["2026-04-12T00:49:34.926Z","anything.9f@gmail.com","dns.delete","dns_record:fc7895d1-686c-4b6b-8392-80757aa86355"],
+  ["2026-04-11T23:42:56.788Z","anything.9f@gmail.com","dns.create","dns_record:fc7895d1-686c-4b6b-8392-80757aa86355"],
+  ["2026-04-11T23:35:06.977Z","anything.9f@gmail.com","subdomain.claim","subdomain:52d1d7e9-2e81-47db-94ce-3fb48a5b653b"],
+  ["2026-04-05T12:52:42.532Z","public","abuse.report.create","abuse_report:f50690e2-3019-4b78-a0b8-69faa93318b3"],
+  ["2026-04-05T12:51:51.003Z","avrxtdev@gmail.com","subdomain.claim","subdomain:edca1210-8e5d-4016-8016-6925a73805e1"],
+  ["2026-04-05T12:49:36.180Z","public","abuse.report.create","abuse_report:ac4e6f1d-80c1-4431-8402-7fbbe3cc8fde"],
+  ["2026-04-05T12:39:25.188Z","avrxtdev@gmail.com","admin.dns.delete","dns_record:a217a0ff-f56f-4864-bdde-1b62ff2378d3"],
+  ["2026-04-05T12:39:22.406Z","avrxtdev@gmail.com","admin.dns.delete","dns_record:d0eda47d-a2f4-4608-bfb1-8eebeb55ad79"],
+  ["2026-04-05T12:39:16.566Z","avrxtdev@gmail.com","admin.dns.delete","dns_record:244fb3fb-f16f-49bb-99fb-571877d24a68"],
+  ["2026-04-05T12:38:59.710Z","avrxtdev@gmail.com","admin.dns.delete","dns_record:cdc8a0eb-9b70-454a-8949-635525471fba"],
+  ["2026-04-04T10:46:34.847Z","avrxtdev@gmail.com","subdomain.suspend","subdomain:a98bdbd5-746b-4b3a-bb08-30fa6c347f94"],
+  ["2026-03-31T16:15:09.530Z","jamesarthurbarker@gmail.com","dns.create","dns_record:cdc8a0eb-9b70-454a-8949-635525471fba"],
+  ["2026-03-31T16:14:53.613Z","jamesarthurbarker@gmail.com","dns.create","dns_record:244fb3fb-f16f-49bb-99fb-571877d24a68"],
+  ["2026-03-31T16:14:44.024Z","jamesarthurbarker@gmail.com","dns.create","dns_record:a217a0ff-f56f-4864-bdde-1b62ff2378d3"],
+  ["2026-03-31T16:14:27.871Z","jamesarthurbarker@gmail.com","dns.create","dns_record:d0eda47d-a2f4-4608-bfb1-8eebeb55ad79"],
+  ["2026-03-31T16:06:23.600Z","jamesarthurbarker@gmail.com","subdomain.claim","subdomain:a98bdbd5-746b-4b3a-bb08-30fa6c347f94"],
+  ["2026-03-26T01:06:32.354Z","mishalmuhammedk12@gmail.com","subdomain.delete","subdomain:63a1f390-3d0a-49eb-9555-65e2fe5568eb"],
+  ["2026-03-26T01:06:09.235Z","mishalmuhammedk12@gmail.com","subdomain.claim","subdomain:fdd882e5-3397-45f1-8048-3d5b0657ba40"],
+  ["2026-03-25T15:59:30.236Z","avrxtdev@gmail.com","subdomain.suspend","subdomain:b73e5acd-7694-4c44-bfbb-36ee782ee4c7"],
+  ["2026-03-25T15:52:05.152Z","avrxtdev@gmail.com","admin.user.set_status","user:cc0d9cef-1714-4ef2-99fc-b3392c1cfba9"],
+  ["2026-03-25T15:51:38.679Z","avrxtdev@gmail.com","admin.subdomain.purge_records","subdomain:63a1f390-3d0a-49eb-9555-65e2fe5568eb"],
+  ["2026-03-25T15:51:28.857Z","avrxtdev@gmail.com","admin.subdomain.purge_records","subdomain:63a1f390-3d0a-49eb-9555-65e2fe5568eb"],
+  ["2026-03-25T15:51:12.363Z","avrxtdev@gmail.com","subdomain.unsuspend","subdomain:63a1f390-3d0a-49eb-9555-65e2fe5568eb"],
+  ["2026-03-25T15:50:55.494Z","avrxtdev@gmail.com","admin.subdomain.purge_records","subdomain:63a1f390-3d0a-49eb-9555-65e2fe5568eb"],
+  ["2026-03-24T21:01:50.297Z","kamalmost@gmail.com","dns.create","dns_record:636eb26a-d8ff-42dc-bb79-a323247a1569"],
+  ["2026-03-24T21:01:08.773Z","kamalmost@gmail.com","dns.create","dns_record:e428bc9b-cf45-4460-bc10-f3e9ea6df697"],
+  ["2026-03-24T20:58:39.974Z","kamalmost@gmail.com","subdomain.claim","subdomain:e77f1e46-a1ba-48a6-9e24-b4c40bfb5ba8"],
+  ["2026-03-24T16:01:59.574Z","avrxtdev@gmail.com","subdomain.suspend","subdomain:63a1f390-3d0a-49eb-9555-65e2fe5568eb"],
+  ["2026-03-24T15:34:24.618Z","mishalmuhammedk12@gmail.com","subdomain.claim","subdomain:63a1f390-3d0a-49eb-9555-65e2fe5568eb"],
+  ["2026-03-24T11:01:31.444Z","avrxtdev@gmail.com","admin.reservation.create","reserved_subdomain:916c8efc-a441-4fd9-8f07-79dc2d7c7003"],
+  ["2026-03-24T05:53:32.200Z","avrxtdev@gmail.com","subdomain.delete","subdomain:feb1dfa6-d2a5-43a0-a6ac-e6e60e91af92"],
+  ["2026-03-24T05:52:38.523Z","avrxtdev@gmail.com","admin.reservation.release","subdomain:feb1dfa6-d2a5-43a0-a6ac-e6e60e91af92"],
+  ["2026-03-24T05:52:07.197Z","avrxtdev@gmail.com","admin.reservation.create","reserved_subdomain:93afbce3-cc82-4166-97ae-482279148a53"],
+  ["2026-03-23T20:52:56.664Z","avrxtdev@gmail.com","dns.create","dns_record:ae62ab33-3c2c-4b50-89ee-2420e051ee77"],
+  ["2026-03-23T19:32:25.584Z","avrxtdev@gmail.com","admin.report.delete","abuse_report:09f0e2c3-8f39-4695-b5b9-f3c1d8d381fb"],
+  ["2026-03-23T19:32:23.845Z","avrxtdev@gmail.com","admin.report.delete","abuse_report:d96032db-ce24-44e3-8ad6-0c7c19623bc7"],
+  ["2026-03-23T19:32:22.121Z","avrxtdev@gmail.com","admin.report.delete","abuse_report:ef55d3b3-c210-4bb1-8cc6-f8f5cfd33f68"],
+  ["2026-03-23T19:32:20.318Z","avrxtdev@gmail.com","admin.report.delete","abuse_report:8b503371-6f50-4ac1-a23b-ed844a488f7c"],
+  ["2026-03-23T19:32:12.386Z","avrxtdev@gmail.com","admin.report.set_status","abuse_report:09f0e2c3-8f39-4695-b5b9-f3c1d8d381fb"],
+  ["2026-03-23T19:32:10.851Z","avrxtdev@gmail.com","admin.report.set_status","abuse_report:d96032db-ce24-44e3-8ad6-0c7c19623bc7"],
+  ["2026-03-23T19:32:09.162Z","avrxtdev@gmail.com","admin.report.set_status","abuse_report:ef55d3b3-c210-4bb1-8cc6-f8f5cfd33f68"],
+  ["2026-03-23T19:32:07.258Z","avrxtdev@gmail.com","admin.report.set_status","abuse_report:8b503371-6f50-4ac1-a23b-ed844a488f7c"],
+  ["2026-03-23T19:32:01.879Z","avrxtdev@gmail.com","admin.report.set_status","abuse_report:12d9b369-f068-49c2-8dda-e15fd8060fd5"],
+  ["2026-03-23T19:31:45.028Z","avrxtdev@gmail.com","admin.report.delete","abuse_report:21c87365-1fca-4e70-aaa9-b653da27b769"],
+  ["2026-03-23T19:30:41.482Z","avrxtdev@gmail.com","admin.report.set_status","abuse_report:21c87365-1fca-4e70-aaa9-b653da27b769"],
+  ["2026-03-23T19:29:57.265Z","public","abuse.report.create","abuse_report:21c87365-1fca-4e70-aaa9-b653da27b769"],
+  ["2026-03-23T19:28:41.422Z","public","abuse.report.create","abuse_report:12d9b369-f068-49c2-8dda-e15fd8060fd5"],
+  ["2026-03-20T22:54:45.963Z","suporte.phantompix@gmail.com","dns.delegation.add","delegated_ns:32acb45c-4c2e-496e-9fb4-f50cb259b62a"],
+  ["2026-03-20T22:54:38.303Z","suporte.phantompix@gmail.com","dns.delegation.add","delegated_ns:e10c7426-e6b9-4139-9fc8-6b4778e52584"],
+  ["2026-03-20T22:54:28.162Z","suporte.phantompix@gmail.com","dns.delegation.add","delegated_ns:8749aaaa-eba0-4eac-ba17-484dfd594024"],
+  ["2026-03-20T22:54:15.332Z","suporte.phantompix@gmail.com","dns.delete","dns_record:8b09ab7d-b345-4e9e-be93-c5a9d45e5e08"],
+  ["2026-03-20T22:48:06.401Z","suporte.phantompix@gmail.com","dns.create","dns_record:8b09ab7d-b345-4e9e-be93-c5a9d45e5e08"],
+  ["2026-03-20T22:45:15.488Z","suporte.phantompix@gmail.com","subdomain.claim","subdomain:ceba62cc-4441-4df4-b5fd-a671c0ed3559"],
+  ["2026-03-20T13:02:58.341Z","rathodvr10@gmail.com","dns.create","dns_record:9784318b-d899-4d57-9bb1-04caa4d1e887"],
+  ["2026-03-20T13:02:08.149Z","rathodvr10@gmail.com","dns.update","dns_record:c2d827d6-7911-49ea-b538-755ef11ec346"],
+  ["2026-03-20T13:00:11.664Z","rathodvr10@gmail.com","dns.delete","dns_record:6b15c281-a598-42b8-b429-88dd7bce64f8"],
+  ["2026-03-20T12:17:58.181Z","rathodvr10@gmail.com","dns.update","dns_record:6b15c281-a598-42b8-b429-88dd7bce64f8"],
+  ["2026-03-20T12:17:18.154Z","rathodvr10@gmail.com","dns.update","dns_record:6b15c281-a598-42b8-b429-88dd7bce64f8"],
+  ["2026-03-19T15:50:29.239Z","rathodvr10@gmail.com","dns.create","dns_record:6b15c281-a598-42b8-b429-88dd7bce64f8"],
+  ["2026-03-19T15:50:20.269Z","rathodvr10@gmail.com","dns.delete","dns_record:c84e4b74-a3b9-4157-871a-c4f49a835ba6"],
+  ["2026-03-19T15:46:16.005Z","rathodvr10@gmail.com","dns.update","dns_record:c84e4b74-a3b9-4157-871a-c4f49a835ba6"],
+  ["2026-03-19T15:44:04.774Z","rathodvr10@gmail.com","dns.update","dns_record:c2d827d6-7911-49ea-b538-755ef11ec346"],
+  ["2026-03-19T15:43:29.287Z","rathodvr10@gmail.com","dns.update","dns_record:c2d827d6-7911-49ea-b538-755ef11ec346"],
+  ["2026-03-19T15:36:08.433Z","rathodvr10@gmail.com","dns.create","dns_record:c84e4b74-a3b9-4157-871a-c4f49a835ba6"],
+  ["2026-03-19T14:27:16.683Z","rathodvr10@gmail.com","dns.create","dns_record:c2d827d6-7911-49ea-b538-755ef11ec346"],
+  ["2026-03-19T13:49:18.424Z","rathodvr10@gmail.com","subdomain.claim","subdomain:1e23c20d-ade4-4f29-bad2-b6f563c65c09"],
+  ["2026-03-19T07:43:39.254Z","public","abuse.report.create","abuse_report:8b503371-6f50-4ac1-a23b-ed844a488f7c"],
+  ["2026-03-17T11:45:05.311Z","oanimelife7@gmail.com","dns.delegation.add","delegated_ns:9a4f095b-1853-4608-a695-199a0b9749f3"],
+  ["2026-03-17T11:44:35.341Z","oanimelife7@gmail.com","dns.delegation.add","delegated_ns:f8401161-6367-4614-8976-4260e7459385"],
+  ["2026-03-17T11:42:35.536Z","oanimelife7@gmail.com","subdomain.claim","subdomain:49f01d30-6fae-41d4-9004-2250620916db"],
+  ["2026-03-15T22:07:55.454Z","avrxtdev@gmail.com","admin.report.delete","abuse_report:612f0e38-6b7a-4222-9dd5-b6f2ddf19786"],
+  ["2026-03-15T22:07:53.257Z","avrxtdev@gmail.com","admin.report.delete","abuse_report:c4ea3741-d86b-48f5-b37e-b4fb5904a6d5"],
+  ["2026-03-15T22:07:50.667Z","avrxtdev@gmail.com","admin.report.delete","abuse_report:c4230dcf-09e8-4478-bb2a-89b7ff79547c"],
+  ["2026-03-15T22:07:45.254Z","avrxtdev@gmail.com","admin.report.delete","abuse_report:b71f1297-241c-4f3a-aadb-09ca1713fa47"],
+  ["2026-03-15T22:07:20.267Z","avrxtdev@gmail.com","admin.report.set_status","abuse_report:c4ea3741-d86b-48f5-b37e-b4fb5904a6d5"],
+  ["2026-03-15T22:07:13.259Z","avrxtdev@gmail.com","admin.report.set_status","abuse_report:612f0e38-6b7a-4222-9dd5-b6f2ddf19786"],
+  ["2026-03-15T22:07:10.973Z","avrxtdev@gmail.com","admin.report.set_status","abuse_report:612f0e38-6b7a-4222-9dd5-b6f2ddf19786"],
+  ["2026-03-15T17:09:31.475Z","public","abuse.report.create","abuse_report:ef55d3b3-c210-4bb1-8cc6-f8f5cfd33f68"],
+  ["2026-03-15T17:08:58.572Z","public","abuse.report.create","abuse_report:d96032db-ce24-44e3-8ad6-0c7c19623bc7"],
+  ["2026-03-15T15:26:00.672Z","public","abuse.report.create","abuse_report:09f0e2c3-8f39-4695-b5b9-f3c1d8d381fb"],
+  ["2026-03-14T02:02:44.249Z","public","abuse.report.create","abuse_report:612f0e38-6b7a-4222-9dd5-b6f2ddf19786"],
+  ["2026-03-14T00:59:36.467Z","public","abuse.report.create","abuse_report:c4ea3741-d86b-48f5-b37e-b4fb5904a6d5"],
+  ["2026-03-13T16:51:39.112Z","public","abuse.report.create","abuse_report:c4230dcf-09e8-4478-bb2a-89b7ff79547c"],
+  ["2026-03-13T16:47:06.636Z","public","abuse.report.create","abuse_report:b71f1297-241c-4f3a-aadb-09ca1713fa47"],
+  ["2026-03-11T20:23:44.887Z","avrxtdev@gmail.com","subdomain.claim","subdomain:b73e5acd-7694-4c44-bfbb-36ee782ee4c7"],
+  ["2026-03-11T20:20:13.111Z","avrxtdev@gmail.com","subdomain.claim","subdomain:247826e5-6328-4f4a-8a29-8ab8886e35f7"],
+];
+
+function getCategory(action) {
+  if (action.startsWith('admin')) return 'admin';
+  if (action.startsWith('abuse') || action.includes('abuse')) return 'abuse';
+  if (action.startsWith('risk')) return 'risk';
+  if (action.startsWith('dns')) return 'dns';
+  return 'subdomain';
+}
+
+function badgeHTML(action) {
+  const cat = getCategory(action);
+  const classes = { admin:'b-admin', abuse:'b-abuse', risk:'b-risk', dns:'b-dns', subdomain:'b-subdomain' };
+  return `<span class="badge ${classes[cat]}"><span class="badge-dot"></span>${action}</span>`;
+}
+
+function formatTime(iso) {
+  const d = new Date(iso);
+  const date = d.toISOString().slice(0,10);
+  const time = d.toISOString().slice(11,19);
+  return `<span style="color:#64748b;display:block;font-size:10px">${date}</span>${time}`;
+}
+
+// Build stats
+const actorCounts = {};
+const catCounts = { admin:0, abuse:0, risk:0, dns:0, subdomain:0 };
+RAW.forEach(([,actor,action]) => {
+  actorCounts[actor] = (actorCounts[actor]||0) + 1;
+  catCounts[getCategory(action)]++;
+});
+
+document.getElementById('statTotal').textContent = RAW.length;
+document.getElementById('statActors').textContent = Object.keys(actorCounts).length;
+document.getElementById('statAdmin').textContent = catCounts.admin;
+document.getElementById('statAbuse').textContent = catCounts.abuse;
+document.getElementById('statSubdomain').textContent = catCounts.subdomain;
+document.getElementById('statDns').textContent = catCounts.dns;
+
+// Actor list
+const actorSorted = Object.entries(actorCounts).sort((a,b)=>b[1]-a[1]).slice(0,10);
+const maxActor = actorSorted[0][1];
+document.getElementById('actorList').innerHTML = actorSorted.map(([name,count])=>`
+  <div class="actor-item">
+    <span class="actor-name" title="${name}">${name}</span>
+    <div class="actor-bar-wrap"><div class="actor-bar" style="width:${(count/maxActor*100).toFixed(0)}%"></div></div>
+    <span class="actor-count">${count}</span>
+  </div>`).join('');
+
+// Action breakdown
+const catColors = { subdomain:'#a78bfa', dns:'#67e8f9', admin:'#fbbf24', abuse:'#f87171', risk:'#fca5a5' };
+document.getElementById('actionBreakdown').innerHTML = Object.entries(catCounts)
+  .sort((a,b)=>b[1]-a[1])
+  .map(([cat,n])=>`
+  <div class="action-row">
+    <span class="action-label">${cat}</span>
+    <span class="action-num" style="color:${catColors[cat]}">${n}</span>
+  </div>`).join('');
+
+// Timeline
+const dayMap = {};
+RAW.forEach(([ts])=>{ const d=ts.slice(0,10); dayMap[d]=(dayMap[d]||0)+1; });
+const days = Object.keys(dayMap).sort();
+const maxDay = Math.max(...Object.values(dayMap));
+const tlEl = document.getElementById('timeline');
+tlEl.innerHTML = days.map(d=>`
+  <div class="tl-bar-wrap" title="${d}: ${dayMap[d]} events">
+    <div class="tl-bar" style="height:${Math.max(4,(dayMap[d]/maxDay*100)).toFixed(0)}%"></div>
+    <span class="tl-label">${d.slice(5)}</span>
+  </div>`).join('');
+
+// Table render
+let currentFilter = 'all';
+let currentSearch = '';
+
+function renderTable() {
+  const tbody = document.getElementById('tableBody');
+  const noRes = document.getElementById('noResults');
+  let rows = RAW.filter(([,actor,action])=>{
+    const cat = getCategory(action);
+    const matchFilter = currentFilter==='all' || cat===currentFilter;
+    const q = currentSearch.toLowerCase();
+    const matchSearch = !q || actor.toLowerCase().includes(q) || action.toLowerCase().includes(q);
+    return matchFilter && matchSearch;
+  });
+  document.getElementById('rowCount').textContent = `${rows.length} events`;
+  if (!rows.length) { tbody.innerHTML=''; noRes.style.display='block'; return; }
+  noRes.style.display='none';
+  tbody.innerHTML = rows.map(([ts,actor,action,target])=>`
+    <tr>
+      <td class="time">${formatTime(ts)}</td>
+      <td class="actor" title="${actor}">${actor}</td>
+      <td>${badgeHTML(action)}</td>
+      <td class="target" title="${target}">${target}</td>
+    </tr>`).join('');
+}
+
+// Filters
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    renderTable();
+  });
+});
+
+document.getElementById('searchInput').addEventListener('input', e=>{
+  currentSearch = e.target.value;
+  renderTable();
+});
+
+renderTable();
+</script>
+</body>
+</html>
