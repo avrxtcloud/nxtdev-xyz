@@ -47,6 +47,7 @@ export function Footer() {
               <a className="transition-colors hover:text-white" href="https://avrxt.in" target="_blank" rel="noreferrer">Developer Site</a>
               <a className="transition-colors hover:text-white" href="https://avrxt.in/guestbook" target="_blank" rel="noreferrer">Leave Feedback</a>
               <a className="transition-colors hover:text-white" href="https://github.com/avrxtcloud" target="_blank" rel="noreferrer">GitHub</a>
+              <a className="transition-colors hover:text-white" href="https://razorpay.me/@avrxtcloud" target="_blank" rel="noreferrer">Support NxtDev</a>
             </nav>
           </div>
         </div>

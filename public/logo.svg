@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">nxtdev logo</title>
+  <desc id="desc">A hard-edged DNS node mark shaped like an N.</desc>
+  <rect width="512" height="512" fill="#f4f1e8"/>
+  <path d="M72 72h368v368H72z" fill="#ffffff" stroke="#18181b" stroke-width="24"/>
+  <path d="M112 112h368v368H112z" fill="#22d3ee" opacity="0.85"/>
+  <path d="M72 72h368v368H72z" fill="#ffffff" stroke="#18181b" stroke-width="24"/>
+  <path d="M148 360V152h64l88 118V152h64v208h-64l-88-118v118h-64z" fill="#18181b"/>
+  <path d="M140 112h48v48h-48zM324 352h48v48h-48zM324 112h48v48h-48zM140 352h48v48h-48z" fill="#a3e635" stroke="#18181b" stroke-width="12"/>
+  <path d="M188 136h136M188 376h136" stroke="#18181b" stroke-width="14"/>
+  <path d="M236 204h40v40h-40zM236 268h40v40h-40z" fill="#facc15" stroke="#18181b" stroke-width="10"/>
+</svg>

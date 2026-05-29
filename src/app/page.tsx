@@ -316,6 +316,32 @@ export default function Home() {
           </Link>
         </div>
       </section>
+
+      <section className="border-y-2 border-zinc-950 bg-zinc-950 px-4 py-16 text-white dark:border-white sm:px-6">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+          <div>
+            <div className="inline-flex border-2 border-white bg-lime-300 px-3 py-1 text-xs font-black uppercase tracking-[0.2em] text-zinc-950 shadow-[4px_4px_0_#22d3ee]">
+              Support NxtDev
+            </div>
+            <h2 className="mt-5 max-w-3xl text-4xl font-black tracking-tight sm:text-5xl">
+              Help keep free developer subdomains online.
+            </h2>
+            <p className="mt-4 max-w-3xl text-sm font-bold leading-7 text-zinc-300 sm:text-base">
+              Donations help pay for DNS infrastructure, uptime/status monitoring,
+              abuse prevention, safety reviews, email routing experiments, and the
+              maintenance work that keeps NxtDev reliable for builders.
+            </p>
+          </div>
+          <a
+            href="https://razorpay.me/@avrxtcloud"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex h-14 items-center justify-center border-2 border-white bg-white px-8 text-sm font-black uppercase tracking-widest text-zinc-950 shadow-[6px_6px_0_#facc15] transition-transform hover:-translate-y-1"
+          >
+            Donate on Razorpay
+          </a>
+        </div>
+      </section>
     </main>
   );
 }

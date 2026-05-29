@@ -51,7 +51,7 @@ export function NavClient(props: { rootDomain: string }) {
           <Link href="/" className="transition-transform hover:scale-105 active:scale-95">
             <span className="inline-flex items-center gap-2">
               <Image
-                src="/logo.png"
+                src="/logo.svg"
                 alt="nxtdev"
                 width={40}
                 height={40}
