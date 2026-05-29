@@ -109,7 +109,7 @@ export default async function AdminReservationsPage({
 
   return (
     <div className="grid gap-6">
-      <Card className="p-6 rounded-[2rem] border-zinc-100 dark:border-zinc-800">
+      <Card className="p-6 rounded-lg border-zinc-950/20 dark:border-white/20">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <h2 className="text-xl font-black uppercase tracking-widest text-zinc-900 dark:text-white">Reserved Subdomains</h2>
@@ -122,7 +122,7 @@ export default async function AdminReservationsPage({
       </Card>
 
       {tableMissing ? (
-        <Card className="p-6 rounded-[2rem] border-orange-100 bg-orange-50/30 dark:border-orange-900/30 dark:bg-orange-900/10">
+        <Card className="p-6 rounded-lg border-orange-100 bg-orange-50/30 dark:border-orange-900/30 dark:bg-orange-900/10">
           <div className="text-sm font-bold text-orange-900 dark:text-orange-100">Setup required</div>
           <div className="mt-2 text-sm text-zinc-600 dark:text-zinc-300">
             Run the latest <span className="font-mono">supabase_schema.sql</span>{" "}
@@ -131,7 +131,7 @@ export default async function AdminReservationsPage({
         </Card>
       ) : null}
 
-      <Card className="p-6 rounded-[2rem] border-zinc-100 dark:border-zinc-800">
+      <Card className="p-6 rounded-lg border-zinc-950/20 dark:border-white/20">
         <form action={reserveSubdomainAction} className="grid gap-6">
           <div className="text-sm font-black uppercase tracking-widest text-zinc-900 dark:text-white">Reserve a label</div>
           <div className="grid gap-4 md:grid-cols-3">
@@ -153,13 +153,13 @@ export default async function AdminReservationsPage({
             </div>
           </div>
           <div className="flex justify-end">
-            <SubmitButton pendingText="Reserving..." className="rounded-xl px-8 h-12 font-black uppercase tracking-widest text-xs shadow-lg shadow-blue-500/20">Reserve</SubmitButton>
+            <SubmitButton pendingText="Reserving..." className="rounded-lg px-8 h-12 font-black uppercase tracking-widest text-xs shadow-lg shadow-zinc-950/20">Reserve</SubmitButton>
           </div>
         </form>
       </Card>
 
       {/* Desktop Table */}
-      <Card className="hidden lg:block rounded-[2rem] border-zinc-100 dark:border-zinc-800 overflow-hidden">
+      <Card className="hidden lg:block rounded-lg border-zinc-950/20 dark:border-white/20 overflow-hidden">
         <Table>
           <thead>
             <tr className="bg-zinc-50/50 dark:bg-zinc-900/50">
@@ -215,9 +215,9 @@ export default async function AdminReservationsPage({
         {rows.map((r) => {
            const reservedFor = r.reservedForUserId ? usersById.get(r.reservedForUserId) : null;
            return (
-            <Card key={r.id} className="p-5 rounded-2xl border-zinc-100 dark:border-zinc-800 space-y-4">
+            <Card key={r.id} className="p-5 rounded-lg border-zinc-950/20 dark:border-white/20 space-y-4">
               <div className="flex items-center justify-between">
-                <div className="font-black text-blue-600 dark:text-blue-400 font-mono">{r.baseFqdn}</div>
+                <div className="font-black text-zinc-950 dark:text-lime-300 font-mono">{r.baseFqdn}</div>
                 <div className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">{new Date(r.createdAt).toISOString().slice(0, 10)}</div>
               </div>
               
@@ -237,7 +237,7 @@ export default async function AdminReservationsPage({
                 </div>
               )}
 
-              <div className="pt-4 border-t border-zinc-50 dark:border-zinc-800">
+              <div className="pt-4 border-t border-zinc-50 dark:border-white/20">
                 <ReservationActions row={r} userOptions={userOptions} isMobile />
               </div>
             </Card>
@@ -260,12 +260,12 @@ function ReservationActions({ row, userOptions, isMobile = false }: { row: Reser
             placeholder="Select user"
           />
         </div>
-        <SubmitButton pendingText="..." variant="secondary" className="h-10 px-4 rounded-xl text-[10px] font-black uppercase tracking-widest">
+        <SubmitButton pendingText="..." variant="secondary" className="h-10 px-4 rounded-lg text-[10px] font-black uppercase tracking-widest">
           Release
         </SubmitButton>
       </form>
       <form action={deleteReservationAction.bind(null, row.id)} className={isMobile ? "" : "inline"}>
-        <Button size="sm" variant="danger" type="submit" className="h-10 px-4 rounded-xl text-[10px] font-black uppercase tracking-widest w-full lg:w-auto">
+        <Button size="sm" variant="danger" type="submit" className="h-10 px-4 rounded-lg text-[10px] font-black uppercase tracking-widest w-full lg:w-auto">
           Delete
         </Button>
       </form>

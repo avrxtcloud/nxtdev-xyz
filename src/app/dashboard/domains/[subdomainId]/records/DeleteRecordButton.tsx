@@ -28,7 +28,7 @@ export function DeleteRecordButton({
         <Button
           variant="danger"
           size="sm"
-          className="rounded-xl h-8 px-3 text-[10px] uppercase font-black tracking-widest sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
+          className="rounded-lg h-8 px-3 text-[10px] uppercase font-black tracking-widest sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
           disabled={disabled}
           onClick={() => setOpen(true)}
         >

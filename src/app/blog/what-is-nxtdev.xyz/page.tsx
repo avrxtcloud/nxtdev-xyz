@@ -19,11 +19,11 @@ export default function BlogPostWhatIsNxtdev() {
 
             <div className="space-y-8 mb-16">
                 <div className="flex items-center gap-4">
-                    <Badge tone="ok" className="rounded-full px-4 py-1.5 text-[10px] font-black uppercase tracking-widest">Platform</Badge>
+                    <Badge tone="ok" className="rounded-none px-4 py-1.5 text-[10px] font-black uppercase tracking-widest">Platform</Badge>
                     <span className="text-sm font-bold text-zinc-400">Published March 24, 2026</span>
                 </div>
                 <h1 className="text-5xl font-black tracking-tight sm:text-7xl leading-[1.05]">
-                    What is <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">nxtdev.xyz?</span>
+                    What is <span className="bg-gradient-to-r from-zinc-950 via-cyan-500 to-amber-400 bg-clip-text text-transparent">nxtdev.xyz?</span>
                 </h1>
                 <p className="text-2xl text-zinc-600 dark:text-zinc-400 font-medium leading-relaxed">
                     The story behind the platform empowering developers with professional subdomains and enterprise-grade DNS.
@@ -52,8 +52,8 @@ export default function BlogPostWhatIsNxtdev() {
                             "Nameserver Delegation Support",
                             "Blazing Fast Propagation"
                         ].map(feature => (
-                            <li key={feature} className="p-4 border border-zinc-100 dark:border-zinc-800 rounded-xl bg-zinc-50 dark:bg-zinc-900/50 flex items-center gap-3 font-bold text-zinc-800 dark:text-zinc-200">
-                                <svg className="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" /></svg>
+                            <li key={feature} className="p-4 border border-zinc-950/20 dark:border-white/20 rounded-lg bg-zinc-50 dark:bg-zinc-900/50 flex items-center gap-3 font-bold text-zinc-800 dark:text-zinc-200">
+                                <svg className="w-5 h-5 text-zinc-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" /></svg>
                                 {feature}
                             </li>
                         ))}
@@ -65,9 +65,8 @@ export default function BlogPostWhatIsNxtdev() {
                     <p className="text-lg text-zinc-600 dark:text-zinc-400 font-medium leading-relaxed">
                         Every feature on nxtdev.xyz is designed with a developer-first mindset. From the intuitive dashboard to the clean API, we ensure that managing your infrastructure never gets in the way of building your product.
                     </p>
-                    <div className="p-8 rounded-3xl bg-zinc-900 text-white overflow-hidden relative">
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/20 blur-3xl rounded-full"></div>
-                        <code className="text-sm font-mono text-blue-400 block relative z-10">
+                    <div className="p-8 rounded-lg bg-zinc-900 text-white overflow-hidden relative">
+                        <code className="text-sm font-mono text-lime-300 block relative z-10">
                             {`$ nxtdev claim my-cool-app
 > Claiming subdomain...
 > Success! Pointing records...
@@ -76,13 +75,13 @@ export default function BlogPostWhatIsNxtdev() {
                     </div>
                 </section>
 
-                <div className="p-10 rounded-[2.5rem] bg-indigo-600/5 border-2 border-dashed border-indigo-600/20 text-center space-y-6 mt-16">
+                <div className="p-10 rounded-lg bg-cyan-100 border-2 border-dashed border-zinc-950/20 text-center space-y-6 mt-16">
                     <h3 className="text-2xl font-black text-zinc-900 dark:text-white">Join the community.</h3>
                     <p className="text-zinc-600 dark:text-zinc-400 font-medium leading-relaxed">
                         Start your journey with nxtdev.xyz and get your projects the professional address they deserve.
                     </p>
                     <Link href="/sign-up" className="inline-block">
-                        <Button size="lg" className="rounded-2xl px-10 h-14 font-black">Create Free Account</Button>
+                        <Button size="lg" className="rounded-lg px-10 h-14 font-black">Create Free Account</Button>
                     </Link>
                 </div>
             </div>

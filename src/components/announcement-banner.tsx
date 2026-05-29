@@ -41,7 +41,7 @@ export async function AnnouncementBanner(props: { showAdminLink?: boolean }) {
         {items.map((i, idx) => (
           <div
             key={`${i.title}-${idx}`}
-            className="rounded-xl border border-zinc-200/70 bg-white/70 p-4 backdrop-blur dark:border-white/10 dark:bg-zinc-950/40"
+            className="border-2 border-zinc-950 bg-white p-4 shadow-[4px_4px_0_#18181b] dark:border-white dark:bg-zinc-950 dark:shadow-[4px_4px_0_#fafafa]"
           >
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div className="min-w-0">
@@ -68,4 +68,3 @@ export async function AnnouncementBanner(props: { showAdminLink?: boolean }) {
     </div>
   );
 }
-

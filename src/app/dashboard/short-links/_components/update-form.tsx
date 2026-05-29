@@ -30,16 +30,16 @@ export function UpdateShortLinkForm({ link }: { link: any }) {
       </div>
 
       {state?.error && (
-        <div className="p-3 bg-red-50 dark:bg-red-950/20 border border-red-100 dark:border-red-900/40 rounded-xl text-xs font-bold text-red-600 dark:text-red-400">
+        <div className="p-3 bg-red-50 dark:bg-red-950/20 border border-red-100 dark:border-red-900/40 rounded-lg text-xs font-bold text-red-600 dark:text-red-400">
            {state.error}
         </div>
       )}
       
       <div className="flex justify-end gap-3 pt-4">
         <Link href="/dashboard/short-links">
-          <Button variant="secondary" type="button" className="rounded-xl px-6 h-12 uppercase font-black tracking-widest text-[10px]">Cancel</Button>
+          <Button variant="secondary" type="button" className="rounded-lg px-6 h-12 uppercase font-black tracking-widest text-[10px]">Cancel</Button>
         </Link>
-        <SubmitButton pendingText="Saving..." className="rounded-xl px-8 h-12 font-black uppercase tracking-widest text-xs shadow-lg shadow-blue-500/20">Save Changes</SubmitButton>
+        <SubmitButton pendingText="Saving..." className="rounded-lg px-8 h-12 font-black uppercase tracking-widest text-xs shadow-lg shadow-zinc-950/20">Save Changes</SubmitButton>
       </div>
     </form>
   );

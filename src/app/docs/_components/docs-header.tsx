@@ -17,8 +17,8 @@ export function DocsHeader(props: {
           <Badge tone={props.badge.tone ?? "neutral"}>{props.badge.label}</Badge>
         ) : null}
       </div>
-      <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
-        <span className="bg-gradient-to-r from-zinc-950 via-zinc-800 to-indigo-600 bg-clip-text text-transparent dark:from-white dark:via-zinc-200 dark:to-indigo-300">
+      <h1 className="text-3xl font-black tracking-tight text-zinc-950 md:text-4xl dark:text-white">
+        <span className="underline decoration-cyan-400 decoration-4 underline-offset-8">
           {props.title}
         </span>
       </h1>
@@ -28,4 +28,3 @@ export function DocsHeader(props: {
     </header>
   );
 }
-

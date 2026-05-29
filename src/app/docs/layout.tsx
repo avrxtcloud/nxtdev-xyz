@@ -2,7 +2,7 @@ import { DocsNav } from "./_components/docs-nav";
 
 export default function DocsLayout(props: { children: React.ReactNode }) {
   return (
-    <main className="mx-auto max-w-6xl px-4 py-12">
+    <main className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
       <div className="grid gap-10 lg:grid-cols-[260px_1fr]">
         <aside className="hidden lg:block">
           <div className="sticky top-20">
@@ -20,4 +20,3 @@ export default function DocsLayout(props: { children: React.ReactNode }) {
     </main>
   );
 }
-

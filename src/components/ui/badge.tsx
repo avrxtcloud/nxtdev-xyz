@@ -6,15 +6,15 @@ export function Badge(
 ) {
   const { className, tone = "neutral", ...rest } = props;
   const tones: Record<string, string> = {
-    neutral: "bg-zinc-100 text-zinc-800 dark:bg-white/10 dark:text-zinc-100",
-    ok: "bg-emerald-100 text-emerald-800 dark:bg-emerald-500/15 dark:text-emerald-200",
-    warn: "bg-amber-100 text-amber-900 dark:bg-amber-500/15 dark:text-amber-200",
-    bad: "bg-red-100 text-red-800 dark:bg-red-500/15 dark:text-red-200",
+    neutral: "bg-white text-zinc-950 dark:bg-zinc-950 dark:text-white",
+    ok: "bg-lime-300 text-zinc-950",
+    warn: "bg-amber-300 text-zinc-950",
+    bad: "bg-red-500 text-white",
   };
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-md px-2 py-0.5 text-xs font-medium ring-1 ring-inset ring-zinc-900/5 dark:ring-white/10",
+        "inline-flex items-center border border-zinc-950 px-2 py-0.5 text-xs font-black uppercase tracking-wider shadow-[2px_2px_0_#18181b] dark:border-white dark:shadow-[2px_2px_0_#fafafa]",
         tones[tone],
         className,
       )}

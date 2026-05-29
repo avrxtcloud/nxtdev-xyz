@@ -23,12 +23,12 @@ export default function RecordTypesPage() {
                         { type: "SRV", name: "Service Locator", usage: "Identifying hosts for specific network services.", example: "0 5 5060 sips.example.com" },
                         { type: "NS", name: "Nameserver", usage: "Delegate a sub-subdomain to an external provider.", example: "ns1.provider.com" }
                     ].map((r) => (
-                        <div key={r.type} className="group p-6 rounded-2xl border border-zinc-100 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900/40 transition-all flex flex-col md:flex-row gap-6">
-                            <div className="flex-none h-12 w-20 rounded-xl bg-zinc-950 dark:bg-white text-white dark:text-zinc-950 flex items-center justify-center font-black text-xs tracking-widest shadow-lg">
+                        <div key={r.type} className="group p-6 rounded-lg border border-zinc-950/20 dark:border-white/20 hover:bg-zinc-50 dark:hover:bg-zinc-900/40 transition-all flex flex-col md:flex-row gap-6">
+                            <div className="flex-none h-12 w-20 rounded-lg bg-zinc-950 dark:bg-white text-white dark:text-zinc-950 flex items-center justify-center font-black text-xs tracking-widest shadow-lg">
                                 {r.type}
                             </div>
                             <div className="space-y-2">
-                                <h3 className="font-bold text-lg text-zinc-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                <h3 className="font-bold text-lg text-zinc-900 dark:text-white group-hover:text-zinc-950 dark:group-hover:text-lime-300 transition-colors">
                                     {r.name}
                                 </h3>
                                 <p className="text-sm text-zinc-600 dark:text-zinc-400 font-medium leading-relaxed">

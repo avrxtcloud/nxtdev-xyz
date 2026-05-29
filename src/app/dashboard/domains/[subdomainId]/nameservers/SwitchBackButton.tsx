@@ -20,7 +20,7 @@ export function SwitchBackButton({
       <form action={formAction}>
         <SubmitButton
           variant="secondary"
-          className="rounded-xl h-10 px-6 font-black uppercase tracking-widest text-[10px]"
+          className="rounded-lg h-10 px-6 font-black uppercase tracking-widest text-[10px]"
           disabled={disabled}
           pendingText="Switching..."
         >

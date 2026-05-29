@@ -27,7 +27,7 @@ export default async function AdminUsersPage({
 
   return (
     <div className="grid gap-6">
-      <Card className="p-6 rounded-[2rem] border-zinc-100 dark:border-zinc-800">
+      <Card className="p-6 rounded-lg border-zinc-950/20 dark:border-white/20">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <h2 className="text-lg font-black uppercase tracking-widest text-zinc-900 dark:text-white">User Management</h2>
@@ -38,7 +38,7 @@ export default async function AdminUsersPage({
       </Card>
 
       {/* Desktop Table View */}
-      <Card className="hidden lg:block rounded-[2rem] border-zinc-100 dark:border-zinc-800 overflow-hidden">
+      <Card className="hidden lg:block rounded-lg border-zinc-950/20 dark:border-white/20 overflow-hidden">
         <Table>
           <thead>
             <tr className="bg-zinc-50/50 dark:bg-zinc-900/50">
@@ -80,7 +80,7 @@ export default async function AdminUsersPage({
       {/* Mobile Card View */}
       <div className="grid gap-4 lg:hidden">
         {(users ?? []).map((u) => (
-          <Card key={u.id} className="p-5 rounded-2xl border-zinc-100 dark:border-zinc-800">
+          <Card key={u.id} className="p-5 rounded-lg border-zinc-950/20 dark:border-white/20">
             <div className="flex items-start justify-between mb-4">
               <div className="space-y-1">
                 <div className="font-bold text-zinc-900 dark:text-white break-all">{u.email}</div>
@@ -97,7 +97,7 @@ export default async function AdminUsersPage({
             <div className="flex items-center gap-2 mb-4">
                <Badge tone="neutral" className="uppercase text-[9px] tracking-tighter">Role: {u.role}</Badge>
             </div>
-            <div className="pt-4 border-t border-zinc-50 dark:border-zinc-800 flex flex-wrap gap-2">
+            <div className="pt-4 border-t border-zinc-50 dark:border-white/20 flex flex-wrap gap-2">
               <UserActions id={u.id} status={u.status} size="sm" />
             </div>
           </Card>

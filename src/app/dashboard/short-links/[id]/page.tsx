@@ -24,9 +24,9 @@ export default async function EditShortLinkPage({
 
   return (
     <div className="max-w-3xl mx-auto py-10">
-      <Card className="p-8 rounded-[2.5rem] border-zinc-100 dark:border-zinc-800 shadow-xl shadow-zinc-200/20 dark:shadow-none">
+      <Card className="p-8 rounded-lg border-zinc-950/20 dark:border-white/20 shadow-xl shadow-zinc-200/20 dark:shadow-none">
         <div className="mb-8">
-          <Link href="/dashboard/short-links" className="text-xs font-black uppercase tracking-widest text-zinc-400 hover:text-blue-600 transition-colors flex items-center gap-2 mb-4">
+          <Link href="/dashboard/short-links" className="text-xs font-black uppercase tracking-widest text-zinc-400 hover:text-zinc-950 transition-colors flex items-center gap-2 mb-4">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
             Back to Links
           </Link>

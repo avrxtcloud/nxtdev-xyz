@@ -19,11 +19,11 @@ export default function BlogPost1() {
 
             <div className="space-y-8 mb-16">
                 <div className="flex items-center gap-4">
-                    <Badge tone="ok" className="rounded-full px-4 py-1.5 text-[10px] font-black uppercase tracking-widest">SEO</Badge>
+                    <Badge tone="ok" className="rounded-none px-4 py-1.5 text-[10px] font-black uppercase tracking-widest">SEO</Badge>
                     <span className="text-sm font-bold text-zinc-400">Published March 24, 2026</span>
                 </div>
                 <h1 className="text-5xl font-black tracking-tight sm:text-7xl leading-[1.05]">
-                    How to Optimize Your <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">Subdomain for SEO.</span>
+                    How to Optimize Your <span className="bg-gradient-to-r from-zinc-950 via-cyan-500 to-amber-400 bg-clip-text text-transparent">Subdomain for SEO.</span>
                 </h1>
                 <p className="text-2xl text-zinc-600 dark:text-zinc-400 font-medium leading-relaxed">
                     Master the art of search engine optimization for your development projects and production sites on nxtdev.xyz.
@@ -43,8 +43,8 @@ export default function BlogPost1() {
                     <p className="text-lg text-zinc-600 dark:text-zinc-400 font-medium leading-relaxed">
                         Avoid duplicate content issues by setting a canonical tag. This tells Google which version of your page is the authoritative one. For Next.js projects, add this to your metadata configuration:
                     </p>
-                    <pre className="bg-zinc-50 dark:bg-zinc-900/50 p-6 rounded-3xl border border-zinc-100 dark:border-zinc-800 overflow-x-auto">
-                        <code className="text-sm font-mono text-blue-600 dark:text-blue-400">
+                    <pre className="bg-zinc-50 dark:bg-zinc-900/50 p-6 rounded-lg border border-zinc-950/20 dark:border-white/20 overflow-x-auto">
+                        <code className="text-sm font-mono text-zinc-950 dark:text-lime-300">
                             {`export const metadata = {
   alternates: {
     canonical: 'https://myproject.nxtdev.xyz',
@@ -68,13 +68,13 @@ export default function BlogPost1() {
                     </p>
                 </section>
 
-                <div className="p-10 rounded-[2.5rem] bg-blue-600/5 border-2 border-dashed border-blue-600/20 text-center space-y-6 mt-16">
+                <div className="p-10 rounded-lg bg-zinc-950/5 border-2 border-dashed border-zinc-950/20 text-center space-y-6 mt-16">
                     <h3 className="text-2xl font-black text-zinc-900 dark:text-white">Ready to deploy?</h3>
                     <p className="text-zinc-600 dark:text-zinc-400 font-medium leading-relaxed">
                         Start managing your professional subdomains today with enterprise-grade DNS records.
                     </p>
                     <Link href="/dashboard" className="inline-block">
-                        <Button size="lg" className="rounded-2xl px-10 h-14 font-black">Get Started</Button>
+                        <Button size="lg" className="rounded-lg px-10 h-14 font-black">Get Started</Button>
                     </Link>
                 </div>
             </div>

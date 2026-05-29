@@ -10,7 +10,7 @@ export function DeleteApiKeyButton({ id }: { id: string }) {
 
   return (
     <form action={formAction}>
-      <SubmitButton variant="danger" size="sm" pendingText="..." className="rounded-xl px-4 font-black uppercase tracking-widest text-[9px]">
+      <SubmitButton variant="danger" size="sm" pendingText="..." className="rounded-lg px-4 font-black uppercase tracking-widest text-[9px]">
         Revoke
       </SubmitButton>
       {state?.error && (

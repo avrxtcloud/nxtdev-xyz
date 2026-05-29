@@ -12,7 +12,7 @@ export function DeleteLinkButton({ id, shortioLinkId }: { id: string, shortioLin
       <input type="hidden" name="id" value={id} />
       <input type="hidden" name="shortioLinkId" value={shortioLinkId} />
       <div className="flex flex-col gap-2">
-        <SubmitButton variant="danger" size="md" pendingText="..." className="w-full sm:w-auto rounded-2xl">
+        <SubmitButton variant="danger" size="md" pendingText="..." className="w-full sm:w-auto rounded-lg">
           Delete
         </SubmitButton>
         {state?.error && (
