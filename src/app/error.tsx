@@ -31,7 +31,7 @@ export default function GlobalError({
     ? "Access to this account is currently paused. If you believe this is a mistake, contact support with your account email."
     : isDomainSuspended
       ? "This domain cannot be changed while it is suspended. Review the abuse or safety notice, then contact support if you need help."
-      : message;
+      : "We could not complete that request right now. Please try again, or contact support if the issue continues.";
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-16">

@@ -69,7 +69,13 @@ export async function GET(req: Request) {
     .from("Subdomain")
     .select("id", { head: true, count: "exact" })
     .eq("baseFqdn", baseFqdn);
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) {
+    console.error("Availability check failed:", error);
+    return NextResponse.json(
+      { error: "Availability check failed. Please try again." },
+      { status: 500 },
+    );
+  }
 
   const taken = (count ?? 0) > 0;
   return NextResponse.json(

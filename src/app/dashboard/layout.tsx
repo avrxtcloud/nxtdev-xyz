@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { unstable_rethrow } from "next/navigation";
 import { getOrCreateAppUser } from "@/lib/auth";
 import { AnnouncementBanner } from "@/components/announcement-banner";
 import { Badge } from "@/components/ui/badge";
@@ -29,6 +30,7 @@ export default async function DashboardLayout({
     isAdmin = res.isAdmin;
     isGithubVerified = res.isGithubVerified;
   } catch (e) {
+    unstable_rethrow(e);
     const message = (e as Error)?.message ?? "Unknown error";
     const suspended = message.toLowerCase().includes("account is suspended");
     console.error("Dashboard init failed:", e);
@@ -36,25 +38,22 @@ export default async function DashboardLayout({
       <div className="mx-auto max-w-3xl px-4 py-10">
         <Card>
           <div className="text-sm font-black uppercase tracking-wider">
-            {suspended ? "Account suspended" : "Dashboard setup error"}
+            {suspended ? "Account suspended" : "Dashboard unavailable"}
           </div>
           <h1 className="mt-4 text-3xl font-black tracking-tight text-zinc-950 dark:text-white">
-            {suspended ? "Your account is suspended" : "Dashboard failed to load"}
+            {suspended ? "Your account is suspended" : "Dashboard is temporarily unavailable"}
           </h1>
           <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-300">
             {suspended
               ? "Your account is currently paused and cannot access dashboard tools. Contact support if you believe this is a mistake."
-              : "The dashboard failed to load. This is usually caused by missing Vercel environment variables or missing Supabase tables."}
+              : "We could not load your dashboard right now. Please try again, or contact support if the issue continues."}
           </p>
-          {!suspended ? (
-            <p className="mt-3 text-xs text-zinc-500">
-              Details: <span className="font-mono">{message}</span>
-            </p>
-          ) : null}
           <div className="mt-4 flex flex-wrap gap-3 text-sm font-black">
-            <a className="underline decoration-cyan-400 decoration-2 underline-offset-4" href="/api/health" target="_blank" rel="noreferrer">
-              Open /api/health
-            </a>
+            {!suspended ? (
+              <Link className="underline decoration-cyan-400 decoration-2 underline-offset-4" href="/report">
+                Contact support
+              </Link>
+            ) : null}
             <Link className="underline decoration-cyan-400 decoration-2 underline-offset-4" href="/">
               Back home
             </Link>
