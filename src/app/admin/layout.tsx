@@ -1,7 +1,13 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { requireAdmin } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Admin Console",
+  description: "Administrative controls for users, subdomains, records, reports, and settings.",
+};
 
 const adminLinks = [
   ["Users", "/admin/users"],

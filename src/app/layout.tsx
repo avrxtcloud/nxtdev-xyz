@@ -73,7 +73,7 @@ const clerkAppearance = {
 export const metadata: Metadata = {
   metadataBase: new URL(appUrl),
   title: {
-    default: rootDomain,
+    default: `${rootDomain} - Free Developer DNS`,
     template: `%s | ${rootDomain}`,
   },
   description,

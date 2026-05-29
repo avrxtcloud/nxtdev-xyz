@@ -3,17 +3,10 @@ import { env } from "@/lib/env";
 import { supabaseAdmin } from "@/db/supabaseAdmin";
 import { baseFqdnForLabel, reservedLabelSchema, subdomainLabelSchema } from "@/lib/validators/domain";
 import { matchesPhishingKeyword } from "@/lib/safety/keywords";
-import { getOrCreateAppUserNoRedirect } from "@/lib/auth";
 
 export const runtime = "nodejs";
 
 export async function GET(req: Request) {
-  try {
-    await getOrCreateAppUserNoRedirect();
-  } catch {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
   const url = new URL(req.url);
   const labelRaw = String(url.searchParams.get("label") ?? "").trim().toLowerCase();
   if (!labelRaw) {

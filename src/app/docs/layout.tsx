@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import { DocsNav } from "./_components/docs-nav";
+
+export const metadata: Metadata = {
+  title: "Documentation",
+  description: "Guides and API references for nxtdev DNS, DDNS, records, limits, and support.",
+};
 
 export default function DocsLayout(props: { children: React.ReactNode }) {
   return (

@@ -5,11 +5,10 @@ export default function Loading() {
     <main className="mx-auto max-w-6xl px-4 py-16">
       <Card className="flex items-center gap-3">
         <div className="h-5 w-5 animate-spin rounded-none border-2 border-current border-t-transparent opacity-70" />
-        <div className="text-sm text-zinc-600 dark:text-zinc-300">
-          Loading…
+        <div className="text-sm font-black uppercase tracking-widest text-zinc-600 dark:text-zinc-300">
+          Loading...
         </div>
       </Card>
     </main>
   );
 }
-

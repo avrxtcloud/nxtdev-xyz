@@ -1,9 +1,16 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { Show, SignUpButton } from "@clerk/nextjs";
 import { AnnouncementBanner } from "@/components/announcement-banner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { HomeSubdomainSearch } from "@/components/home-subdomain-search";
 import { env } from "@/lib/env";
+
+export const metadata: Metadata = {
+  title: "Free Developer DNS",
+  description: "Check availability, claim a free nxtdev.xyz subdomain, and manage DNS for your next project.",
+};
 
 const featureRows = [
   {
@@ -111,6 +118,8 @@ export default function Home() {
               Claim a clean <strong className="text-zinc-950 dark:text-white">{env.ROOT_DOMAIN}</strong>{" "}
               subdomain, wire up DNS records, and ship with guardrails for abuse, routing, and verification.
             </p>
+
+            <HomeSubdomainSearch rootDomain={env.ROOT_DOMAIN} />
 
             <div className="mt-9 flex flex-wrap gap-3">
               <Show when="signed-out">

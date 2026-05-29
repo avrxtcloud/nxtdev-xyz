@@ -34,6 +34,11 @@ export default async function SubdomainLayout({
           <div className="mt-1 text-xs text-zinc-500">
             Risk score: {subdomain.riskScore}
           </div>
+          {subdomain.status !== "active" ? (
+            <div className="mt-3 border-2 border-zinc-950 bg-red-500 px-4 py-2 text-sm font-black text-white shadow-[4px_4px_0_#18181b] dark:border-white dark:shadow-[4px_4px_0_#fafafa]">
+              Your domain is suspended. DNS and nameserver changes are disabled.
+            </div>
+          ) : null}
         </div>
         <div className="flex gap-2">
           <Link className="rounded-md px-3 py-2 text-sm hover:bg-zinc-100 dark:hover:bg-zinc-900" href={`/dashboard/domains/${subdomain.id}/records`}>

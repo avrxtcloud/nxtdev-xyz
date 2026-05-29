@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import DocsContainer from "@/components/docs-container";
+
+export const metadata: Metadata = {
+  title: "Abuse Policy",
+  description: "Safety rules and enforcement policy for nxtdev subdomains.",
+};
 
 export default function AbusePolicyPage() {
   return (

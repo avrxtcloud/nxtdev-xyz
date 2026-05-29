@@ -1,8 +1,14 @@
+import type { Metadata } from "next";
 import DocsContainer from "@/components/docs-container";
 import { Card } from "@/components/ui/card";
 import { env } from "@/lib/env";
 import { submitAbuseReport } from "@/app/report/actions";
 import { ReportForm } from "@/app/report/ReportForm";
+
+export const metadata: Metadata = {
+  title: "Report Abuse",
+  description: "Report phishing, malware, spam, impersonation, or abuse on nxtdev subdomains.",
+};
 
 export default async function ReportPage({
   searchParams,
@@ -63,4 +69,3 @@ export default async function ReportPage({
     </DocsContainer>
   );
 }
-
