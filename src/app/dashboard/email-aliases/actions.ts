@@ -69,7 +69,6 @@ export async function createEmailAliasAction(state: any, formData: FormData) {
 
     const aliasAddress = buildAliasAddress();
     const destination = await getOrCreateDestinationAddress(parsed.data.destinationAddress);
-    const rule = await createAliasRule(aliasAddress, parsed.data.destinationAddress);
     const verified = Boolean(destination.verified);
     const now = new Date().toISOString();
 
@@ -78,16 +77,13 @@ export async function createEmailAliasAction(state: any, formData: FormData) {
       userId: appUser.id,
       aliasAddress,
       destinationAddress: parsed.data.destinationAddress,
-      cloudflareRuleId: rule.id ?? null,
+      cloudflareRuleId: null,
       cloudflareDestinationId: destination.id ?? null,
-      status: verified ? "active" : "pending",
+      status: "pending",
       createdAt: now,
       updatedAt: now,
     });
-    if (error) {
-      if (rule.id) await deleteAliasRule(rule.id).catch(console.error);
-      throw new Error(error.message);
-    }
+    if (error) throw new Error(error.message);
 
     revalidatePath("/dashboard/email-aliases");
     return {
@@ -95,7 +91,7 @@ export async function createEmailAliasAction(state: any, formData: FormData) {
       pending: !verified,
       aliasAddress,
       message: verified
-        ? "Email mask created."
+        ? "Destination is verified. Refresh once to activate the forwarding rule."
         : "Email mask created. Cloudflare sent a verification email to your destination inbox.",
     };
   } catch (error) {
@@ -120,10 +116,24 @@ export async function refreshEmailAliasAction(aliasId: string) {
     }
 
     const destination = await getDestinationAddress(alias.cloudflareDestinationId as string);
-    const status = destination.verified ? "active" : "pending";
+    const verified = Boolean(destination.verified);
+    let status = verified ? "active" : "pending";
+    let cloudflareRuleId = alias.cloudflareRuleId as string | null;
+
+    if (verified && !cloudflareRuleId) {
+      const rule = await createAliasRule(
+        alias.aliasAddress as string,
+        alias.destinationAddress as string,
+      );
+      cloudflareRuleId = rule.id ?? null;
+      if (!cloudflareRuleId) {
+        status = "pending";
+      }
+    }
+
     const { error: updateError } = await supabaseAdmin
       .from("EmailAlias")
-      .update({ status, updatedAt: new Date().toISOString() })
+      .update({ status, cloudflareRuleId, updatedAt: new Date().toISOString() })
       .eq("id", aliasId)
       .eq("userId", appUser.id);
     if (updateError) throw new Error(updateError.message);

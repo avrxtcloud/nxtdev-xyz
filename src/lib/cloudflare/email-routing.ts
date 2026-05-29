@@ -19,10 +19,13 @@ export type EmailRoutingRule = {
 };
 
 async function cfEmailFetch<T>(path: string, options: RequestInit = {}): Promise<T> {
+  const token = env.CLOUDFLARE_API_TOKEN.trim()
+    .replace(/^Bearer\s+/i, "")
+    .replace(/^["']|["']$/g, "");
   const response = await fetch(`https://api.cloudflare.com/client/v4${path}`, {
     ...options,
     headers: {
-      Authorization: `Bearer ${env.CLOUDFLARE_API_TOKEN}`,
+      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
       ...options.headers,
     },
@@ -32,6 +35,11 @@ async function cfEmailFetch<T>(path: string, options: RequestInit = {}): Promise
     const message =
       payload.errors?.map((e) => e.message).filter(Boolean).join("; ") ||
       `Cloudflare Email Routing API error: ${response.status}`;
+    console.error("Cloudflare Email Routing request failed:", {
+      path,
+      status: response.status,
+      errors: payload.errors,
+    });
     throw new Error(message);
   }
   return payload.result;
