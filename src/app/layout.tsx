@@ -104,7 +104,7 @@ export default function RootLayout({
       >
         <ClerkProvider>
           <Nav />
-          <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(1200px_circle_at_20%_10%,rgba(99,102,241,0.18),transparent_55%),radial-gradient(900px_circle_at_80%_0%,rgba(14,165,233,0.12),transparent_50%),radial-gradient(900px_circle_at_50%_100%,rgba(168,85,247,0.12),transparent_55%)] dark:bg-[radial-gradient(1200px_circle_at_20%_10%,rgba(99,102,241,0.16),transparent_55%),radial-gradient(900px_circle_at_80%_0%,rgba(14,165,233,0.10),transparent_50%),radial-gradient(900px_circle_at_50%_100%,rgba(168,85,247,0.10),transparent_55%)]" />
+          <div className="pointer-events-none fixed inset-0 -z-10 bg-[linear-gradient(135deg,rgba(250,204,21,0.16),transparent_32%),linear-gradient(315deg,rgba(34,211,238,0.14),transparent_38%)] dark:bg-[linear-gradient(135deg,rgba(250,204,21,0.08),transparent_32%),linear-gradient(315deg,rgba(34,211,238,0.08),transparent_38%)]" />
           <div className="min-h-[calc(100vh-4rem)] text-zinc-900 dark:text-zinc-50 animate-[fade-in_420ms_ease-out]">
             {children}
             <Footer />
@@ -114,4 +114,3 @@ export default function RootLayout({
     </html>
   );
 }
-
