@@ -24,7 +24,7 @@ export default async function RecordsPage({
   params: Promise<{ subdomainId: string }>;
 }) {
   const { subdomainId } = await params;
-  const { appUser } = await getOrCreateAppUser();
+  const { appUser, isGithubVerified } = await getOrCreateAppUser();
   const subdomain = await getOwnedSubdomainOrThrow({
     userId: appUser.id,
     subdomainId,
@@ -55,7 +55,14 @@ export default async function RecordsPage({
         </div>
 
         <div className="bg-zinc-50 dark:bg-zinc-900/50 rounded-lg p-4 sm:p-6 border border-zinc-950/20 dark:border-white/20">
-          {delegated ? (
+          {!isGithubVerified ? (
+            <div className="border-2 border-zinc-950 bg-amber-200 p-4 text-sm font-bold text-zinc-950 shadow-[4px_4px_0_#18181b] dark:border-white dark:shadow-[4px_4px_0_#fafafa]">
+              Connect GitHub to manage DNS records for this subdomain. You can keep the name reserved while verification is pending.
+              <Link className="ml-2 font-black underline decoration-cyan-400 decoration-2 underline-offset-4" href="/dashboard/verify">
+                Connect GitHub
+              </Link>
+            </div>
+          ) : delegated ? (
             <div className="flex items-center gap-3 p-4 rounded-lg bg-orange-50 dark:bg-orange-900/20 border border-orange-100 dark:border-orange-900/40 text-sm font-bold text-orange-800 dark:text-orange-200">
               <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
               Standard DNS editing is disabled while custom nameservers are active.
@@ -134,15 +141,19 @@ export default async function RecordsPage({
                         </Td>
                         <Td className="py-5 text-right">
                           <div className="flex justify-end items-center gap-2">
-                            <Link href={`/dashboard/domains/${subdomain.id}/records/${r.id}`}>
-                              <Button variant="ghost" size="sm" className="rounded-lg h-8 text-xs">Edit</Button>
-                            </Link>
+                            {isGithubVerified ? (
+                              <Link href={`/dashboard/domains/${subdomain.id}/records/${r.id}`}>
+                                <Button variant="ghost" size="sm" className="rounded-lg h-8 text-xs">Edit</Button>
+                              </Link>
+                            ) : (
+                              <Button variant="ghost" size="sm" className="rounded-lg h-8 text-xs" disabled>Edit</Button>
+                            )}
                             <PropagationButton recordId={r.id} />
                             <DeleteRecordButton
                               subdomainId={subdomain.id}
                               recordId={r.id}
                               fqdn={r.fqdn}
-                              disabled={delegated || subdomain.status !== "active"}
+                              disabled={!isGithubVerified || delegated || subdomain.status !== "active"}
                             />
                           </div>
                         </Td>
@@ -181,15 +192,19 @@ export default async function RecordsPage({
                     <div className="flex items-center justify-between gap-4 pt-2 border-t border-zinc-50 dark:border-white/20">
                       <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400">TTL: {r.ttl}s</span>
                       <div className="flex items-center gap-2">
-                        <Link href={`/dashboard/domains/${subdomain.id}/records/${r.id}`}>
-                          <Button variant="ghost" size="sm" className="h-8 text-[10px] font-black uppercase tracking-widest">Edit</Button>
-                        </Link>
+                        {isGithubVerified ? (
+                          <Link href={`/dashboard/domains/${subdomain.id}/records/${r.id}`}>
+                            <Button variant="ghost" size="sm" className="h-8 text-[10px] font-black uppercase tracking-widest">Edit</Button>
+                          </Link>
+                        ) : (
+                          <Button variant="ghost" size="sm" className="h-8 text-[10px] font-black uppercase tracking-widest" disabled>Edit</Button>
+                        )}
                         <PropagationButton recordId={r.id} />
                         <DeleteRecordButton
                           subdomainId={subdomain.id}
                           recordId={r.id}
                           fqdn={r.fqdn}
-                          disabled={delegated || subdomain.status !== "active"}
+                          disabled={!isGithubVerified || delegated || subdomain.status !== "active"}
                         />
                       </div>
                     </div>

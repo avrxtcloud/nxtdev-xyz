@@ -62,16 +62,28 @@ export function Footer() {
             >
               Developed by @avrxt
             </a>
-            <div className="flex items-center overflow-hidden rounded-lg bg-black p-0.5 shadow-sm ring-1 ring-zinc-800 transition-all hover:ring-zinc-700">
-              <iframe
-                src="https://status.nxtdev.xyz/badge?theme=dark"
-                width="250"
-                height="30"
-                frameBorder="0"
-                scrolling="no"
-                style={{ colorScheme: "normal", display: "block" }}
-              />
-            </div>
+            <a
+              href="https://status.nxtdev.xyz"
+              target="_blank"
+              rel="noreferrer"
+              className="grid gap-1 border border-white/20 bg-black p-2 shadow-[3px_3px_0_#a3e635]"
+            >
+              <span className="font-mono text-[9px] font-black uppercase tracking-[0.22em] text-lime-300">
+                System status
+              </span>
+              <span className="block overflow-hidden bg-zinc-950">
+                <iframe
+                  src="https://status.nxtdev.xyz/badge?theme=dark"
+                  title="nxtdev system status"
+                  width="250"
+                  height="30"
+                  frameBorder="0"
+                  scrolling="no"
+                  className="block"
+                  style={{ colorScheme: "normal" }}
+                />
+              </span>
+            </a>
           </div>
           <div className="flex items-center gap-6">
             <span>Powered by Cloudflare</span>

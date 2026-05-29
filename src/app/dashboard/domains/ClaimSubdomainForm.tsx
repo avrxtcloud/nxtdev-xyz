@@ -34,7 +34,7 @@ export function ClaimSubdomainForm(props: {
   const [transitionPending, startTransition] = useTransition();
 
   const canClaim =
-    props.usedCount < 2 && props.isGithubVerified && props.domainCreationEnabled;
+    props.usedCount < 2 && props.domainCreationEnabled;
   const trimmed = label.trim().toLowerCase();
   const previewFqdn = useMemo(() => {
     if (!trimmed) return `yourname.${props.rootDomain}`;
@@ -94,9 +94,9 @@ export function ClaimSubdomainForm(props: {
         ) : null}
         
         {!props.isGithubVerified ? (
-          <div className="rounded-lg border border-amber-100 bg-amber-50/50 px-4 py-3 text-sm text-amber-900 dark:border-amber-500/20 dark:bg-amber-500/10 dark:text-amber-200 flex items-center gap-3">
+          <div className="flex items-center gap-3 border-2 border-zinc-950 bg-amber-200 px-4 py-3 text-sm font-bold text-zinc-950 shadow-[4px_4px_0_#18181b] dark:border-white dark:shadow-[4px_4px_0_#fafafa]">
             <svg className="w-5 h-5 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-            <span>Please verify your identity with GitHub to claim a subdomain. <Link className="font-bold underline" href="/dashboard/verify">Verify now</Link></span>
+            <span>You can claim now. Connect GitHub before adding, editing, or deleting DNS records. <Link className="font-black underline decoration-cyan-400 decoration-2 underline-offset-4" href="/dashboard/verify">Connect GitHub</Link></span>
           </div>
         ) : null}
 
@@ -131,7 +131,7 @@ export function ClaimSubdomainForm(props: {
               onClick={() => {
                 startTransition(() => check());
               }}
-              disabled={transitionPending || !props.isGithubVerified || !props.domainCreationEnabled}
+              disabled={transitionPending || !props.domainCreationEnabled}
             >
               {transitionPending ? <Spinner className="h-4 w-4" /> : "Check"}
             </Button>
@@ -169,7 +169,7 @@ export function ClaimSubdomainForm(props: {
         </div>
       )}
 
-      {props.domainCreationEnabled && props.isGithubVerified && props.usedCount >= 2 ? (
+      {props.domainCreationEnabled && props.usedCount >= 2 ? (
         <div className="p-4 bg-zinc-50 dark:bg-zinc-900/40 rounded-lg border border-zinc-950/20 dark:border-white/20 text-xs font-bold text-zinc-500 text-center">
           You have reached your limit of {props.usedCount}/2 subdomains. 
           <br/><span className="text-[10px] opacity-70">Delete an existing domain to claim a new one.</span>

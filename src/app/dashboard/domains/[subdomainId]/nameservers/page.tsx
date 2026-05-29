@@ -1,4 +1,5 @@
 import { supabaseAdmin } from "@/db/supabaseAdmin";
+import Link from "next/link";
 import { getOrCreateAppUser } from "@/lib/auth";
 import { getOwnedSubdomainOrThrow } from "@/lib/services/subdomains";
 import { Card } from "@/components/ui/card";
@@ -19,7 +20,7 @@ export default async function NameserversPage({
   params: Promise<{ subdomainId: string }>;
 }) {
   const { subdomainId } = await params;
-  const { appUser } = await getOrCreateAppUser();
+  const { appUser, isGithubVerified } = await getOrCreateAppUser();
   const subdomain = await getOwnedSubdomainOrThrow({
     userId: appUser.id,
     subdomainId,
@@ -44,7 +45,14 @@ export default async function NameserversPage({
           </p>
         </div>
 
-        {subdomain.status !== "active" ? (
+        {!isGithubVerified ? (
+          <div className="border-2 border-zinc-950 bg-amber-200 p-4 text-sm font-bold text-zinc-950 shadow-[4px_4px_0_#18181b] dark:border-white dark:shadow-[4px_4px_0_#fafafa]">
+            Connect GitHub to manage nameservers and DNS delegation for this subdomain.
+            <Link className="ml-2 font-black underline decoration-cyan-400 decoration-2 underline-offset-4" href="/dashboard/verify">
+              Connect GitHub
+            </Link>
+          </div>
+        ) : subdomain.status !== "active" ? (
           <div className="p-4 rounded-lg bg-red-50 dark:bg-red-950/20 border border-red-100 dark:border-red-900/40 text-sm font-bold text-red-800 dark:text-red-200">
             This subdomain is suspended. Delegation changes are blocked.
           </div>
@@ -57,7 +65,7 @@ export default async function NameserversPage({
             <NameserverForm
               subdomainId={subdomain.id}
               action={addNameserverAction}
-              disabled={false}
+              disabled={!isGithubVerified}
             />
           </div>
         )}
@@ -67,7 +75,7 @@ export default async function NameserversPage({
              <SwitchBackButton
                subdomainId={subdomain.id}
                action={switchBackAction}
-               disabled={subdomain.status !== "active"}
+               disabled={!isGithubVerified || subdomain.status !== "active"}
              />
           </div>
         ) : null}
@@ -103,7 +111,7 @@ export default async function NameserversPage({
                         subdomainId={subdomain.id}
                         nsId={d.id}
                         action={removeNameserverAction}
-                        disabled={subdomain.status !== "active"}
+                        disabled={!isGithubVerified || subdomain.status !== "active"}
                       />
                     </Td>
                   </tr>

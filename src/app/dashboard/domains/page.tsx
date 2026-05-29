@@ -75,6 +75,11 @@ export default async function DomainsPage() {
             claimAction={claimSubdomainAction}
           />
         </div>
+        {!isGithubVerified ? (
+          <div className="border-2 border-zinc-950 bg-cyan-200 p-4 text-sm font-bold text-zinc-950 shadow-[4px_4px_0_#18181b] dark:border-white dark:shadow-[4px_4px_0_#fafafa]">
+            Flow update: claim your name first, then connect GitHub to unlock DNS record and nameserver management.
+          </div>
+        ) : null}
       </Card>
 
       <section className="space-y-6">
