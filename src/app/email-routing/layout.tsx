@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Email Routing",
-  description: "Create privacy-friendly email aliases for nxtdev domains.",
+  title: "Email Masking",
+  description: "Create Cloudflare Email Routing aliases that forward to a verified destination inbox.",
 };
 
 export default function EmailRoutingLayout(props: { children: React.ReactNode }) {

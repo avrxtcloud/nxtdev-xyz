@@ -97,6 +97,7 @@ export default async function DashboardLayout({
         </div>
         <nav className="flex w-fit flex-wrap items-center gap-1 border-2 border-zinc-950 bg-white p-1.5 shadow-[5px_5px_0_#18181b] dark:border-white dark:bg-zinc-950 dark:shadow-[5px_5px_0_#fafafa]">
           <Link className={navLink} href="/dashboard/domains">Domains</Link>
+          <Link className={navLink} href="/dashboard/email-aliases">Email Masks</Link>
           <Link className={navLink} href="/dashboard/short-links">Short Links</Link>
           <Link className={navLink} href="/dashboard/api-keys">API Keys</Link>
           <Link className={navLink} href="/dashboard/reports">Reports</Link>
