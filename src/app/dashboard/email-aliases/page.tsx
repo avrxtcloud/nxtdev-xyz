@@ -4,7 +4,7 @@ import { env } from "@/lib/env";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { CreateEmailAliasForm } from "./_components/create-form";
-import { DeleteAliasButton, RefreshAliasButton } from "./_components/alias-actions";
+import { CopyAliasButton, DeleteAliasButton, RefreshAliasButton } from "./_components/alias-actions";
 
 function statusTone(status: string) {
   if (status === "active") return "ok" as const;
@@ -42,15 +42,15 @@ export default async function EmailAliasesPage() {
             </p>
           </div>
           <div className="border-2 border-zinc-950 bg-amber-200 px-4 py-3 text-center shadow-[5px_5px_0_#18181b] dark:border-white dark:shadow-[5px_5px_0_#fafafa]">
-            <div className="text-3xl font-black text-zinc-950">{aliases?.length ?? 0}/5</div>
+            <div className="text-3xl font-black text-zinc-950">{aliases?.length ?? 0}/1</div>
             <div className="text-[10px] font-black uppercase tracking-widest text-zinc-700">
               Masks used
             </div>
           </div>
         </div>
-        {(aliases?.length ?? 0) >= 5 ? (
+        {(aliases?.length ?? 0) >= 1 ? (
           <div className="border-2 border-zinc-950 bg-zinc-100 px-4 py-3 text-sm font-black text-zinc-700 dark:border-white dark:bg-zinc-900 dark:text-zinc-200">
-            Alias limit reached. Delete an unused mask before creating another one.
+            Alias limit reached. Each account can keep 1 email mask. Delete your current mask before creating another one.
           </div>
         ) : (
           <CreateEmailAliasForm />
@@ -104,6 +104,7 @@ export default async function EmailAliasesPage() {
                   ) : null}
                 </div>
                 <div className="flex flex-wrap gap-3">
+                  <CopyAliasButton aliasAddress={alias.aliasAddress as string} />
                   {alias.status !== "active" ? (
                     <RefreshAliasButton aliasId={alias.id as string} />
                   ) : null}

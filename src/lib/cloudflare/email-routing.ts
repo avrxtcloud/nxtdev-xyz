@@ -67,6 +67,13 @@ export async function getDestinationAddress(destinationId: string) {
   );
 }
 
+export async function deleteDestinationAddress(destinationId: string) {
+  await cfEmailFetch<EmailRoutingAddress>(
+    `/accounts/${env.CLOUDFLARE_ACCOUNT_ID}/email/routing/addresses/${destinationId}`,
+    { method: "DELETE" },
+  );
+}
+
 export async function createAliasRule(aliasAddress: string, destinationAddress: string) {
   return cfEmailFetch<EmailRoutingRule>(
     `/zones/${env.CLOUDFLARE_ZONE_ID}/email/routing/rules`,

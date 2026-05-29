@@ -9,6 +9,7 @@ import { env } from "@/lib/env";
 import {
   createAliasRule,
   createDestinationAddress,
+  deleteDestinationAddress,
   deleteAliasRule,
   getDestinationAddress,
   listDestinationAddresses,
@@ -63,8 +64,8 @@ export async function createEmailAliasAction(state: any, formData: FormData) {
       .select("id", { head: true, count: "exact" })
       .eq("userId", appUser.id);
     if (countError) throw new Error(countError.message);
-    if ((count ?? 0) >= 5) {
-      return { error: "You can create up to 5 email masks for now." };
+    if ((count ?? 0) >= 1) {
+      return { error: "You can create 1 email mask per account. Delete your current mask before creating another." };
     }
 
     const aliasAddress = buildAliasAddress();
@@ -100,7 +101,7 @@ export async function createEmailAliasAction(state: any, formData: FormData) {
   }
 }
 
-export async function refreshEmailAliasAction(aliasId: string) {
+export async function refreshEmailAliasAction(aliasId: string, _state?: any) {
   try {
     const { appUser } = await getOrCreateAppUser();
     const { data: alias, error } = await supabaseAdmin
@@ -150,12 +151,12 @@ export async function refreshEmailAliasAction(aliasId: string) {
   }
 }
 
-export async function deleteEmailAliasAction(aliasId: string) {
+export async function deleteEmailAliasAction(aliasId: string, _state?: any) {
   try {
     const { appUser } = await getOrCreateAppUser();
     const { data: alias, error } = await supabaseAdmin
       .from("EmailAlias")
-      .select("id,cloudflareRuleId")
+      .select("id,destinationAddress,cloudflareRuleId,cloudflareDestinationId")
       .eq("id", aliasId)
       .eq("userId", appUser.id)
       .maybeSingle();
@@ -163,7 +164,19 @@ export async function deleteEmailAliasAction(aliasId: string) {
     if (!alias) return { error: "Email mask not found." };
 
     if (alias.cloudflareRuleId) {
-      await deleteAliasRule(alias.cloudflareRuleId as string).catch(console.error);
+      await deleteAliasRule(alias.cloudflareRuleId as string);
+    }
+
+    if (alias.cloudflareDestinationId) {
+      const { count: sharedCount, error: sharedError } = await supabaseAdmin
+        .from("EmailAlias")
+        .select("id", { head: true, count: "exact" })
+        .eq("destinationAddress", alias.destinationAddress as string)
+        .neq("id", alias.id as string);
+      if (sharedError) throw new Error(sharedError.message);
+      if ((sharedCount ?? 0) === 0) {
+        await deleteDestinationAddress(alias.cloudflareDestinationId as string);
+      }
     }
 
     const { error: deleteError } = await supabaseAdmin

@@ -1,7 +1,8 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { deleteEmailAliasAction, refreshEmailAliasAction } from "../actions";
+import { Button } from "@/components/ui/button";
 import { SubmitButton } from "@/components/ui/submit-button";
 
 function ActionStateMessage({ state }: { state: any }) {
@@ -38,5 +39,21 @@ export function DeleteAliasButton({ aliasId }: { aliasId: string }) {
       </SubmitButton>
       <ActionStateMessage state={state} />
     </form>
+  );
+}
+
+export function CopyAliasButton({ aliasAddress }: { aliasAddress: string }) {
+  const [copied, setCopied] = useState(false);
+
+  async function copyAlias() {
+    await navigator.clipboard.writeText(aliasAddress);
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1600);
+  }
+
+  return (
+    <Button type="button" variant="secondary" size="sm" onClick={copyAlias}>
+      {copied ? "Copied" : "Copy Email"}
+    </Button>
   );
 }

@@ -186,6 +186,7 @@ create table if not exists "EmailAlias" (
     foreign key ("userId") references "User"("id") on delete cascade
 );
 create index if not exists "EmailAlias_userId_idx" on "EmailAlias" ("userId");
+create unique index if not exists "EmailAlias_userId_unique" on "EmailAlias" ("userId");
 create index if not exists "EmailAlias_aliasAddress_idx" on "EmailAlias" ("aliasAddress");
 create index if not exists "EmailAlias_destinationAddress_idx" on "EmailAlias" ("destinationAddress");
 
