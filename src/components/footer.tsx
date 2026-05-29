@@ -54,6 +54,14 @@ export function Footer() {
         <div className="mt-16 flex flex-col items-center justify-between gap-6 border-t border-white/15 pt-8 text-xs font-bold uppercase tracking-widest text-zinc-400 md:flex-row">
           <div className="flex flex-col items-center gap-6 md:flex-row">
             <div>(c) {new Date().getFullYear()} nxtdev.xyz / All rights reserved.</div>
+            <a
+              className="border border-white/20 bg-white px-3 py-2 font-black text-zinc-950 shadow-[3px_3px_0_#22d3ee] transition-transform hover:-translate-y-0.5"
+              href="https://www.avrxt.in"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Developed by @avrxt
+            </a>
             <div className="flex items-center overflow-hidden rounded-lg bg-black p-0.5 shadow-sm ring-1 ring-zinc-800 transition-all hover:ring-zinc-700">
               <iframe
                 src="https://status.nxtdev.xyz/badge?theme=dark"
