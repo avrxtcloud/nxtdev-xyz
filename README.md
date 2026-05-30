@@ -3,23 +3,24 @@
 <br />
 
 ```
- ███╗   ██╗██╗  ██╗████████╗██████╗ ███████╗██╗   ██╗    ██╗  ██╗██╗   ██╗███████╗
- ████╗  ██║╚██╗██╔╝╚══██╔══╝██╔══██╗██╔════╝██║   ██║    ╚██╗██╔╝╚██╗ ██╔╝╚══███╔╝
- ██╔██╗ ██║ ╚███╔╝    ██║   ██║  ██║█████╗  ██║   ██║     ╚███╔╝  ╚████╔╝   ███╔╝ 
- ██║╚██╗██║ ██╔██╗    ██║   ██║  ██║██╔══╝  ╚██╗ ██╔╝     ██╔██╗   ╚██╔╝   ███╔╝  
- ██║ ╚████║██╔╝ ██╗   ██║   ██████╔╝███████╗ ╚████╔╝     ██╔╝ ██╗   ██║   ███████╗
- ╚═╝  ╚═══╝╚═╝  ╚═╝   ╚═╝   ╚═════╝ ╚══════╝  ╚═══╝      ╚═╝  ╚═╝   ╚═╝   ╚══════╝
+███╗   ██╗██╗  ██╗████████╗██████╗ ███████╗██╗   ██╗    ██╗  ██╗██╗   ██╗███████╗
+████╗  ██║╚██╗██╔╝╚══██╔══╝██╔══██╗██╔════╝██║   ██║    ╚██╗██╔╝╚██╗ ██╔╝╚══███╔╝
+██╔██╗ ██║ ╚███╔╝    ██║   ██║  ██║█████╗  ██║   ██║     ╚███╔╝  ╚████╔╝   ███╔╝ 
+██║╚██╗██║ ██╔██╗    ██║   ██║  ██║██╔══╝  ╚██╗ ██╔╝     ██╔██╗   ╚██╔╝   ███╔╝  
+██║ ╚████║██╔╝ ██╗   ██║   ██████╔╝███████╗ ╚████╔╝     ██╔╝ ██╗   ██║   ███████╗
+╚═╝  ╚═══╝╚═╝  ╚═╝   ╚═╝   ╚═════╝ ╚══════╝  ╚═══╝      ╚═╝  ╚═╝   ╚═╝   ╚══════╝
 ```
 
-**Claim a free subdomain. Ship faster with real DNS.**
+### Free subdomains · Email aliases · Short links — built for developers
 
 [![Subdomains Claimed](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.nxtdev.xyz%2Fstats&query=total&label=subdomains%20claimed&color=00ff88&style=flat-square)](https://nxtdev.xyz)
 [![Built on Cloudflare](https://img.shields.io/badge/built%20on-Cloudflare-F48120?style=flat-square&logo=cloudflare&logoColor=white)](https://cloudflare.com)
 [![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
+[![Made by aviorxt](https://img.shields.io/badge/made%20by-aviorxt-a78bfa?style=flat-square)](https://www.avrxt.in/me)
 
 <br />
 
-[**→ Claim your subdomain**](https://nxtdev.xyz) · [Docs](https://nxtdev.xyz/docs) · [Status](https://status.nxtdev.xyz)
+[**→ Get Started**](https://www.nxtdev.xyz) &nbsp;·&nbsp; [Claim a Domain](https://www.nxtdev.xyz/dashboard/domains) &nbsp;·&nbsp; [Email Aliases](https://www.nxtdev.xyz/dashboard/email-aliases) &nbsp;·&nbsp; [Short Links](https://www.nxtdev.xyz/dashboard/short-links) &nbsp;·&nbsp; [Status](https://status.nxtdev.xyz)
 
 <br />
 
@@ -29,170 +30,183 @@
 
 ## What is nxtdev.xyz?
 
-**nxtdev.xyz** gives every developer a real, production-grade subdomain — for free. No credit card. No BS. Just point your DNS and ship.
+**nxtdev.xyz** is a free developer toolkit — real DNS subdomains, email aliases, and short links, all on Cloudflare's global network. No credit card. No waitlist. Ship in seconds.
 
 ```
-yourthing.nxtdev.xyz  →  your Vercel deploy
-api.yourthing.nxtdev.xyz  →  your backend
-mail.yourthing.nxtdev.xyz  →  your self-hosted email
+yourproject.nxtdev.xyz        →  your Vercel / Netlify / VPS deploy
+api.yourproject.nxtdev.xyz    →  your backend
+me@yourproject.nxtdev.xyz     →  your email alias
+nxtdev.xyz/go/your-link       →  your short link
 ```
-
-Built on Cloudflare's global network. Live in seconds.
 
 ---
 
 ## Features
 
-### 🚀 Free Tier — No catch
-- **2 subdomains** per account, free forever
-- Up to **100 DNS records** per subdomain (default limit)
+### 🌐 Subdomain Registry
+Claim a real subdomain under `nxtdev.xyz` and point it anywhere — Vercel, Netlify, Cloudflare Pages, a VPS, a game server, anywhere.
+
+- **2 subdomains free**, forever — no tricks
+- Up to **100 DNS records** per subdomain
 - Cloudflare-backed — global propagation in seconds
+- Supports `A`, `AAAA`, `CNAME`, `MX`, `TXT`, `SRV`, and NS delegation
 
-### ♾️ Unlimited — Bring your nameservers
-- Point your own nameservers to nxtdev.xyz infra
-- **Unlimited records**, full control
+[→ Claim your subdomain](https://www.nxtdev.xyz/dashboard/domains)
 
-### 🛡️ Safety System
-Every submission goes through:
-- Phishing pattern detection
-- IP reputation checks on `A`/`AAAA` records
-- Abuse reports handled within 24h
+---
 
-### 🔌 DNS Record Support
+### 📬 Email Aliases
+Create lightweight email aliases under your nxtdev subdomain. Forward to any inbox — no self-hosting required.
+
+- Perfect for project emails, throwaway contacts, or portfolio identity
+- Set up via MX + TXT records in your subdomain dashboard
+
+[→ Set up email aliases](https://www.nxtdev.xyz/dashboard/email-aliases)
+
+---
+
+### 🔗 Short Links
+Brand your links with `nxtdev.xyz/go/your-slug`. Clean, shareable, Cloudflare-fast.
+
+- Create and manage short links from your dashboard
+- Great for project demos, portfolio links, and sharing APIs
+
+[→ Create short links](https://www.nxtdev.xyz/dashboard/short-links)
+
+---
+
+## DNS Record Support
 
 | Record | Use Case |
 |--------|----------|
-| `A` / `AAAA` | Point to any server IP |
-| `CNAME` | Vercel, Netlify, Render, any host |
-| `MX` | Self-hosted or managed email |
-| `TXT` | SPF, DKIM, verification tokens |
+| `A` / `AAAA` | Point to any server IP (IPv4 or IPv6) |
+| `CNAME` | Vercel, Netlify, Render, GitHub Pages, any host |
+| `MX` | Self-hosted or managed email delivery |
+| `TXT` | SPF, DKIM, site verification tokens |
 | `SRV` | Game servers, XMPP, custom protocols |
+| `NS` | Delegate to your own nameservers (unlimited records) |
 
 ---
 
 ## Quick Start
 
-### 1. Claim your subdomain
+### 1. Sign in
 
-Head to **[nxtdev.xyz](https://nxtdev.xyz)** and log in with GitHub.
+Head to **[nxtdev.xyz](https://www.nxtdev.xyz)** and log in with GitHub — no forms, no friction.
 
-### 2. Add your DNS records
+### 2. Claim your subdomain
+
+Pick your handle, configure your records, done.
 
 ```
+# Point to Vercel
 Type:   CNAME
 Name:   yourname.nxtdev.xyz
 Value:  cname.vercel-dns.com
 TTL:    Auto
-```
 
-Or for a VPS:
-
-```
+# Point to a VPS
 Type:   A
 Name:   yourname.nxtdev.xyz
 Value:  1.2.3.4
 TTL:    60
 ```
 
-### 3. Done
+### 3. Ship
 
-Your subdomain is live. No waiting. No propagation delays (Cloudflare handles it).
+Your subdomain is live. No waiting. No propagation lag. Cloudflare handles it.
 
 ---
 
 ## Use Cases
 
-<table>
-<tr>
-<td width="33%">
-
-**🌐 Websites**
-
-Deploy to Vercel, Netlify, Cloudflare Pages, GitHub Pages or any host. Point a CNAME and you're live.
-
-</td>
-<td width="33%">
-
-**⚙️ APIs & Backends**
-
-Running a side project API on a VPS or Railway? Use an `A` record or reverse proxy via Cloudflare Workers.
-
-</td>
-<td width="33%">
-
-**📬 Email & Real Infra**
-
-Set up MX + TXT records for self-hosted email. SRV records for game servers. This is actual DNS.
-
-</td>
-</tr>
-</table>
+| | |
+|---|---|
+| 🌐 **Portfolios & Websites** | Deploy to Vercel, Netlify, Cloudflare Pages, or GitHub Pages. Point a CNAME and go live. |
+| ⚙️ **APIs & Backends** | Running a side project on a VPS or Railway? Use an `A` record or Cloudflare Worker reverse proxy. |
+| 📬 **Email & Identity** | Set up MX + TXT for a real project email. `me@yourproject.nxtdev.xyz` hits differently. |
+| 🎮 **Game Servers** | SRV records for Minecraft, XMPP, or any custom protocol. |
+| 📊 **Status Pages** | `status.yourproject.nxtdev.xyz` pointing at Uptime Kuma or BetterUptime. |
+| 🔗 **Short Links** | Share clean links for demos, portfolios, and side projects. |
 
 ---
 
-## Subdomain Ideas
+## Safety
 
-```
-portfolio.nxtdev.xyz     — your dev portfolio
-api.nxtdev.xyz           — personal API playground
-blog.nxtdev.xyz          — ghost / hashnode / whatever
-mc.nxtdev.xyz            — minecraft server (SRV)
-status.nxtdev.xyz        — uptime page
-dev.nxtdev.xyz           — staging environment
-```
+Every submission is automatically reviewed:
+
+- Phishing pattern detection
+- IP reputation checks on `A` / `AAAA` records
+- Private IP ranges blocked (`10.x`, `192.168.x`, `172.16–31.x`)
+- Abuse reports handled within 24h
+
+To report abuse: [nxtdev.xyz/report](https://www.nxtdev.xyz/report) or email `abuse@nxtdev.xyz`
 
 ---
 
 ## FAQ
 
 <details>
-<summary><strong>Is this really free?</strong></summary>
+<summary><strong>Is this actually free?</strong></summary>
 
-Yes. 2 subdomains, forever free. We're not pivoting to paid-only. The free tier is the point.
+Yes. 2 subdomains, forever free. The free tier is the point — not a funnel.
 
 </details>
 
 <details>
 <summary><strong>How do I get unlimited records?</strong></summary>
 
-Change your nameservers to point at our infrastructure. Full docs at [nxtdev.xyz/docs](https://nxtdev.xyz/docs).
+Delegate your nameservers to nxtdev.xyz infrastructure and get full control with unlimited records. Full guide at [nxtdev.xyz/docs](https://www.nxtdev.xyz/docs).
 
 </details>
 
 <details>
-<summary><strong>What's the TTL / propagation time?</strong></summary>
+<summary><strong>How fast does DNS propagate?</strong></summary>
 
-Cloudflare. Usually under 60 seconds globally.
-
-</details>
-
-<details>
-<summary><strong>Can I use this for production?</strong></summary>
-
-Absolutely. The DNS infrastructure is Cloudflare — same as what powers millions of production sites.
+Cloudflare. Usually under 60 seconds globally — sometimes faster.
 
 </details>
 
 <details>
-<summary><strong>What gets blocked by the safety system?</strong></summary>
+<summary><strong>Can I use this for a production project?</strong></summary>
 
-Known phishing patterns, IPs on abuse lists, and anything that looks like credential harvesting. Legitimate projects are never blocked. Appeal at abuse@nxtdev.xyz.
+Yes. The DNS layer is Cloudflare — the same infrastructure powering millions of production sites.
 
 </details>
 
 <details>
-<summary><strong>Can I point to a private/local IP?</strong></summary>
+<summary><strong>Can I point to a local/private IP?</strong></summary>
 
-No. Private ranges (10.x, 192.168.x, 172.16–31.x) are blocked on A/AAAA records for security.
+No. Private ranges are blocked on `A`/`AAAA` records for security reasons.
+
+</details>
+
+<details>
+<summary><strong>What gets flagged by the safety system?</strong></summary>
+
+Known phishing patterns, IPs on abuse lists, and credential harvesting patterns. Legitimate projects are never blocked. Appeal at `abuse@nxtdev.xyz`.
 
 </details>
 
 ---
 
+## Links
+
+| | |
+|---|---|
+| 🌐 Website | [nxtdev.xyz](https://www.nxtdev.xyz) |
+| 📋 Dashboard | [nxtdev.xyz/dashboard/domains](https://www.nxtdev.xyz/dashboard/domains) |
+| 📬 Email Aliases | [nxtdev.xyz/dashboard/email-aliases](https://www.nxtdev.xyz/dashboard/email-aliases) |
+| 🔗 Short Links | [nxtdev.xyz/dashboard/short-links](https://www.nxtdev.xyz/dashboard/short-links) |
+| 🚨 Abuse Report | [nxtdev.xyz/report](https://www.nxtdev.xyz/report) |
+| 📡 Status | [status.nxtdev.xyz](https://status.nxtdev.xyz) |
+
+---
+
 <div align="center">
 
-Built for developers who just want to ship.
+Built with 🖤 by [aviorxt](https://www.avrxt.in/me)
 
-**[nxtdev.xyz →](https://nxtdev.xyz)**
+**[nxtdev.xyz →](https://www.nxtdev.xyz)**
 
 </div>
