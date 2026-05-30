@@ -201,11 +201,46 @@ Known phishing patterns, IPs on abuse lists, and credential harvesting patterns.
 | 🚨 Abuse Report | [nxtdev.xyz/report](https://www.nxtdev.xyz/report) |
 | 📡 Status | [status.nxtdev.xyz](https://status.nxtdev.xyz) |
 
+## Team
+
+<table>
+<tr>
+<td align="center" width="25%">
+  <a href="https://www.avrxt.in/me">
+    <img src="https://github.com/aviorxt.png" width="64" height="64" style="border-radius:50%" alt="aviorxt" /><br />
+    <strong>@aviorxt</strong>
+  </a><br />
+  <sub>Founder · <a href="https://www.nxtdev.xyz">nxtdev.xyz</a></sub>
+</td>
+<td align="center" width="25%">
+  <a href="https://github.com/erroraero">
+    <img src="https://github.com/erroraero.png" width="64" height="64" style="border-radius:50%" alt="erroraero" /><br />
+    <strong>@erroraero</strong>
+  </a><br />
+  <sub><a href="https://error.nxtdev.xyz">error.nxtdev.xyz</a></sub>
+</td>
+<td align="center" width="25%">
+  <a href="https://ebnn.xyz">
+    <img src="https://github.com/Ebnxyz.png" width="64" height="64" style="border-radius:50%" alt="Ebnxyz" /><br />
+    <strong>@Ebnxyz</strong>
+  </a><br />
+  <sub><a href="https://ebnn.xyz">ebnn.xyz</a></sub>
+</td>
+<td align="center" width="25%">
+  <a href="https://naruto.nxtdev.xyz">
+    <img src="https://github.com/006naruto.png" width="64" height="64" style="border-radius:50%" alt="006naruto" /><br />
+    <strong>@006naruto</strong>
+  </a><br />
+  <sub><a href="https://naruto.nxtdev.xyz">naruto.nxtdev.xyz</a></sub>
+</td>
+</tr>
+</table>
+
 ---
 
 <div align="center">
 
-Built with 🖤 by [aviorxt](https://www.avrxt.in/me)
+Built with 🖤 by the nxtdev team
 
 **[nxtdev.xyz →](https://www.nxtdev.xyz)**
 
