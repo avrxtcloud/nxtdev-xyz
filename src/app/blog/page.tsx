@@ -15,7 +15,7 @@ const posts = [
         slug: "what-is-nxtdev.xyz",
         date: "March 24, 2026",
         category: "Platform",
-        gradient: "from-green-500 to-emerald-600",
+        gradient: "from-lime-300 to-cyan-300",
     },
     {
         title: "How to Optimize Your Subdomain for SEO",
@@ -23,7 +23,7 @@ const posts = [
         slug: "how-to-optimize-your-subdomain-for-seo",
         date: "March 24, 2026",
         category: "SEO",
-        gradient: "from-blue-500 to-indigo-600",
+        gradient: "from-zinc-950 to-cyan-500",
     },
     {
         title: "Why DNS Security Matters for Developers",
@@ -31,7 +31,7 @@ const posts = [
         slug: "why-dns-security-matters-for-developers",
         date: "March 23, 2026",
         category: "Security",
-        gradient: "from-purple-500 to-pink-600",
+        gradient: "from-amber-400 to-red-500",
     },
 ];
 
@@ -39,11 +39,11 @@ export default function BlogPage() {
     return (
         <main className="mx-auto max-w-7xl px-4 py-16 sm:py-24">
             <div className="space-y-8 mb-16">
-                <div className="inline-flex items-center gap-2 rounded-full bg-blue-50 dark:bg-blue-900/20 px-4 py-1.5 text-sm font-semibold text-blue-700 dark:text-blue-300 border border-blue-100 dark:border-blue-800/50">
+                <div className="inline-flex items-center gap-2 rounded-none bg-amber-100 dark:bg-zinc-900 px-4 py-1.5 text-sm font-semibold text-zinc-950 dark:text-lime-300 border border-zinc-950/20 dark:border-white/20">
                     Developer Insights
                 </div>
                 <h1 className="text-5xl font-black tracking-tight sm:text-7xl leading-[1.05]">
-                    The <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">nxtdev Blog.</span>
+                    The <span className="bg-gradient-to-r from-zinc-950 via-cyan-500 to-amber-400 bg-clip-text text-transparent">nxtdev Blog.</span>
                 </h1>
                 <p className="max-w-2xl text-xl text-zinc-600 dark:text-zinc-400 font-medium leading-relaxed">
                     Stay up to date with the latest in DNS management, web development, and cloud infrastructure tips from our engineering team.
@@ -53,17 +53,15 @@ export default function BlogPage() {
             <div className="grid gap-8 md:grid-cols-2">
                 {posts.map((post) => (
                     <Link key={post.slug} href={`/blog/${post.slug}`} className="group">
-                        <Card className="h-full p-8 sm:p-10 rounded-[2.5rem] border-zinc-100/50 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-all overflow-hidden relative">
-                            <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${post.gradient} opacity-10 blur-3xl group-hover:opacity-20 transition-opacity`}></div>
-
+                        <Card className="h-full p-8 sm:p-10 rounded-lg border-zinc-950 dark:border-white/20 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-all overflow-hidden relative">
                             <div className="flex flex-col h-full space-y-6 relative z-10">
                                 <div className="flex items-center justify-between">
-                                    <Badge tone="ok" className="rounded-full px-4 py-1.5 text-[10px] font-black uppercase tracking-widest">{post.category}</Badge>
+                                    <Badge tone="ok" className="rounded-none px-4 py-1.5 text-[10px] font-black uppercase tracking-widest">{post.category}</Badge>
                                     <span className="text-sm font-bold text-zinc-400">{post.date}</span>
                                 </div>
 
                                 <div className="space-y-4">
-                                    <h2 className="text-3xl font-black text-zinc-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                    <h2 className="text-3xl font-black text-zinc-900 dark:text-white group-hover:text-zinc-950 dark:group-hover:text-lime-300 transition-colors">
                                         {post.title}
                                     </h2>
                                     <p className="text-lg text-zinc-600 dark:text-zinc-400 font-medium leading-relaxed">
@@ -71,7 +69,7 @@ export default function BlogPage() {
                                     </p>
                                 </div>
 
-                                <div className="mt-auto pt-6 flex items-center text-blue-600 dark:text-blue-400 font-black text-sm uppercase tracking-widest gap-2">
+                                <div className="mt-auto pt-6 flex items-center text-zinc-950 dark:text-lime-300 font-black text-sm uppercase tracking-widest gap-2">
                                     Read Article
                                     <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
                                 </div>

@@ -16,7 +16,7 @@ export const Button = React.forwardRef<
   const { className, variant = "primary", size = "md", ...rest } = props;
 
   const base =
-    "inline-flex items-center justify-center gap-2 rounded-xl font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98]";
+    "inline-flex items-center justify-center gap-2 rounded-lg border-2 font-black transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/70 disabled:pointer-events-none disabled:opacity-50 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none";
 
   const sizes: Record<ButtonSize, string> = {
     sm: "h-9 px-4 text-xs tracking-tight",
@@ -27,15 +27,15 @@ export const Button = React.forwardRef<
 
   const variants: Record<ButtonVariant, string> = {
     primary:
-      "bg-zinc-900 text-white shadow-xl shadow-zinc-950/20 hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200",
+      "border-zinc-950 bg-zinc-950 text-white shadow-[4px_4px_0_#facc15] hover:bg-zinc-800 dark:border-white dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200",
     secondary:
-      "bg-zinc-100 text-zinc-900 hover:bg-zinc-200 dark:bg-zinc-800/50 dark:text-white dark:hover:bg-zinc-800",
+      "border-zinc-950 bg-white text-zinc-950 shadow-[4px_4px_0_#22d3ee] hover:bg-zinc-100 dark:border-white dark:bg-zinc-950 dark:text-white dark:hover:bg-zinc-900",
     outline:
-      "border-2 border-zinc-200 text-zinc-900 hover:bg-zinc-50 dark:border-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-900",
+      "border-zinc-950 bg-transparent text-zinc-950 hover:bg-white dark:border-white dark:text-white dark:hover:bg-zinc-900",
     ghost:
-      "bg-transparent text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-white/5 dark:hover:text-zinc-50",
+      "border-transparent bg-transparent text-zinc-700 shadow-none hover:border-zinc-950 hover:bg-white dark:text-zinc-300 dark:hover:border-white dark:hover:bg-zinc-900 dark:hover:text-white",
     danger:
-      "bg-red-500 text-white shadow-lg shadow-red-500/20 hover:bg-red-600",
+      "border-zinc-950 bg-red-500 text-white shadow-[4px_4px_0_#18181b] hover:bg-red-600 dark:border-white dark:shadow-[4px_4px_0_#fafafa]",
   };
 
   return (

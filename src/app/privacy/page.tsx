@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import DocsContainer from "@/components/docs-container";
 import { env } from "@/lib/env";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description: "Privacy policy for nxtdev accounts, authentication, and DNS services.",
+};
 
 export default function PrivacyPage() {
   return (

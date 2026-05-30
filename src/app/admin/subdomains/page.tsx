@@ -67,7 +67,7 @@ export default async function AdminSubdomainsPage({
 
   return (
     <div className="grid gap-6">
-      <Card className="p-6 rounded-[2rem] border-zinc-100 dark:border-zinc-800">
+      <Card className="p-6 rounded-lg border-zinc-950/20 dark:border-white/20">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <h2 className="text-lg font-black uppercase tracking-widest text-zinc-900 dark:text-white">Subdomain Audit</h2>
@@ -78,7 +78,7 @@ export default async function AdminSubdomainsPage({
       </Card>
 
       {/* Desktop Table */}
-      <Card className="hidden lg:block rounded-[2rem] border-zinc-100 dark:border-zinc-800 overflow-hidden">
+      <Card className="hidden lg:block rounded-lg border-zinc-950/20 dark:border-white/20 overflow-hidden">
         <Table>
           <thead>
             <tr className="bg-zinc-50/50 dark:bg-zinc-900/50">
@@ -134,9 +134,9 @@ export default async function AdminSubdomainsPage({
            const dnsCount = dnsCountBySub.get(s.id as string) ?? 0;
            const delegatedCount = delegatedCountBySub.get(s.id as string) ?? 0;
            return (
-            <Card key={s.id} className="p-5 rounded-2xl border-zinc-100 dark:border-zinc-800 space-y-4">
+            <Card key={s.id} className="p-5 rounded-lg border-zinc-950/20 dark:border-white/20 space-y-4">
               <div className="flex items-start justify-between">
-                <div className="font-black text-blue-600 dark:text-blue-400 font-mono text-sm">{s.baseFqdn}</div>
+                <div className="font-black text-zinc-950 dark:text-lime-300 font-mono text-sm">{s.baseFqdn}</div>
                 <div className="flex flex-col items-end gap-1">
                    {s.status === "active" ? (
                     <Badge tone="ok">Active</Badge>
@@ -149,7 +149,7 @@ export default async function AdminSubdomainsPage({
                 </div>
               </div>
               
-              <div className="grid grid-cols-2 gap-4 bg-zinc-50 dark:bg-zinc-900 p-3 rounded-xl border border-zinc-100 dark:border-zinc-800">
+              <div className="grid grid-cols-2 gap-4 bg-zinc-50 dark:bg-zinc-900 p-3 rounded-lg border border-zinc-950/20 dark:border-white/20">
                 <div>
                    <div className="text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-1">Records</div>
                    <div className="text-sm font-bold text-zinc-900 dark:text-white">{dnsCount + delegatedCount}</div>
@@ -165,7 +165,7 @@ export default async function AdminSubdomainsPage({
                 {emailByUserId.get(s.userId as string) ?? "unknown"}
               </div>
 
-              <div className="pt-4 border-t border-zinc-50 dark:border-zinc-800 flex flex-wrap gap-2">
+              <div className="pt-4 border-t border-zinc-50 dark:border-white/20 flex flex-wrap gap-2">
                 <SubdomainActions id={s.id} status={s.status} />
               </div>
             </Card>
@@ -187,19 +187,19 @@ function SubdomainActions({ id, status }: { id: string; status: string }) {
     <>
       {status === "active" ? (
         <form action={suspendSubdomainAction.bind(null, id)}>
-          <Button size="sm" variant="secondary" type="submit" className="rounded-xl h-9 text-[10px] uppercase font-black tracking-widest">
+          <Button size="sm" variant="secondary" type="submit" className="rounded-lg h-9 text-[10px] uppercase font-black tracking-widest">
             Suspend
           </Button>
         </form>
       ) : (
         <form action={unsuspendSubdomainAction.bind(null, id)}>
-          <Button size="sm" variant="secondary" type="submit" className="rounded-xl h-9 text-[10px] uppercase font-black tracking-widest">
+          <Button size="sm" variant="secondary" type="submit" className="rounded-lg h-9 text-[10px] uppercase font-black tracking-widest">
             Unsuspend
           </Button>
         </form>
       )}
       <form action={purgeSubdomainRecordsAction.bind(null, id)}>
-        <Button size="sm" variant="danger" type="submit" className="rounded-xl h-9 text-[10px] uppercase font-black tracking-widest">
+        <Button size="sm" variant="danger" type="submit" className="rounded-lg h-9 text-[10px] uppercase font-black tracking-widest">
           Purge records
         </Button>
       </form>

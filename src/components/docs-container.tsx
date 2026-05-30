@@ -13,12 +13,12 @@ export default function DocsContainer({
     backLink?: string;
 }) {
     return (
-        <main className="mx-auto max-w-4xl px-4 py-12 sm:py-24 lg:px-8">
+        <main className="mx-auto max-w-4xl px-4 py-12 sm:py-20 lg:px-8">
             {backLink && (
                 <div className="mb-10">
                     <Link
                         href={backLink}
-                        className="inline-flex items-center gap-2 text-sm font-medium text-zinc-500 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-zinc-100 transition-all duration-200 group bg-zinc-100/50 dark:bg-zinc-800/50 px-3 py-1.5 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                        className="group inline-flex items-center gap-2 border-2 border-zinc-950 bg-white px-3 py-1.5 text-sm font-black text-zinc-950 shadow-[3px_3px_0_#22d3ee] transition-transform hover:-translate-y-0.5 dark:border-white dark:bg-zinc-950 dark:text-white"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -40,7 +40,7 @@ export default function DocsContainer({
             )}
 
             <div className="space-y-6 mb-16 lg:mb-20">
-                <h1 className="text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-white sm:text-5xl lg:text-6xl">
+                <h1 className="text-4xl font-black tracking-tight text-zinc-950 dark:text-white sm:text-5xl lg:text-6xl">
                     {title}
                 </h1>
                 {subtitle && (
@@ -53,8 +53,8 @@ export default function DocsContainer({
             <div className="prose prose-zinc dark:prose-invert max-w-none 
         prose-headings:font-bold prose-headings:tracking-tight
         prose-p:leading-relaxed prose-p:text-zinc-600 dark:prose-p:text-zinc-400
-        prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline
-        prose-code:text-blue-600 dark:prose-code:text-blue-300 prose-code:bg-blue-50 dark:prose-code:bg-blue-900/30 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
+        prose-a:text-zinc-950 dark:prose-a:text-white prose-a:font-black prose-a:underline prose-a:decoration-cyan-400 prose-a:decoration-2 prose-a:underline-offset-4
+        prose-code:text-zinc-950 dark:prose-code:text-lime-300 prose-code:bg-amber-100 dark:prose-code:bg-zinc-900 prose-code:px-1.5 prose-code:py-0.5 prose-code:before:content-none prose-code:after:content-none
         prose-strong:text-zinc-900 dark:prose-strong:text-white
       ">
                 {children}

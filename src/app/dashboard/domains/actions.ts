@@ -9,11 +9,7 @@ import { redirect } from "next/navigation";
 export async function claimSubdomainAction(state: any, formData: FormData) {
   try {
     const label = String(formData.get("label") ?? "");
-    const { appUser, isAdmin, isGithubVerified } = await getOrCreateAppUser();
-    
-    if (!isGithubVerified) {
-      return { error: "Please verify your GitHub account first." };
-    }
+    const { appUser, isAdmin } = await getOrCreateAppUser();
     
     await assertDomainCreationEnabled({ isAdmin });
     

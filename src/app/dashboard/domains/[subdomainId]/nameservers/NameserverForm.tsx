@@ -24,19 +24,19 @@ export function NameserverForm({
           placeholder="ns1.example.com"
           required
           disabled={disabled}
-          className="max-w-md h-10 rounded-xl"
+          className="max-w-md h-10 rounded-lg"
         />
         <SubmitButton 
           disabled={disabled} 
           pendingText="Adding..."
-          className="h-10 px-6 rounded-xl font-black uppercase tracking-widest text-[10px]"
+          className="h-10 px-6 rounded-lg font-black uppercase tracking-widest text-[10px]"
         >
           Add nameserver
         </SubmitButton>
       </form>
       
       {state?.error && (
-        <div className="p-3 bg-red-50 dark:bg-red-950/20 border border-red-100 dark:border-red-900/40 rounded-xl text-xs font-bold text-red-800 dark:text-red-200 animate-in fade-in slide-in-from-top-1 duration-200">
+        <div className="p-3 bg-red-50 dark:bg-red-950/20 border border-red-100 dark:border-red-900/40 rounded-lg text-xs font-bold text-red-800 dark:text-red-200 animate-in fade-in slide-in-from-top-1 duration-200">
            {state.error}
         </div>
       )}

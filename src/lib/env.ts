@@ -35,9 +35,14 @@ export const env = {
   get CLOUDFLARE_ZONE_ID() {
     return required("CLOUDFLARE_ZONE_ID");
   },
+  get CLOUDFLARE_ACCOUNT_ID() {
+    return required("CLOUDFLARE_ACCOUNT_ID");
+  },
   get CLOUDFLARE_API_TOKEN() {
     return required("CLOUDFLARE_API_TOKEN");
   },
+  EMAIL_ALIAS_DOMAIN:
+    optional("EMAIL_ALIAS_DOMAIN") ?? `aliase.${optional("ROOT_DOMAIN") ?? "nxtdev.xyz"}`,
 
   get ABUSEIPDB_API_KEY() {
     return required("ABUSEIPDB_API_KEY");

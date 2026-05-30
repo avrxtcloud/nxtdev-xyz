@@ -19,11 +19,11 @@ export default function BlogPost2() {
 
             <div className="space-y-8 mb-16">
                 <div className="flex items-center gap-4">
-                    <Badge tone="ok" className="rounded-full px-4 py-1.5 text-[10px] font-black uppercase tracking-widest">Security</Badge>
+                    <Badge tone="ok" className="rounded-none px-4 py-1.5 text-[10px] font-black uppercase tracking-widest">Security</Badge>
                     <span className="text-sm font-bold text-zinc-400">Published March 23, 2026</span>
                 </div>
                 <h1 className="text-5xl font-black tracking-tight sm:text-7xl leading-[1.05]">
-                    Why <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 bg-clip-text text-transparent">DNS Security Matters</span> for Developers.
+                    Why <span className="bg-gradient-to-r from-zinc-950 via-cyan-500 to-amber-400 bg-clip-text text-transparent">DNS Security Matters</span> for Developers.
                 </h1>
                 <p className="text-2xl text-zinc-600 dark:text-zinc-400 font-medium leading-relaxed">
                     Building great apps is only half the battle. Securing the infrastructure that points to them is just as critical.
@@ -50,8 +50,8 @@ export default function BlogPost2() {
                     <p className="text-lg text-zinc-600 dark:text-zinc-400 font-medium leading-relaxed">
                         Once you claim a subdomain, it's yours. Our platform ensures that ownership is verified through reliable auth providers like Clerk, so only authorized users can modify their records.
                     </p>
-                    <pre className="bg-zinc-50 dark:bg-zinc-900/50 p-6 rounded-3xl border border-zinc-100 dark:border-zinc-800 overflow-x-auto">
-                        <code className="text-sm font-mono text-purple-600 dark:text-purple-400">
+                    <pre className="bg-zinc-50 dark:bg-zinc-900/50 p-6 rounded-lg border border-zinc-950/20 dark:border-white/20 overflow-x-auto">
+                        <code className="text-sm font-mono text-zinc-950 dark:text-lime-300">
                             {`// nxtdev.xyz safety protocol
 const isAuthorized = await checkOwnership(subdomainId, userId);
 if (!isAuthorized) throw new Error("Unauthorized");`}
@@ -66,13 +66,13 @@ if (!isAuthorized) throw new Error("Unauthorized");`}
                     </p>
                 </section>
 
-                <div className="p-10 rounded-[2.5rem] bg-purple-600/5 border-2 border-dashed border-purple-600/20 text-center space-y-6 mt-16">
+                <div className="p-10 rounded-lg bg-amber-100 border-2 border-dashed border-zinc-950/20 text-center space-y-6 mt-16">
                     <h3 className="text-2xl font-black text-zinc-900 dark:text-white">Protect your project now.</h3>
                     <p className="text-zinc-600 dark:text-zinc-400 font-medium leading-relaxed">
                         Join thousands of developers who trust nxtdev.xyz for secure and easy subdomain management.
                     </p>
                     <Link href="/sign-up" className="inline-block">
-                        <Button size="lg" className="rounded-2xl px-10 h-14 font-black">Join nxtdev</Button>
+                        <Button size="lg" className="rounded-lg px-10 h-14 font-black">Join nxtdev</Button>
                     </Link>
                 </div>
             </div>

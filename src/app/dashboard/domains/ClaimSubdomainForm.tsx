@@ -34,7 +34,7 @@ export function ClaimSubdomainForm(props: {
   const [transitionPending, startTransition] = useTransition();
 
   const canClaim =
-    props.usedCount < 2 && props.isGithubVerified && props.domainCreationEnabled;
+    props.usedCount < 2 && props.domainCreationEnabled;
   const trimmed = label.trim().toLowerCase();
   const previewFqdn = useMemo(() => {
     if (!trimmed) return `yourname.${props.rootDomain}`;
@@ -87,23 +87,23 @@ export function ClaimSubdomainForm(props: {
     <div className="space-y-6">
       <form action={formAction} className="grid gap-4">
         {!props.domainCreationEnabled ? (
-          <div className="rounded-2xl border border-indigo-100 bg-indigo-50/50 px-4 py-3 text-sm text-indigo-900 dark:border-white/10 dark:bg-white/5 dark:text-indigo-200 flex items-center gap-3">
+          <div className="rounded-lg border border-zinc-950/20 bg-cyan-100/50 px-4 py-3 text-sm text-zinc-950 dark:border-white/10 dark:bg-white/5 dark:text-zinc-200 flex items-center gap-3">
              <svg className="w-5 h-5 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             {props.maintenanceMessage}
           </div>
         ) : null}
         
         {!props.isGithubVerified ? (
-          <div className="rounded-2xl border border-amber-100 bg-amber-50/50 px-4 py-3 text-sm text-amber-900 dark:border-amber-500/20 dark:bg-amber-500/10 dark:text-amber-200 flex items-center gap-3">
+          <div className="flex items-center gap-3 border-2 border-zinc-950 bg-amber-200 px-4 py-3 text-sm font-bold text-zinc-950 shadow-[4px_4px_0_#18181b] dark:border-white dark:shadow-[4px_4px_0_#fafafa]">
             <svg className="w-5 h-5 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-            <span>Please verify your identity with GitHub to claim a subdomain. <Link className="font-bold underline" href="/dashboard/verify">Verify now</Link></span>
+            <span>You can claim now. Connect GitHub before adding, editing, or deleting DNS records. <Link className="font-black underline decoration-cyan-400 decoration-2 underline-offset-4" href="/dashboard/verify">Connect GitHub</Link></span>
           </div>
         ) : null}
 
         <div className="grid gap-4 md:grid-cols-[1fr_auto] items-end">
           <div className="space-y-2">
             <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Your Desired Subdomain</label>
-            <div className="flex h-12 shadow-sm rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 transition-all focus-within:ring-2 focus-within:ring-blue-500/20 focus-within:border-blue-500/50">
+            <div className="flex h-12 shadow-sm rounded-lg overflow-hidden border border-zinc-200 dark:border-white/20 transition-all focus-within:ring-2 focus-within:ring-amber-300/70 focus-within:border-zinc-950">
               <Input
                 name="label"
                 value={label}
@@ -117,7 +117,7 @@ export function ClaimSubdomainForm(props: {
                 className="h-full border-0 rounded-none bg-white dark:bg-zinc-950 px-4 text-base font-bold placeholder:font-medium placeholder:text-zinc-300"
                 aria-label="Subdomain label"
               />
-              <div className="flex h-full items-center bg-zinc-50 dark:bg-zinc-900 px-4 text-sm font-black text-zinc-500 dark:text-zinc-400 border-l border-zinc-100 dark:border-zinc-800">
+              <div className="flex h-full items-center bg-zinc-50 dark:bg-zinc-900 px-4 text-sm font-black text-zinc-500 dark:text-zinc-400 border-l border-zinc-950/20 dark:border-white/20">
                 .{props.rootDomain}
               </div>
             </div>
@@ -127,15 +127,15 @@ export function ClaimSubdomainForm(props: {
             <Button
               type="button"
               variant="secondary"
-              className="h-full px-6 rounded-2xl font-black uppercase tracking-widest text-[10px]"
+              className="h-full px-6 rounded-lg font-black uppercase tracking-widest text-[10px]"
               onClick={() => {
                 startTransition(() => check());
               }}
-              disabled={transitionPending || !props.isGithubVerified || !props.domainCreationEnabled}
+              disabled={transitionPending || !props.domainCreationEnabled}
             >
               {transitionPending ? <Spinner className="h-4 w-4" /> : "Check"}
             </Button>
-            <SubmitButton disabled={!canClaim} pendingText="Claiming..." className="h-full px-8 rounded-2xl font-black uppercase tracking-widest text-[10px] bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-500/20">
+            <SubmitButton disabled={!canClaim} pendingText="Claiming..." className="h-full px-8 rounded-lg font-black uppercase tracking-widest text-[10px] bg-zinc-950 hover:bg-zinc-800 shadow-lg shadow-zinc-950/20">
               Claim Link
             </SubmitButton>
           </div>
@@ -146,20 +146,20 @@ export function ClaimSubdomainForm(props: {
              Status:
            </span>
            {availability.status === "idle" && <span className="text-[10px] text-zinc-400 font-bold italic">Waiting for input...</span>}
-           {availability.status === "checking" && <span className="text-[10px] text-blue-500 font-black animate-pulse">Scanning DNS...</span>}
-           {availability.status === "available" && <Badge tone="ok" className="rounded-full px-3 py-0.5 text-[9px]">Available</Badge>}
-           {availability.status === "taken" && <Badge tone="bad" className="rounded-full px-3 py-0.5 text-[9px]">Already Taken</Badge>}
-           {availability.status === "reserved" && <Badge tone="warn" className="rounded-full px-3 py-0.5 text-[9px]">Reserved</Badge>}
-           {availability.status === "blocked" && <Badge tone="bad" className="rounded-full px-3 py-0.5 text-[9px]">Blocked</Badge>}
-           {availability.status === "invalid" && <Badge tone="warn" className="rounded-full px-3 py-0.5 text-[9px]">Invalid Label</Badge>}
-           {availability.status === "error" && <Badge tone="warn" className="rounded-full px-3 py-0.5 text-[9px]">System Error</Badge>}
+           {availability.status === "checking" && <span className="text-[10px] text-zinc-950 font-black animate-pulse">Scanning DNS...</span>}
+           {availability.status === "available" && <Badge tone="ok" className="rounded-none px-3 py-0.5 text-[9px]">Available</Badge>}
+           {availability.status === "taken" && <Badge tone="bad" className="rounded-none px-3 py-0.5 text-[9px]">Already Taken</Badge>}
+           {availability.status === "reserved" && <Badge tone="warn" className="rounded-none px-3 py-0.5 text-[9px]">Reserved</Badge>}
+           {availability.status === "blocked" && <Badge tone="bad" className="rounded-none px-3 py-0.5 text-[9px]">Blocked</Badge>}
+           {availability.status === "invalid" && <Badge tone="warn" className="rounded-none px-3 py-0.5 text-[9px]">Invalid Label</Badge>}
+           {availability.status === "error" && <Badge tone="warn" className="rounded-none px-3 py-0.5 text-[9px]">System Error</Badge>}
         </div>
       </form>
 
       {/* Premium Error & Success Cards */}
       {state?.error && (
-        <div className="p-5 bg-red-50 dark:bg-red-950/20 border border-red-100 dark:border-red-900/40 rounded-[2rem] flex items-start gap-4 animate-in slide-in-from-top-2 duration-300">
-           <div className="h-10 w-10 shrink-0 bg-white dark:bg-zinc-900 rounded-2xl shadow-sm border border-red-100 dark:border-red-950 flex items-center justify-center text-red-600">
+        <div className="p-5 bg-red-50 dark:bg-red-950/20 border border-red-100 dark:border-red-900/40 rounded-lg flex items-start gap-4 animate-in slide-in-from-top-2 duration-300">
+           <div className="h-10 w-10 shrink-0 bg-white dark:bg-zinc-900 rounded-lg shadow-sm border border-red-100 dark:border-red-950 flex items-center justify-center text-red-600">
              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
            </div>
            <div>
@@ -169,8 +169,8 @@ export function ClaimSubdomainForm(props: {
         </div>
       )}
 
-      {props.domainCreationEnabled && props.isGithubVerified && props.usedCount >= 2 ? (
-        <div className="p-4 bg-zinc-50 dark:bg-zinc-900/40 rounded-2xl border border-zinc-100 dark:border-zinc-800 text-xs font-bold text-zinc-500 text-center">
+      {props.domainCreationEnabled && props.usedCount >= 2 ? (
+        <div className="p-4 bg-zinc-50 dark:bg-zinc-900/40 rounded-lg border border-zinc-950/20 dark:border-white/20 text-xs font-bold text-zinc-500 text-center">
           You have reached your limit of {props.usedCount}/2 subdomains. 
           <br/><span className="text-[10px] opacity-70">Delete an existing domain to claim a new one.</span>
         </div>

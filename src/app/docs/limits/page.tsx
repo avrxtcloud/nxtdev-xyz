@@ -16,9 +16,9 @@ export default function LimitsPage() {
                 </section>
 
                 <div className="grid gap-6 md:grid-cols-2">
-                    <div className="p-8 rounded-3xl border border-zinc-100 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50">
+                    <div className="p-8 rounded-lg border border-zinc-950/20 dark:border-white/20 bg-zinc-50/50 dark:bg-zinc-900/50">
                         <div className="flex items-center gap-3 mb-4">
-                            <div className="h-10 w-10 text-blue-600 bg-white dark:bg-zinc-800 rounded-xl flex items-center justify-center border border-blue-100 dark:border-blue-900/50 shadow-sm">
+                            <div className="h-10 w-10 text-zinc-950 bg-white dark:bg-zinc-800 rounded-lg flex items-center justify-center border border-zinc-950/20 dark:border-white/20 shadow-sm">
                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" /></svg>
                             </div>
                             <h3 className="font-bold text-zinc-900 dark:text-white">Subdomains</h3>
@@ -30,9 +30,9 @@ export default function LimitsPage() {
                         <p className="text-sm text-zinc-500 font-medium">Maximum number of root-level subdomains per account.</p>
                     </div>
 
-                    <div className="p-8 rounded-3xl border border-zinc-100 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50">
+                    <div className="p-8 rounded-lg border border-zinc-950/20 dark:border-white/20 bg-zinc-50/50 dark:bg-zinc-900/50">
                         <div className="flex items-center gap-3 mb-4">
-                            <div className="h-10 w-10 text-purple-600 bg-white dark:bg-zinc-800 rounded-xl flex items-center justify-center border border-purple-100 dark:border-purple-900/50 shadow-sm">
+                            <div className="h-10 w-10 text-zinc-950 bg-white dark:bg-zinc-800 rounded-lg flex items-center justify-center border border-zinc-950/20 dark:border-white/20 shadow-sm">
                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
                             </div>
                             <h3 className="font-bold text-zinc-900 dark:text-white">DNS Records</h3>
@@ -47,7 +47,7 @@ export default function LimitsPage() {
 
                 <section className="space-y-6">
                     <h2 className="text-2xl font-bold text-zinc-900 dark:text-white">Rate Limiting</h2>
-                    <div className="overflow-hidden rounded-2xl border border-zinc-100 dark:border-zinc-800">
+                    <div className="overflow-hidden rounded-lg border border-zinc-950/20 dark:border-white/20">
                         <table className="w-full text-sm text-left font-medium">
                             <thead className="bg-zinc-50 dark:bg-zinc-900/50 text-zinc-500 uppercase text-[10px] tracking-widest">
                                 <tr>

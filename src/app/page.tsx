@@ -1,142 +1,347 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { Show, SignUpButton } from "@clerk/nextjs";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { env } from "@/lib/env";
 import { AnnouncementBanner } from "@/components/announcement-banner";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { HomeSubdomainSearch } from "@/components/home-subdomain-search";
+import { env } from "@/lib/env";
+
+export const metadata: Metadata = {
+  title: "Free Developer DNS",
+  description: "Check availability, claim a free nxtdev.xyz subdomain, and manage DNS for your next project.",
+};
+
+const featureRows = [
+  {
+    label: "Name",
+    value: "studio",
+    suffix: ".nxtdev.xyz",
+    tone: "bg-amber-300 text-zinc-950",
+  },
+  {
+    label: "Target",
+    value: "cname.vercel-dns.com",
+    suffix: "CNAME",
+    tone: "bg-cyan-300 text-zinc-950",
+  },
+  {
+    label: "Safety",
+    value: "phishing + IP reputation",
+    suffix: "PASS",
+    tone: "bg-lime-300 text-zinc-950",
+  },
+];
+
+const routes = [
+  ["A", "192.0.2.24", "edge node"],
+  ["TXT", "site-verification=ready", "verified"],
+  ["MX", "route.mx.cloudflare.net", "email"],
+  ["SRV", "_minecraft._tcp", "game server"],
+];
+
+const useCases = [
+  {
+    title: "Launch previews",
+    copy: "Give every demo, client build, and hackathon project a real domain before it is famous.",
+    accent: "border-l-amber-400",
+  },
+  {
+    title: "Home labs",
+    copy: "Keep self-hosted services reachable with DDNS that syncs through the same control plane.",
+    accent: "border-l-cyan-400",
+  },
+  {
+    title: "API sandboxes",
+    copy: "Point staging backends, docs, and webhooks at clean names your team can remember.",
+    accent: "border-l-lime-400",
+  },
+];
+
+function NodeIcon(props: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={props.className}
+      aria-hidden="true"
+    >
+      <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+      <path d="M18 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+      <path d="M7.7 6.5 15.6 10" />
+      <path d="M8.4 18.2 15.6 14" />
+      <path d="M6 22a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+    </svg>
+  );
+}
+
+function ArrowIcon(props: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={props.className}
+      aria-hidden="true"
+    >
+      <path d="M5 12h14" />
+      <path d="m13 6 6 6-6 6" />
+    </svg>
+  );
+}
 
 export default function Home() {
   return (
-    <main className="mx-auto max-w-7xl px-4 py-16 sm:py-24 lg:py-32">
-      <AnnouncementBanner />
-      <div className="mt-12 grid gap-16 lg:grid-cols-2 lg:items-center">
-        <div className="space-y-8">
-          <div className="inline-flex items-center gap-2 rounded-full bg-blue-50 dark:bg-blue-900/20 px-4 py-1.5 text-sm font-semibold text-blue-700 dark:text-blue-300 border border-blue-100 dark:border-blue-800/50">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-            </span>
-            Available Now: Free Subdomains
-          </div>
-          <h1 className="text-5xl font-black tracking-tight sm:text-7xl xl:text-8xl leading-[1.05]">
-            Claim your <br />
-            <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
-              free subdomain.
-            </span>
-          </h1>
-          <p className="max-w-xl text-lg sm:text-xl text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
-            Join thousands of developers using <span className="text-zinc-900 dark:text-white font-bold">{env.ROOT_DOMAIN}</span> to ship faster with production-ready DNS. No credit card required.
-          </p>
-          <div className="flex flex-wrap gap-4 pt-4">
-            <Show when="signed-out">
-              <SignUpButton mode="modal">
-                <Button size="lg" className="h-14 px-8 text-base font-bold rounded-2xl shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40 transition-all hover:scale-105 active:scale-95">
-                  Start for free
-                </Button>
-              </SignUpButton>
-            </Show>
-            <Show when="signed-in">
-              <Link href="/dashboard">
-                <Button size="lg" className="h-14 px-8 text-base font-bold rounded-2xl shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40 transition-all hover:scale-105 active:scale-95">
-                  Go to dashboard
+    <main className="overflow-hidden">
+      <section className="relative mx-auto max-w-7xl px-4 pb-20 pt-10 sm:px-6 lg:pb-28 lg:pt-16">
+        <AnnouncementBanner />
+
+        <div className="mt-10 grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+          <div className="max-w-2xl">
+            <div className="inline-flex items-center gap-3 border border-zinc-900 bg-white px-3 py-2 text-xs font-black uppercase tracking-[0.22em] text-zinc-950 shadow-[5px_5px_0_#18181b] dark:border-white dark:bg-zinc-950 dark:text-white dark:shadow-[5px_5px_0_#f4f4f5]">
+              <span className="h-2 w-2 bg-lime-400" />
+              Free developer DNS
+            </div>
+
+            <h1 className="mt-8 max-w-4xl text-5xl font-black leading-[0.94] tracking-tight text-zinc-950 sm:text-7xl lg:text-8xl dark:text-white">
+              Your next project deserves a real address.
+            </h1>
+
+            <p className="mt-7 max-w-xl text-lg font-medium leading-8 text-zinc-600 dark:text-zinc-300">
+              Claim a clean <strong className="text-zinc-950 dark:text-white">{env.ROOT_DOMAIN}</strong>{" "}
+              subdomain, wire up DNS records, and ship with guardrails for abuse, routing, and verification.
+            </p>
+
+            <HomeSubdomainSearch rootDomain={env.ROOT_DOMAIN} />
+
+            <div className="mt-9 flex flex-wrap gap-3">
+              <Show when="signed-out">
+                <SignUpButton mode="modal">
+                  <Button size="lg" className="rounded-lg bg-zinc-950 text-white shadow-[6px_6px_0_#facc15] hover:bg-zinc-800 dark:bg-white dark:text-zinc-950">
+                    Claim a subdomain
+                    <ArrowIcon className="h-4 w-4" />
+                  </Button>
+                </SignUpButton>
+              </Show>
+              <Show when="signed-in">
+                <Link href="/dashboard">
+                  <Button size="lg" className="rounded-lg bg-zinc-950 text-white shadow-[6px_6px_0_#facc15] hover:bg-zinc-800 dark:bg-white dark:text-zinc-950">
+                    Open dashboard
+                    <ArrowIcon className="h-4 w-4" />
+                  </Button>
+                </Link>
+              </Show>
+              <Link href="/docs">
+                <Button variant="outline" size="lg" className="rounded-lg border-2 border-zinc-950 bg-white text-zinc-950 hover:bg-zinc-100 dark:border-white dark:bg-zinc-950 dark:text-white">
+                  Read the docs
                 </Button>
               </Link>
-            </Show>
-            <Link href="/docs">
-              <Button variant="secondary" size="lg" className="h-14 px-8 text-base font-bold rounded-2xl border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-all">
-                Read docs
-              </Button>
-            </Link>
+            </div>
+
+            <dl className="mt-12 grid max-w-xl grid-cols-3 gap-3 text-sm">
+              {[
+                ["2", "free names"],
+                ["100", "DNS records"],
+                ["24/7", "edge sync"],
+              ].map(([value, label]) => (
+                <div key={label} className="border-l-2 border-zinc-950 pl-3 dark:border-white">
+                  <dt className="text-2xl font-black text-zinc-950 dark:text-white">{value}</dt>
+                  <dd className="mt-1 font-bold text-zinc-500 dark:text-zinc-400">{label}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
-          <p className="text-sm text-zinc-500 font-medium pt-4">
-            By joining, you agree to our{" "}
-            <Link className="underline decoration-zinc-300 underline-offset-4 hover:text-zinc-950 dark:hover:text-zinc-300" href="/terms">
-              Terms
-            </Link>{" "}
-            and{" "}
-            <Link className="underline decoration-zinc-300 underline-offset-4 hover:text-zinc-950 dark:hover:text-zinc-300" href="/privacy">
-              Privacy Policy
-            </Link>.
-          </p>
+
+          <div className="relative min-h-[560px]">
+            <div className="absolute inset-x-0 top-8 h-[420px] rotate-[-3deg] border-2 border-zinc-950 bg-amber-200 shadow-[14px_14px_0_#18181b] dark:border-white dark:bg-amber-300 dark:shadow-[14px_14px_0_#fafafa]" />
+            <div className="relative border-2 border-zinc-950 bg-zinc-950 text-white shadow-[10px_10px_0_#22d3ee] dark:border-white">
+              <div className="flex items-center justify-between border-b-2 border-white/20 px-4 py-3">
+                <div className="flex items-center gap-2">
+                  <span className="h-3 w-3 bg-red-400" />
+                  <span className="h-3 w-3 bg-amber-300" />
+                  <span className="h-3 w-3 bg-lime-300" />
+                </div>
+                <span className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-zinc-400">
+                  domain console
+                </span>
+              </div>
+
+              <div className="grid gap-0 lg:grid-cols-[1fr_190px]">
+                <div className="p-5 sm:p-7">
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <p className="font-mono text-sm font-bold text-cyan-300">nxtdev create</p>
+                      <h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">
+                        studio.{env.ROOT_DOMAIN}
+                      </h2>
+                    </div>
+                    <Badge tone="ok" className="rounded bg-lime-300 px-3 py-1 font-black text-zinc-950">
+                      Live
+                    </Badge>
+                  </div>
+
+                  <div className="mt-8 grid gap-3">
+                    {featureRows.map((row) => (
+                      <div key={row.label} className="grid gap-3 border border-white/15 bg-white/[0.06] p-4 sm:grid-cols-[92px_1fr_auto] sm:items-center">
+                        <span className="text-xs font-black uppercase tracking-[0.18em] text-zinc-400">
+                          {row.label}
+                        </span>
+                        <span className="min-w-0 font-mono text-sm font-bold text-white">
+                          {row.value}
+                        </span>
+                        <span className={`w-fit px-2 py-1 font-mono text-[11px] font-black ${row.tone}`}>
+                          {row.suffix}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-8 border border-white/15 bg-black/40 p-4">
+                    <div className="flex items-center gap-3 text-sm font-black uppercase tracking-[0.18em] text-zinc-400">
+                      <NodeIcon className="h-5 w-5 text-lime-300" />
+                      Propagation map
+                    </div>
+                    <div className="mt-5 grid grid-cols-4 gap-2">
+                      {["SIN", "FRA", "SFO", "BOM", "IAD", "LHR", "TYO", "SYD"].map((node, index) => (
+                        <div
+                          key={node}
+                          className="border border-white/15 bg-white/[0.04] px-2 py-3 text-center font-mono text-xs font-black"
+                        >
+                          <span className={index % 3 === 0 ? "text-amber-300" : "text-cyan-300"}>{node}</span>
+                          <div className="mt-2 h-1 bg-lime-300" />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="border-t-2 border-white/15 bg-white/[0.04] p-5 lg:border-l-2 lg:border-t-0">
+                  <p className="font-mono text-xs font-black uppercase tracking-[0.2em] text-zinc-400">
+                    Record stack
+                  </p>
+                  <div className="mt-5 grid gap-3">
+                    {routes.map(([type, target, note]) => (
+                      <div key={`${type}-${target}`} className="border border-white/15 bg-zinc-950 p-3">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="bg-white px-2 py-1 font-mono text-xs font-black text-zinc-950">
+                            {type}
+                          </span>
+                          <span className="text-[10px] font-black uppercase tracking-wider text-lime-300">
+                            {note}
+                          </span>
+                        </div>
+                        <p className="mt-3 break-words font-mono text-xs font-bold text-zinc-300">
+                          {target}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y-2 border-zinc-950 bg-white py-5 dark:border-white dark:bg-zinc-950">
+        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 text-sm font-black uppercase tracking-[0.18em] text-zinc-950 sm:px-6 md:flex-row md:items-center md:justify-between dark:text-white">
+          <span>Cloudflare DNS</span>
+          <span>AbuseIPDB checks</span>
+          <span>DDNS API</span>
+          <span>Email aliases</span>
+          <span>NS delegation</span>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:py-28">
+        <div className="grid gap-10 lg:grid-cols-[0.75fr_1.25fr]">
+          <div>
+            <p className="text-sm font-black uppercase tracking-[0.22em] text-cyan-600 dark:text-cyan-300">
+              Built for messy shipping
+            </p>
+            <h2 className="mt-4 text-4xl font-black tracking-tight text-zinc-950 sm:text-5xl dark:text-white">
+              A name system that moves as fast as the project.
+            </h2>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-3">
+            {useCases.map((useCase) => (
+              <article
+                key={useCase.title}
+                className={`border-l-4 ${useCase.accent} bg-white p-6 shadow-sm ring-1 ring-zinc-200 dark:bg-zinc-950 dark:ring-white/10`}
+              >
+                <h3 className="text-xl font-black text-zinc-950 dark:text-white">{useCase.title}</h3>
+                <p className="mt-4 text-sm font-medium leading-6 text-zinc-600 dark:text-zinc-300">
+                  {useCase.copy}
+                </p>
+              </article>
+            ))}
+          </div>
         </div>
 
-        <div className="relative group">
-          <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-[2.5rem] opacity-20 blur-2xl group-hover:opacity-30 transition duration-1000"></div>
-          <div className="relative grid gap-4 sm:grid-cols-2">
-            <Card className="p-8 rounded-[2rem] border-zinc-100/50 dark:border-zinc-800 shadow-sm transition-all hover:translate-y-[-4px]">
-              <div className="h-12 w-12 rounded-2xl bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 mb-6">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
-              </div>
-              <div className="text-2xl font-black text-zinc-900 dark:text-white">2 Subdomains</div>
-              <div className="mt-2 text-zinc-600 dark:text-zinc-400 font-medium">Free base subdomains per user.</div>
-            </Card>
-            <Card className="p-8 rounded-[2rem] border-zinc-100/50 dark:border-zinc-800 shadow-sm transition-all hover:translate-y-[-4px]">
-              <div className="h-12 w-12 rounded-2xl bg-purple-50 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 mb-6">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-              </div>
-              <div className="text-2xl font-black text-zinc-900 dark:text-white">100 Records</div>
-              <div className="mt-2 text-zinc-600 dark:text-zinc-400 font-medium">Per subdomain, including SRV/NS.</div>
-            </Card>
-            <Card className="sm:col-span-2 p-8 rounded-[2rem] border-zinc-100/50 dark:border-zinc-800 shadow-sm transition-all hover:translate-y-[-4px]">
-              <div className="h-12 w-12 rounded-2xl bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600 mb-6">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-              </div>
-              <div className="text-2xl font-black text-zinc-900 dark:text-white">Enterprise Safety</div>
-              <div className="mt-2 text-zinc-600 dark:text-zinc-400 font-medium">Anti-phishing checks and IP reputation verification powered by AbuseIPDB.</div>
-            </Card>
-          </div>
+        <div className="mt-16 grid gap-4 lg:grid-cols-[1fr_1fr_1fr]">
+          <Link href="/DynamicDns" className="group border-2 border-zinc-950 bg-lime-200 p-7 text-zinc-950 shadow-[6px_6px_0_#18181b] transition-transform hover:-translate-y-1 dark:border-white dark:shadow-[6px_6px_0_#fafafa]">
+            <div className="flex items-center justify-between gap-4">
+              <h3 className="text-2xl font-black">Dynamic DNS</h3>
+              <ArrowIcon className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </div>
+            <p className="mt-4 text-sm font-bold leading-6">
+              Keep a changing IP attached to a stable subdomain for labs, game servers, and always-on side projects.
+            </p>
+          </Link>
+          <Link href="/email-routing" className="group border-2 border-zinc-950 bg-cyan-200 p-7 text-zinc-950 shadow-[6px_6px_0_#18181b] transition-transform hover:-translate-y-1 dark:border-white dark:shadow-[6px_6px_0_#fafafa]">
+            <div className="flex items-center justify-between gap-4">
+              <h3 className="text-2xl font-black">Email masking</h3>
+              <ArrowIcon className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </div>
+            <p className="mt-4 text-sm font-bold leading-6">
+              Create disposable addresses on your domain and forward them without exposing your real inbox.
+            </p>
+          </Link>
+          <Link href="/docs/quick-start" className="group border-2 border-zinc-950 bg-amber-200 p-7 text-zinc-950 shadow-[6px_6px_0_#18181b] transition-transform hover:-translate-y-1 dark:border-white dark:shadow-[6px_6px_0_#fafafa]">
+            <div className="flex items-center justify-between gap-4">
+              <h3 className="text-2xl font-black">Quick start</h3>
+              <ArrowIcon className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </div>
+            <p className="mt-4 text-sm font-bold leading-6">
+              Go from claim to DNS record to verified deployment with docs made for copy-paste momentum.
+            </p>
+          </Link>
         </div>
-      </div>
+      </section>
 
-      <div className="mt-32 space-y-12">
-        <div className="text-center space-y-4">
-          <h2 className="text-3xl font-black tracking-tight sm:text-5xl text-zinc-900 dark:text-white">One platform, endless possibilities.</h2>
-          <p className="text-lg text-zinc-600 dark:text-zinc-400 font-medium">Everything you need to build and scale your next project.</p>
+      <section className="border-y-2 border-zinc-950 bg-zinc-950 px-4 py-16 text-white dark:border-white sm:px-6">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+          <div>
+            <div className="inline-flex border-2 border-white bg-lime-300 px-3 py-1 text-xs font-black uppercase tracking-[0.2em] text-zinc-950 shadow-[4px_4px_0_#22d3ee]">
+              Support NxtDev
+            </div>
+            <h2 className="mt-5 max-w-3xl text-4xl font-black tracking-tight sm:text-5xl">
+              Help keep free developer subdomains online.
+            </h2>
+            <p className="mt-4 max-w-3xl text-sm font-bold leading-7 text-zinc-300 sm:text-base">
+              Donations help pay for DNS infrastructure, uptime/status monitoring,
+              abuse prevention, safety reviews, email routing experiments, and the
+              maintenance work that keeps NxtDev reliable for builders.
+            </p>
+          </div>
+          <a
+            href="https://razorpay.me/@avrxtcloud"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex h-14 items-center justify-center border-2 border-white bg-white px-8 text-sm font-black uppercase tracking-widest text-zinc-950 shadow-[6px_6px_0_#facc15] transition-transform hover:-translate-y-1"
+          >
+            Donate on Razorpay
+          </a>
         </div>
-        <div className="grid gap-8 sm:grid-cols-2 xl:grid-cols-5">
-          <Card className="p-10 rounded-[2.5rem] border-zinc-100/50 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-all border-b-4 border-b-blue-500">
-            <h3 className="text-2xl font-black text-zinc-900 dark:text-white mb-4">Websites</h3>
-            <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
-              Point your subdomain to Vercel, Netlify, or any Cloud provider using specialized CNAME or A records.
-            </p>
-          </Card>
-          <Card className="p-10 rounded-[2.5rem] border-zinc-100/50 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-all border-b-4 border-b-indigo-500">
-            <h3 className="text-2xl font-black text-zinc-900 dark:text-white mb-4">APIs</h3>
-            <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
-              Deploy backends with ease. Support for A/AAAA records and reverse proxying through global CDNs.
-            </p>
-          </Card>
-          <Link href="/DynamicDns" className="group">
-            <Card className="h-full p-10 rounded-[2.5rem] border-zinc-100/50 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-all border-b-4 border-b-emerald-500 group-hover:scale-[1.02]">
-              <h3 className="text-2xl font-black text-zinc-900 dark:text-white mb-4 flex items-center gap-2">
-                Dynamic DNS
-                <Badge tone="ok" className="text-[10px]">Sync</Badge>
-              </h3>
-              <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
-                Keep your home server online 24/7 with our Cloudflare Edge-powered DDNS API. Auto-sync to dashboard.
-              </p>
-            </Card>
-          </Link>
-          <Card className="p-10 rounded-[2.5rem] border-zinc-100/50 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-all border-b-4 border-b-purple-500">
-            <h3 className="text-2xl font-black text-zinc-900 dark:text-white mb-4">Infrastructure</h3>
-            <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
-              Experimental support for MX, TXT, and SRV records allows you to host mail and game servers for free.
-            </p>
-          </Card>
-          <Link href="/email-routing" className="group">
-            <Card className="h-full p-10 rounded-[2.5rem] border-zinc-100/50 dark:border-zinc-800 bg-blue-600/5 hover:bg-blue-600/10 dark:bg-blue-900/10 dark:hover:bg-blue-900/20 transition-all border-b-4 border-b-blue-600 border-dashed group-hover:border-solid">
-              <h3 className="text-2xl font-black text-zinc-900 dark:text-white mb-4 flex items-center gap-2">
-                Masking
-                <Badge tone="ok" className="text-[10px]">New</Badge>
-              </h3>
-              <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
-                Protect your privacy. Create disposable @nxtdev.xyz aliases that forward to your real address.
-              </p>
-            </Card>
-          </Link>
-        </div>
-      </div>
+      </section>
     </main>
   );
 }

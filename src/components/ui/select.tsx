@@ -82,7 +82,7 @@ export function Select(props: {
         aria-haspopup="listbox"
         aria-expanded={open}
         className={cn(
-          "flex h-10 w-full items-center justify-between gap-2 rounded-md border border-zinc-200 bg-white/80 px-3 text-sm text-zinc-900 backdrop-blur transition-colors hover:bg-white focus:outline-none focus:ring-2 focus:ring-zinc-400/30 disabled:pointer-events-none disabled:opacity-60 dark:border-white/10 dark:bg-zinc-950/40 dark:text-zinc-50 dark:hover:bg-zinc-950/60 dark:focus:ring-white/10",
+          "flex h-10 w-full items-center justify-between gap-2 rounded-none border-2 border-zinc-950 bg-white px-3 text-sm font-bold text-zinc-950 transition-colors hover:bg-amber-50 focus:outline-none focus:ring-2 focus:ring-amber-300/70 disabled:pointer-events-none disabled:opacity-60 dark:border-white dark:bg-zinc-950 dark:text-zinc-50 dark:hover:bg-zinc-900",
         )}
         onClick={() => setOpen((v) => !v)}
         onKeyDown={(e) => {
@@ -127,7 +127,7 @@ export function Select(props: {
         <div
           ref={listRef}
           role="listbox"
-          className="absolute z-50 mt-2 w-full overflow-hidden rounded-xl border border-zinc-200 bg-white/95 shadow-xl backdrop-blur dark:border-white/10 dark:bg-zinc-950/80"
+          className="absolute z-50 mt-2 w-full overflow-hidden border-2 border-zinc-950 bg-white shadow-[5px_5px_0_#18181b] dark:border-white dark:bg-zinc-950 dark:shadow-[5px_5px_0_#fafafa]"
           onKeyDown={(e) => {
             if (e.key === "Escape") setOpen(false);
             if (e.key === "ArrowDown") {
@@ -198,8 +198,8 @@ export function Select(props: {
                     role="option"
                     aria-selected={isSelected}
                     className={cn(
-                      "flex w-full items-start justify-between gap-3 rounded-lg px-3 py-2 text-left text-sm text-zinc-900 hover:bg-zinc-100 dark:text-zinc-50 dark:hover:bg-white/10",
-                      isActive && "bg-zinc-100 dark:bg-white/10",
+                      "flex w-full items-start justify-between gap-3 px-3 py-2 text-left text-sm text-zinc-900 hover:bg-amber-100 dark:text-zinc-50 dark:hover:bg-white/10",
+                      isActive && "bg-amber-100 dark:bg-white/10",
                     )}
                     onMouseEnter={() => setActiveIndex(idx)}
                     onClick={() => commit(o.value)}
@@ -216,7 +216,7 @@ export function Select(props: {
                     </span>
                     {isSelected ? (
                       <span
-                        className="mt-0.5 text-indigo-600 dark:text-indigo-300"
+                        className="mt-0.5 text-zinc-950 dark:text-lime-300"
                         aria-hidden="true"
                       >
                         <svg
@@ -239,4 +239,3 @@ export function Select(props: {
     </div>
   );
 }
-

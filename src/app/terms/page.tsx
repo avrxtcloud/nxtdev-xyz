@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import DocsContainer from "@/components/docs-container";
 import { env } from "@/lib/env";
+
+export const metadata: Metadata = {
+  title: "Terms of Service",
+  description: "Terms and service rules for using nxtdev subdomains and DNS.",
+};
 
 export default function TermsPage() {
   return (

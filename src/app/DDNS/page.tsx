@@ -59,7 +59,7 @@ update_ddns()`,
       <div className="space-y-6 mb-16">
         <Link 
           href="/docs" 
-          className="text-xs font-black uppercase tracking-widest text-zinc-400 hover:text-blue-600 transition-colors flex items-center gap-2"
+          className="text-xs font-black uppercase tracking-widest text-zinc-400 hover:text-zinc-950 transition-colors flex items-center gap-2"
         >
           <svg className="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
           Back to Docs
@@ -73,24 +73,24 @@ update_ddns()`,
       </div>
 
       <section className="space-y-12">
-        <Card className="p-8 lg:p-12 rounded-[2.5rem] border-zinc-100 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50">
+        <Card className="p-8 lg:p-12 rounded-lg border-zinc-950/20 dark:border-white/20 bg-zinc-50/50 dark:bg-zinc-900/50">
           <div className="flex flex-col lg:flex-row gap-12">
             <div className="lg:w-1/3 space-y-4">
-              <Badge className="bg-blue-600 text-white border-none rounded-full px-4 py-1 font-black uppercase tracking-widest text-[10px]">Step 1</Badge>
+              <Badge className="bg-zinc-950 text-white border-none rounded-none px-4 py-1 font-black uppercase tracking-widest text-[10px]">Step 1</Badge>
               <h3 className="text-2xl font-black text-zinc-900 dark:text-white">Generate an API Key</h3>
               <p className="text-sm font-bold text-zinc-500 dark:text-zinc-400">
-                Head over to your <Link href="/dashboard/api-keys" className="text-blue-600 underline">API Keys dashboard</Link> and create a new key. Keep this secret as it provides write access to your DNS.
+                Head over to your <Link href="/dashboard/api-keys" className="text-zinc-950 underline">API Keys dashboard</Link> and create a new key. Keep this secret as it provides write access to your DNS.
               </p>
             </div>
             <div className="lg:w-1/3 space-y-4">
-               <Badge className="bg-blue-600 text-white border-none rounded-full px-4 py-1 font-black uppercase tracking-widest text-[10px]">Step 2</Badge>
+               <Badge className="bg-zinc-950 text-white border-none rounded-none px-4 py-1 font-black uppercase tracking-widest text-[10px]">Step 2</Badge>
                <h3 className="text-2xl font-black text-zinc-900 dark:text-white">Claim a Domain</h3>
                <p className="text-sm font-bold text-zinc-500 dark:text-zinc-400">
-                 Ensure you have successfully claimed the subdomain you wish to update via the <Link href="/dashboard/domains" className="text-blue-600 underline">Domains panel</Link>.
+                 Ensure you have successfully claimed the subdomain you wish to update via the <Link href="/dashboard/domains" className="text-zinc-950 underline">Domains panel</Link>.
                </p>
             </div>
             <div className="lg:w-1/3 space-y-4">
-               <Badge className="bg-blue-600 text-white border-none rounded-full px-4 py-1 font-black uppercase tracking-widest text-[10px]">Step 3</Badge>
+               <Badge className="bg-zinc-950 text-white border-none rounded-none px-4 py-1 font-black uppercase tracking-widest text-[10px]">Step 3</Badge>
                <h3 className="text-2xl font-black text-zinc-900 dark:text-white">Automate</h3>
                <p className="text-sm font-bold text-zinc-500 dark:text-zinc-400">
                  Use one of the examples below to automate your IP updates. Our API handles A (IPv4) and AAAA (IPv6) automatically.
@@ -103,13 +103,13 @@ update_ddns()`,
           <h2 className="text-3xl font-black text-zinc-900 dark:text-white tracking-tight">Implementation Examples</h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {codeExamples.map((ex) => (
-              <Card key={ex.title} className="p-8 rounded-[2.5rem] border-zinc-100 dark:border-zinc-800 flex flex-col justify-between">
+              <Card key={ex.title} className="p-8 rounded-lg border-zinc-950/20 dark:border-white/20 flex flex-col justify-between">
                 <div>
                   <h4 className="text-xl font-black text-zinc-900 dark:text-white mb-2">{ex.title}</h4>
                   <p className="text-sm font-bold text-zinc-500 dark:text-zinc-400 mb-6">{ex.description}</p>
                 </div>
                 <div className="relative group">
-                  <pre className="bg-zinc-950 text-zinc-300 p-6 rounded-2xl text-xs font-mono overflow-auto max-h-[300px] border border-white/10">
+                  <pre className="bg-zinc-950 text-zinc-300 p-6 rounded-lg text-xs font-mono overflow-auto max-h-[300px] border border-white/10">
                     <code>{ex.code}</code>
                   </pre>
                   <button 
@@ -124,7 +124,7 @@ update_ddns()`,
           </div>
         </div>
 
-        <Card className="p-8 lg:p-12 rounded-[2.5rem] border-zinc-100 dark:border-zinc-800 bg-blue-600 text-white shadow-2xl shadow-blue-500/20">
+        <Card className="p-8 lg:p-12 rounded-lg border-zinc-950/20 dark:border-white/20 bg-zinc-950 text-white shadow-2xl shadow-zinc-950/20">
            <div className="flex flex-col lg:flex-row items-center gap-10">
               <div className="space-y-4 lg:w-2/3">
                  <h2 className="text-3xl sm:text-4xl font-black tracking-tight">API Reference</h2>
@@ -132,20 +132,20 @@ update_ddns()`,
                     The endpoint is highly optimized for performance and rate-limited at 60 updates per hour per account.
                  </p>
                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
-                    <div className="bg-white/10 p-4 rounded-2xl">
+                    <div className="bg-white/10 p-4 rounded-lg">
                        <span className="block text-[10px] uppercase font-black tracking-widest opacity-60 mb-1">Base Endpoint</span>
                        <code className="text-sm font-black text-white">api.nxtdev.xyz/update</code>
                     </div>
-                    <div className="bg-white/10 p-4 rounded-2xl">
+                    <div className="bg-white/10 p-4 rounded-lg">
                        <span className="block text-[10px] uppercase font-black tracking-widest opacity-60 mb-1">Methods</span>
                        <code className="text-sm font-black text-white">GET, POST</code>
                     </div>
                  </div>
               </div>
               <div className="lg:w-1/3">
-                 <div className="p-6 bg-zinc-950 rounded-[2rem] border border-white/10 shadow-2xl">
+                 <div className="p-6 bg-zinc-950 rounded-lg border border-white/10 shadow-2xl">
                     <div className="flex items-center gap-2 mb-4">
-                       <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                       <div className="h-2 w-2 rounded-none bg-emerald-500 animate-pulse"></div>
                        <span className="text-[10px] font-black uppercase tracking-widest text-emerald-500">Live API Status</span>
                     </div>
                     <div className="space-y-3 font-mono text-[10px]">

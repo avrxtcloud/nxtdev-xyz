@@ -13,15 +13,15 @@ export function DocsNav(props: { variant?: "sidebar" | "top" }) {
     <div
       className={cn(
         variant === "top"
-          ? "flex gap-2 overflow-x-auto rounded-xl border border-zinc-200/70 bg-white/70 p-2 backdrop-blur dark:border-white/10 dark:bg-zinc-950/40"
-          : "space-y-6",
+          ? "flex gap-2 overflow-x-auto border-2 border-zinc-950 bg-white p-2 shadow-[4px_4px_0_#18181b] dark:border-white dark:bg-zinc-950 dark:shadow-[4px_4px_0_#fafafa]"
+          : "space-y-6 border-l-2 border-zinc-950 pl-4 dark:border-white",
       )}
     >
       {DOC_SECTIONS.map((section) => (
         <div key={section.title} className={cn(variant === "top" && "shrink-0")}>
           <div
             className={cn(
-              "text-xs font-semibold tracking-wide text-zinc-500 dark:text-zinc-400",
+              "text-xs font-black uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400",
               variant === "top" && "sr-only",
             )}
           >
@@ -36,10 +36,10 @@ export function DocsNav(props: { variant?: "sidebar" | "top" }) {
                   href={item.href}
                   aria-current={active ? "page" : undefined}
                   className={cn(
-                    "rounded-lg px-3 py-2 text-sm transition-colors",
+                    "px-3 py-2 text-sm font-black transition-colors",
                     active
-                      ? "bg-zinc-900 text-white dark:bg-white dark:text-zinc-950"
-                      : "text-zinc-700 hover:bg-zinc-100/70 dark:text-zinc-200 dark:hover:bg-white/10",
+                      ? "bg-zinc-950 text-white dark:bg-white dark:text-zinc-950"
+                      : "text-zinc-700 hover:bg-amber-200 dark:text-zinc-200 dark:hover:bg-white/10",
                     variant === "top" && "whitespace-nowrap py-1.5 text-xs",
                   )}
                 >
@@ -53,4 +53,3 @@ export function DocsNav(props: { variant?: "sidebar" | "top" }) {
     </div>
   );
 }
-

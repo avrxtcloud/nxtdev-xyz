@@ -18,7 +18,7 @@ export function DeleteSubdomainButton({ baseFqdn, id }: { baseFqdn: string; id: 
         <Button
           variant="danger"
           size="sm"
-          className="rounded-2xl h-9 px-6 font-black uppercase tracking-widest text-[10px]"
+          className="rounded-lg h-9 px-6 font-black uppercase tracking-widest text-[10px]"
           onClick={() => setOpen(true)}
         >
           Delete

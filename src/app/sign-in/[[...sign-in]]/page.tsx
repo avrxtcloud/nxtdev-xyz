@@ -2,12 +2,29 @@ import { SignIn } from "@clerk/nextjs";
 
 export default function SignInPage() {
   return (
-    <main className="mx-auto flex min-h-[calc(100vh-12rem)] items-center justify-center px-4 py-20 bg-zinc-50/50 dark:bg-zinc-950/20">
-      <div className="relative group p-1">
-        <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-[2.5rem] blur opacity-15 group-hover:opacity-25 transition duration-1000 group-hover:duration-200"></div>
-        <SignIn appearance={{ elements: { card: "rounded-[2rem] border-zinc-100 dark:border-zinc-800 shadow-2xl" } }} />
+    <main className="mx-auto flex min-h-[calc(100vh-12rem)] items-center justify-center px-4 py-20">
+      <div className="border-2 border-zinc-950 bg-amber-200 p-2 shadow-[8px_8px_0_#18181b] dark:border-white dark:bg-zinc-900 dark:shadow-[8px_8px_0_#fafafa]">
+        <SignIn
+          appearance={{
+            variables: {
+              colorPrimary: "#18181b",
+              colorBackground: "#ffffff",
+              colorText: "#18181b",
+              borderRadius: "0px",
+              fontFamily: "inherit",
+            },
+            elements: {
+              card: "rounded-none border-2 border-zinc-950 dark:border-white shadow-none",
+              headerTitle: "font-black tracking-tight text-zinc-950",
+              headerSubtitle: "font-bold text-zinc-500",
+              socialButtonsBlockButton: "rounded-none border-2 border-zinc-950 font-black shadow-[3px_3px_0_#22d3ee]",
+              formButtonPrimary: "rounded-none border-2 border-zinc-950 bg-zinc-950 font-black text-white shadow-[4px_4px_0_#facc15]",
+              formFieldInput: "rounded-none border-2 border-zinc-950 font-bold",
+              footerActionLink: "font-black text-zinc-950 underline decoration-cyan-400 decoration-2 underline-offset-4",
+            },
+          }}
+        />
       </div>
     </main>
   );
 }
-

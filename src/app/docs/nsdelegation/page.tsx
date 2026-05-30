@@ -14,9 +14,9 @@ export default function NSDelegation() {
                         If you want to use our subdomain with your own custom nameservers (like Cloudflare, Netlify, or your own self-hosted nameservers), you can use the NS delegation feature.
                     </p>
 
-                    <div className="p-6 border border-zinc-100 dark:border-zinc-800 rounded-2xl shadow-sm bg-white dark:bg-zinc-900/50 space-y-4">
+                    <div className="p-6 border border-zinc-950/20 dark:border-white/20 rounded-lg shadow-sm bg-white dark:bg-zinc-900/50 space-y-4">
                         <div className="flex items-center gap-3">
-                            <div className="p-2 bg-blue-100 dark:bg-blue-900/40 rounded-lg text-blue-600 dark:text-blue-300">
+                            <div className="p-2 bg-amber-100 dark:bg-zinc-900 rounded-lg text-zinc-950 dark:text-lime-300">
                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
@@ -35,7 +35,7 @@ export default function NSDelegation() {
                 <section className="space-y-6">
                     <h2 className="text-2xl font-bold text-zinc-900 dark:text-white">How to setup Nameserver Delegation</h2>
 
-                    <div className="space-y-6 bg-zinc-50 dark:bg-zinc-900/50 p-8 border border-zinc-100 dark:border-zinc-800 rounded-3xl">
+                    <div className="space-y-6 bg-zinc-50 dark:bg-zinc-900/50 p-8 border border-zinc-950/20 dark:border-white/20 rounded-lg">
                         <ol className="list-decimal pl-5 space-y-6 text-zinc-600 dark:text-zinc-400">
                             <li>Log in to your dashboard and navigate to your subdomain settings.</li>
                             <li>Navigate to the **Record Management** section.</li>

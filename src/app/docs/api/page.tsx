@@ -13,7 +13,7 @@ export default function ApiGuidePage() {
       <div className="space-y-4">
         <h1 className="text-4xl font-black tracking-tight text-zinc-900 dark:text-white uppercase">API Reference</h1>
         <p className="text-lg text-zinc-600 dark:text-zinc-400 font-medium max-w-2xl">
-          Automate your workflow with our public endpoints. All requests should be made to <code className="bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded font-bold text-blue-600 dark:text-blue-400">https://nxtdev.xyz/api</code>.
+          Automate your workflow with our public endpoints. All requests should be made to <code className="bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded font-bold text-zinc-950 dark:text-lime-300">https://nxtdev.xyz/api</code>.
         </p>
       </div>
 
@@ -80,7 +80,7 @@ function EndpointCard({ method, path, description, params, example, baseUrl }: {
   baseUrl?: string;
 }) {
   return (
-    <Card className="p-8 rounded-[2.5rem] border-zinc-100 dark:border-zinc-800 overflow-hidden relative">
+    <Card className="p-8 rounded-lg border-zinc-950/20 dark:border-white/20 overflow-hidden relative">
       <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 relative z-10">
         <div className="space-y-6 flex-1">
           <div className="flex items-center gap-3">
@@ -102,8 +102,8 @@ function EndpointCard({ method, path, description, params, example, baseUrl }: {
               <h4 className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Parameters</h4>
               <div className="grid gap-2">
                 {params.map(p => (
-                  <div key={p.name} className="flex items-start gap-3 bg-zinc-50 dark:bg-zinc-900/50 p-3 rounded-xl border border-zinc-100 dark:border-zinc-800">
-                    <code className="text-xs font-bold text-blue-600 dark:text-blue-400">{p.name}</code>
+                  <div key={p.name} className="flex items-start gap-3 bg-zinc-50 dark:bg-zinc-900/50 p-3 rounded-lg border border-zinc-950/20 dark:border-white/20">
+                    <code className="text-xs font-bold text-zinc-950 dark:text-lime-300">{p.name}</code>
                     <span className="text-xs text-zinc-400 font-mono">[{p.type}]</span>
                     <span className="text-xs font-medium text-zinc-500">{p.description}</span>
                   </div>
@@ -116,7 +116,7 @@ function EndpointCard({ method, path, description, params, example, baseUrl }: {
         {example && (
           <div className="w-full md:w-80 shrink-0 space-y-3">
              <h4 className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Example</h4>
-             <div className="bg-zinc-900 text-zinc-100 p-4 rounded-2xl font-mono text-xs break-all border border-zinc-800/50 shadow-2xl">
+             <div className="bg-zinc-900 text-zinc-100 p-4 rounded-lg font-mono text-xs break-all border border-zinc-800/50 shadow-2xl">
                <span className="text-zinc-500">$</span> curl {example}
              </div>
           </div>

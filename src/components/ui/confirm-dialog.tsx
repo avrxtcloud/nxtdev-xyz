@@ -40,8 +40,8 @@ export function ConfirmDialog(props: {
         onClick={props.onClose}
         aria-label="Close"
       />
-      <div className="relative w-full max-w-md rounded-xl border border-zinc-200 bg-white/90 p-5 shadow-xl backdrop-blur dark:border-white/10 dark:bg-zinc-950/60">
-        <div className="text-sm font-semibold">{props.title}</div>
+      <div className="relative w-full max-w-md border-2 border-zinc-950 bg-white p-5 shadow-[8px_8px_0_#18181b] dark:border-white dark:bg-zinc-950 dark:shadow-[8px_8px_0_#fafafa]">
+        <div className="text-sm font-black uppercase tracking-wider">{props.title}</div>
         {props.description ? (
           <div className="mt-2 text-sm text-zinc-600 dark:text-zinc-300">
             {props.description}
@@ -67,4 +67,3 @@ export function ConfirmDialog(props: {
     document.body,
   );
 }
-

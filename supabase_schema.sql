@@ -171,6 +171,25 @@ create table if not exists "ShortLink" (
 create index if not exists "ShortLink_userId_idx" on "ShortLink" ("userId");
 create index if not exists "ShortLink_shortSlug_idx" on "ShortLink" ("shortSlug");
 
+-- Email aliases (Cloudflare Email Routing)
+create table if not exists "EmailAlias" (
+  "id" text primary key,
+  "userId" text not null,
+  "aliasAddress" text not null unique,
+  "destinationAddress" text not null,
+  "cloudflareRuleId" text null unique,
+  "cloudflareDestinationId" text null,
+  "status" text not null default 'pending', -- pending|active|disabled
+  "createdAt" timestamptz not null default now(),
+  "updatedAt" timestamptz not null default now(),
+  constraint "EmailAlias_userId_fkey"
+    foreign key ("userId") references "User"("id") on delete cascade
+);
+create index if not exists "EmailAlias_userId_idx" on "EmailAlias" ("userId");
+create unique index if not exists "EmailAlias_userId_unique" on "EmailAlias" ("userId");
+create index if not exists "EmailAlias_aliasAddress_idx" on "EmailAlias" ("aliasAddress");
+create index if not exists "EmailAlias_destinationAddress_idx" on "EmailAlias" ("destinationAddress");
+
 -- API Keys (DDNS tokens)
 create table if not exists "ApiKey" (
   "id" text primary key,

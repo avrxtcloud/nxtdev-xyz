@@ -25,7 +25,7 @@ export function DeleteNameserverButton({
           size="sm"
           disabled={disabled}
           pendingText="..."
-          className="rounded-xl h-8 px-3 text-[10px] uppercase font-black tracking-widest"
+          className="rounded-lg h-8 px-3 text-[10px] uppercase font-black tracking-widest"
         >
           Remove
         </SubmitButton>

@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import DocsContainer from "@/components/docs-container";
+
+export const metadata: Metadata = {
+  title: "Abuse Policy",
+  description: "Safety rules and enforcement policy for nxtdev subdomains.",
+};
 
 export default function AbusePolicyPage() {
   return (
@@ -22,8 +28,8 @@ export default function AbusePolicyPage() {
               "Copyright Violations",
               "Illegal Activity"
             ].map(item => (
-              <li key={item} className="p-4 border border-zinc-100 dark:border-zinc-800 rounded-xl bg-zinc-50 dark:bg-zinc-900/50 flex items-center gap-3">
-                <div className="h-2 w-2 rounded-full bg-red-500"></div>
+              <li key={item} className="p-4 border border-zinc-950/20 dark:border-white/20 rounded-lg bg-zinc-50 dark:bg-zinc-900/50 flex items-center gap-3">
+                <div className="h-2 w-2 rounded-none bg-red-500"></div>
                 <span className="font-semibold text-zinc-700 dark:text-zinc-300">{item}</span>
               </li>
             ))}
@@ -45,7 +51,7 @@ export default function AbusePolicyPage() {
         <section className="space-y-4">
           <h2 className="text-2xl font-bold text-zinc-900 dark:text-white">Reporting & Enforcement</h2>
           <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
-            To report abuse, please visit our <a href="/report" className="text-blue-600 dark:text-blue-400 font-bold hover:underline">Specialized Reporting Page</a>. We take every report seriously and investigate promptly. Actions include record deletion, subdomain suspension, and account termination.
+            To report abuse, please visit our <a href="/report" className="text-zinc-950 dark:text-lime-300 font-bold hover:underline">Specialized Reporting Page</a>. We take every report seriously and investigate promptly. Actions include record deletion, subdomain suspension, and account termination.
           </p>
         </section>
       </div>
