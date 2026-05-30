@@ -2,25 +2,26 @@
 
 <br />
 
-```
-███╗   ██╗██╗  ██╗████████╗██████╗ ███████╗██╗   ██╗    ██╗  ██╗██╗   ██╗███████╗
-████╗  ██║╚██╗██╔╝╚══██╔══╝██╔══██╗██╔════╝██║   ██║    ╚██╗██╔╝╚██╗ ██╔╝╚══███╔╝
-██╔██╗ ██║ ╚███╔╝    ██║   ██║  ██║█████╗  ██║   ██║     ╚███╔╝  ╚████╔╝   ███╔╝ 
-██║╚██╗██║ ██╔██╗    ██║   ██║  ██║██╔══╝  ╚██╗ ██╔╝     ██╔██╗   ╚██╔╝   ███╔╝  
-██║ ╚████║██╔╝ ██╗   ██║   ██████╔╝███████╗ ╚████╔╝     ██╔╝ ██╗   ██║   ███████╗
-╚═╝  ╚═══╝╚═╝  ╚═╝   ╚═╝   ╚═════╝ ╚══════╝  ╚═══╝      ╚═╝  ╚═╝   ╚═╝   ╚══════╝
-```
+<img src="https://www.nxtdev.xyz/logo.svg" alt="nxtdev.xyz" height="72" />
+
+<br /><br />
 
 ### Free subdomains · Email aliases · Short links — built for developers
 
 [![Subdomains Claimed](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.nxtdev.xyz%2Fstats&query=total&label=subdomains%20claimed&color=00ff88&style=flat-square)](https://nxtdev.xyz)
 [![Built on Cloudflare](https://img.shields.io/badge/built%20on-Cloudflare-F48120?style=flat-square&logo=cloudflare&logoColor=white)](https://cloudflare.com)
 [![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
-[![Made by aviorxt](https://img.shields.io/badge/made%20by-aviorxt-a78bfa?style=flat-square)](https://www.avrxt.in/me)
+[![Made by aviorxt](https://img.shields.io/badge/made%20by-aviorxt-a78bfa?style=flat-square)](https://www.avrxt.in)
+[![Version](https://img.shields.io/badge/version-v3.2-00ff88?style=flat-square)](https://github.com/erroraero)
+[![Last Updated](https://img.shields.io/badge/last%20updated-May%202026-slategray?style=flat-square)](https://github.com/erroraero)
 
 <br />
 
 [**→ Get Started**](https://www.nxtdev.xyz) &nbsp;·&nbsp; [Claim a Domain](https://www.nxtdev.xyz/dashboard/domains) &nbsp;·&nbsp; [Email Aliases](https://www.nxtdev.xyz/dashboard/email-aliases) &nbsp;·&nbsp; [Short Links](https://www.nxtdev.xyz/dashboard/short-links) &nbsp;·&nbsp; [Status](https://status.nxtdev.xyz)
+
+<br />
+
+<img src="https://www.nxtdev.xyz/og.png" alt="nxtdev.xyz preview" width="600" style="border-radius:12px" />
 
 <br />
 
@@ -206,11 +207,11 @@ Known phishing patterns, IPs on abuse lists, and credential harvesting patterns.
 <table>
 <tr>
 <td align="center" width="25%">
-  <a href="https://www.avrxt.in/me">
+  <a href="https://www.avrxt.in">
     <img src="https://github.com/aviorxt.png" width="64" height="64" style="border-radius:50%" alt="aviorxt" /><br />
     <strong>@aviorxt</strong>
   </a><br />
-  <sub>Founder · <a href="https://www.nxtdev.xyz">nxtdev.xyz</a></sub>
+  <sub><a href="https://www.avrxt.in">avrxt.in</a></sub>
 </td>
 <td align="center" width="25%">
   <a href="https://github.com/erroraero">
