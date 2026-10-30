@@ -1,59 +1,16 @@
 import type { Metadata } from "next";
-import DocsContainer from "@/components/docs-container";
+import { LegalPage } from "@/components/legal-page";
 import { env } from "@/lib/env";
 
-export const metadata: Metadata = {
-  title: "Terms of Service",
-  description: "Terms and service rules for using nxtdev subdomains and DNS.",
-};
+export const metadata: Metadata = { title: "Terms", description: "Rules for using nxtdev.xyz free developer subdomains and DNS management." };
 
 export default function TermsPage() {
-  return (
-    <DocsContainer
-      title="Terms of Service"
-      subtitle="Last updated: March 15, 2026"
-      backLink="/"
-    >
-      <div className="space-y-12">
-        <section className="space-y-4">
-          <h2 className="text-2xl font-bold text-zinc-900 dark:text-white">1. Acceptance of Terms</h2>
-          <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
-            By accessing or using {env.ROOT_DOMAIN}, you agree to be bound by these Terms of Service. If you do not agree to these terms, you may not use our service. We reserve the right to modify these terms at any time.
-          </p>
-        </section>
-
-        <section className="space-y-4">
-          <h2 className="text-2xl font-bold text-zinc-900 dark:text-white">2. Service Description</h2>
-          <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
-            {env.ROOT_DOMAIN} provides free subdomains and DNS management tools for developers. The service is provided "as is" and "as available" without warranties of any kind.
-          </p>
-        </section>
-
-        <section className="space-y-4">
-          <h2 className="text-2xl font-bold text-zinc-900 dark:text-white">3. User Responsibilities</h2>
-          <div className="prose prose-zinc dark:prose-invert">
-            <ul>
-              <li>You are responsible for all activity that occurs under your subdomain.</li>
-              <li>You must comply with our Abuse Policy at all times.</li>
-              <li>You may not use the service for any illegal or unauthorized purpose.</li>
-            </ul>
-          </div>
-        </section>
-
-        <section className="space-y-4">
-          <h2 className="text-2xl font-bold text-zinc-900 dark:text-white">4. Termination</h2>
-          <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
-            We reserve the right to terminate or suspend your access to the service immediately, without prior notice or liability, for any reason, including without limitation if you breach the Terms.
-          </p>
-        </section>
-
-        <section className="space-y-4">
-          <h2 className="text-2xl font-bold text-zinc-900 dark:text-white">5. Limitation of Liability</h2>
-          <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
-            In no event shall {env.ROOT_DOMAIN} or its maintainers be liable for any damages arising out of the use or inability to use the service.
-          </p>
-        </section>
-      </div>
-    </DocsContainer>
-  );
+  return <LegalPage label="Platform policy / terms" title="Build freely. Operate responsibly." description="The rules that keep nxtdev useful for verified developers and safe for everyone who relies on the DNS." updated="October 30, 2026" notice={{ title: "DNS is public infrastructure", description: "Your subdomain and its published records can be resolved by anyone on the internet. Keep confidential values out of DNS." }} sections={[
+    { id: "acceptance", number: "01", title: "Acceptance and account access", children: <><p>By accessing or using {env.ROOT_DOMAIN}, you agree to these terms. You must provide accurate account information and protect access to your account. If you do not agree, do not use the service.</p><p>We may update these terms as the platform changes. The effective date above reflects the current version.</p></> },
+    { id: "service", number: "02", title: "What the service provides", children: <><p>nxtdev provides free developer subdomains and management for supported public DNS record types. Availability, propagation time, and third-party infrastructure remain outside our complete control.</p><p>The service is supplied on an “as is” and “as available” basis. It is not designed for workloads where interruption could cause personal injury, death, or material loss.</p></> },
+    { id: "acceptable-use", number: "03", title: "Acceptable use", children: <><p>You are responsible for your subdomain and its configuration. You may not use the platform to facilitate phishing, malware, impersonation, fraud, unlawful content, network abuse, or interference with the service or other users.</p><p>You must follow applicable law and respond promptly to legitimate abuse concerns relating to your use.</p></> },
+    { id: "verification", number: "04", title: "Verification and platform controls", children: <><p>nxtdev may require identity or GitHub verification before enabling sensitive DNS actions. We can apply limits, reserve names, reject records, or suspend access where this is needed to protect the platform, its users, or the public DNS ecosystem.</p></> },
+    { id: "suspension", number: "05", title: "Suspension and termination", children: <><p>We may suspend, remove, or reclaim a subdomain or account when we reasonably believe these terms are violated, a security risk exists, an abuse report warrants action, or continued operation could harm the platform. Where practical, we will provide notice; urgent safety action may happen first.</p></> },
+    { id: "liability", number: "06", title: "Disclaimers and liability", children: <><p>To the maximum extent permitted by law, nxtdev and its maintainers are not liable for indirect, incidental, special, consequential, or loss-of-data damages arising from use of, or inability to use, the service.</p><p>If you have a security or abuse concern, use the report channel so it can be triaged with the relevant context.</p></> },
+  ]} />;
 }

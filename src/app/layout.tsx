@@ -1,9 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Space_Grotesk, Geist_Mono } from "next/font/google";
+import { Space_Grotesk, Geist_Mono, Geist } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const rootDomain =
   (process.env.ROOT_DOMAIN ?? "nxtdev.xyz")
@@ -118,9 +121,9 @@ export const metadata: Metadata = {
     images: ["/og.png"],
   },
   icons: {
-    icon: "/favicon.png",
-    apple: "/favicon.png",
-    shortcut: "/favicon.png",
+    icon: "/icon.svg",
+    apple: "/icon.svg",
+    shortcut: "/icon.svg",
   },
 };
 
@@ -136,7 +139,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={cn("font-sans", geist.variable)}>
       <body
         className={`${spaceGrotesk.variable} ${geistMono.variable} antialiased`}
       >

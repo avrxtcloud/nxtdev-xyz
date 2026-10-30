@@ -1,30 +1,11 @@
 import { SignUp } from "@clerk/nextjs";
+import { GitFork } from "lucide-react";
+
+const appearance = {
+  variables: { colorPrimary: "#c4b5fd", colorBackground: "#111114", colorText: "#f5f5f4", colorTextSecondary: "#a1a1aa", colorInputBackground: "#17171a", colorInputText: "#f5f5f4", borderRadius: "0.75rem", fontFamily: "var(--font-space-grotesk), ui-sans-serif, system-ui" },
+  elements: { card: "rounded-xl border border-white/10 bg-[#111114] shadow-none", headerTitle: "font-semibold tracking-[-.04em] text-white", headerSubtitle: "text-zinc-400", socialButtonsBlockButton: "rounded-lg border border-white/15 bg-white/[.06] font-semibold text-white hover:bg-white/[.1]", formButtonPrimary: "rounded-lg border border-violet-300/50 bg-violet-300 font-semibold text-zinc-950 hover:bg-violet-200", formFieldInput: "rounded-lg border border-white/15 bg-[#17171a] text-white", footerActionLink: "font-semibold text-violet-200 underline decoration-violet-300/50 underline-offset-4" },
+};
 
 export default function SignUpPage() {
-  return (
-    <main className="mx-auto flex min-h-[calc(100vh-12rem)] items-center justify-center px-4 py-20">
-      <div className="border-2 border-zinc-950 bg-cyan-200 p-2 shadow-[8px_8px_0_#18181b] dark:border-white dark:bg-zinc-900 dark:shadow-[8px_8px_0_#fafafa]">
-        <SignUp
-          appearance={{
-            variables: {
-              colorPrimary: "#18181b",
-              colorBackground: "#ffffff",
-              colorText: "#18181b",
-              borderRadius: "0px",
-              fontFamily: "inherit",
-            },
-            elements: {
-              card: "rounded-none border-2 border-zinc-950 dark:border-white shadow-none",
-              headerTitle: "font-black tracking-tight text-zinc-950",
-              headerSubtitle: "font-bold text-zinc-500",
-              socialButtonsBlockButton: "rounded-none border-2 border-zinc-950 font-black shadow-[3px_3px_0_#22d3ee]",
-              formButtonPrimary: "rounded-none border-2 border-zinc-950 bg-zinc-950 font-black text-white shadow-[4px_4px_0_#facc15]",
-              formFieldInput: "rounded-none border-2 border-zinc-950 font-bold",
-              footerActionLink: "font-black text-zinc-950 underline decoration-cyan-400 decoration-2 underline-offset-4",
-            },
-          }}
-        />
-      </div>
-    </main>
-  );
+  return <main className="relative mx-auto flex min-h-[calc(100vh-12rem)] max-w-6xl items-center justify-center px-4 py-16"><div className="pointer-events-none absolute h-80 w-80 rounded-full bg-violet-400/10 blur-3xl animate-signal-orbit" /><section className="relative grid w-full max-w-md overflow-hidden rounded-2xl border border-white/10 bg-[#0d0d0f]/90 p-2 shadow-[0_30px_90px_rgba(0,0,0,.45)] animate-avrxt-enter"><div className="border border-white/10 bg-[linear-gradient(145deg,rgba(196,181,253,.08),transparent_38%)] p-6 sm:p-8"><p className="avrxt-eyebrow">Create an account</p><h1 className="mt-3 text-2xl font-semibold tracking-[-.05em] text-white">Start with a verified identity.</h1><p className="mt-2 text-sm leading-6 text-zinc-400">Use email or GitHub to create an account. You can connect GitHub later before making DNS changes.</p><div className="mt-6"><SignUp appearance={appearance} /></div><p className="mt-5 flex items-center gap-2 text-xs text-zinc-500"><GitFork className="h-3.5 w-3.5 text-violet-200" /> GitHub sign-up uses your existing Clerk social connection.</p></div></section></main>;
 }

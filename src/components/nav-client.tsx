@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Show,
   SignInButton,
@@ -48,7 +49,7 @@ export function NavClient(props: { rootDomain: string }) {
       <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-4 sm:px-6">
         <div className="flex items-center gap-5 lg:gap-9">
           <Link href="/" className="group flex items-center gap-3" aria-label="nxtdev home">
-            <span className="grid h-9 w-9 place-items-center border border-violet-300/70 bg-violet-300 text-sm font-black text-zinc-950 transition-transform group-hover:-rotate-6">N</span>
+            <span className="grid h-9 w-9 place-items-center overflow-hidden rounded-lg border border-violet-300/50 bg-[#0d0d10] transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-105"><Image src="/logo.svg" alt="" width={36} height={36} priority /></span>
             <span className="hidden leading-none sm:block">
               <span className="block text-sm font-black tracking-[-.06em] text-white">nxtdev</span>
               <span className="mt-1 block font-mono text-[8px] font-bold uppercase tracking-[.24em] text-violet-200">by avrxt</span>

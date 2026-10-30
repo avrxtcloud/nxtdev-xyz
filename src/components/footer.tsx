@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const groups = [
   { title: "Platform", links: [["Documentation", "/docs"], ["Dashboard", "/dashboard"], ["Dynamic DNS", "/DynamicDns"], ["Status", "/status"]] },
-  { title: "Safety", links: [["Abuse policy", "/abuse"], ["Report abuse", "/report"], ["Privacy", "/privacy"], ["Terms", "/terms"]] },
+  { title: "Safety", links: [["Abuse policy", "/abuse"], ["Report abuse", "/report"], ["Security", "/security"], ["Privacy", "/privacy"], ["Terms", "/terms"]] },
 ] as const;
 
 export function Footer() {

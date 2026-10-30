@@ -1,53 +1,15 @@
 import type { Metadata } from "next";
-import DocsContainer from "@/components/docs-container";
+import { LegalPage } from "@/components/legal-page";
 import { env } from "@/lib/env";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy",
-  description: "Privacy policy for nxtdev accounts, authentication, and DNS services.",
-};
+export const metadata: Metadata = { title: "Privacy", description: "How nxtdev.xyz handles account, DNS, and security information." };
 
 export default function PrivacyPage() {
-  return (
-    <DocsContainer
-      title="Privacy Policy"
-      subtitle="Last updated: March 15, 2026"
-      backLink="/"
-    >
-      <div className="space-y-12">
-        <section className="space-y-4">
-          <h2 className="text-2xl font-bold text-zinc-900 dark:text-white">1. Data Collection</h2>
-          <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
-            We collect minimal data necessary to provide the service, including your email address (via Clerk) and DNS record configurations. No personal traffic data passing through your subdomains is inspected or stored by {env.ROOT_DOMAIN}.
-          </p>
-          <ul className="list-disc space-y-2 pl-5 text-zinc-600 dark:text-zinc-400">
-            <li>Account details from Clerk (email, name, ID).</li>
-            <li>DNS configurations and subdomain names.</li>
-            <li>Technical logs for security and abuse prevention.</li>
-          </ul>
-        </section>
-
-        <section className="space-y-4">
-          <h2 className="text-2xl font-bold text-zinc-900 dark:text-white">2. Third-Party Services</h2>
-          <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
-            We use Cloudflare for DNS infrastructure, Clerk for authentication, and Supabase for database storage. Please refer to their respective privacy policies for details on how they handle your data.
-          </p>
-        </section>
-
-        <section className="space-y-4">
-          <h2 className="text-2xl font-bold text-zinc-900 dark:text-white">3. Cookies</h2>
-          <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
-            We use essential cookies via Clerk to manage session authentication. We do not use any tracking, analytics, or advertisement cookies.
-          </p>
-        </section>
-
-        <section className="space-y-4">
-          <h2 className="text-2xl font-bold text-zinc-900 dark:text-white">4. Security</h2>
-          <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
-            We take reasonable measures to protect your information from unauthorized access, loss, or disclosure. However, no internet-based service is 100% secure.
-          </p>
-        </section>
-      </div>
-    </DocsContainer>
-  );
+  return <LegalPage label="Platform policy / privacy" title="Privacy without the fog." description="A clear account of the limited information nxtdev needs to run a verified DNS platform." updated="October 30, 2026" notice={{ title: "The short version", description: "We use account and DNS configuration data to operate the service and defend it from abuse. We do not inspect traffic served through your subdomain." }} sections={[
+    { id: "information", number: "01", title: "Information we process", children: <><p>When you use {env.ROOT_DOMAIN}, we process the information needed to provide an account and manage the DNS resources you create.</p><ul className="list-disc space-y-2 pl-5 marker:text-violet-200"><li>Account identifiers and verified email information supplied through Clerk.</li><li>Linked GitHub identity information used to verify access to DNS-management features.</li><li>Claimed subdomain names, supported DNS records, and the settings required to apply them.</li><li>Security, audit, and abuse-prevention events associated with service use.</li></ul></> },
+    { id: "use", number: "02", title: "How we use it", children: <><p>We use this information to authenticate you, provision and maintain DNS records, enforce platform limits, investigate abuse, and keep a reliable audit trail for changes.</p><p>DNS records are inherently public once published. Do not place passwords, API keys, tokens, or other confidential information in DNS values.</p></> },
+    { id: "providers", number: "03", title: "Service providers", children: <><p>nxtdev relies on carefully selected providers to operate core parts of the platform, including Clerk for authentication, Supabase for application data, and Cloudflare for DNS infrastructure. Each provider processes data needed for its part of the service.</p><p>We do not sell personal information or use it for behavioural advertising.</p></> },
+    { id: "cookies", number: "04", title: "Cookies and session data", children: <><p>Authentication uses essential session technology supplied by Clerk. These are necessary to sign in, keep your session secure, and protect account actions. The platform does not use advertising cookies.</p></> },
+    { id: "retention", number: "05", title: "Retention and requests", children: <><p>We retain account and configuration data while an account or resource remains active, plus a limited period where needed for security, fraud prevention, legal obligations, or dispute resolution. You may request account-related help or report a concern through the platform&apos;s report channel.</p><p>These terms describe platform operations and are not a substitute for independent legal advice.</p></> },
+  ]} />;
 }
