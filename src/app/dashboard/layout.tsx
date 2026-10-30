@@ -3,113 +3,42 @@ import type { Metadata } from "next";
 import { unstable_rethrow } from "next/navigation";
 import { getOrCreateAppUser } from "@/lib/auth";
 import { AnnouncementBanner } from "@/components/announcement-banner";
-import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
 
 export const dynamic = "force-dynamic";
+export const metadata: Metadata = { title: "Console", description: "Manage your verified domains and DNS records." };
 
-export const metadata: Metadata = {
-  title: "Dashboard",
-  description: "Manage subdomains, DNS records, API keys, and reports.",
-};
+const nav = [
+  ["Overview", "/dashboard"], ["Domains", "/dashboard/domains"], ["Dynamic DNS", "/dashboard/api-keys"],
+  ["Email masks", "/dashboard/email-aliases"], ["Short links", "/dashboard/short-links"], ["Reports", "/dashboard/reports"],
+] as const;
 
-const navLink =
-  "px-4 py-2 text-sm font-black text-zinc-700 transition-all hover:bg-zinc-950 hover:text-white dark:text-zinc-300 dark:hover:bg-white dark:hover:text-zinc-950";
-
-export default async function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  let appUser: { email: string } & Record<string, unknown>;
-  let isAdmin = false;
-  let isGithubVerified = false;
+export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   try {
-    const res = await getOrCreateAppUser();
-    appUser = res.appUser as typeof appUser;
-    isAdmin = res.isAdmin;
-    isGithubVerified = res.isGithubVerified;
-  } catch (e) {
-    unstable_rethrow(e);
-    const message = (e as Error)?.message ?? "Unknown error";
-    const suspended = message.toLowerCase().includes("account is suspended");
-    console.error("Dashboard init failed:", e);
+    const { appUser, isAdmin, isGithubVerified } = await getOrCreateAppUser();
     return (
-      <div className="mx-auto max-w-3xl px-4 py-10">
-        <Card>
-          <div className="text-sm font-black uppercase tracking-wider">
-            {suspended ? "Account suspended" : "Dashboard unavailable"}
-          </div>
-          <h1 className="mt-4 text-3xl font-black tracking-tight text-zinc-950 dark:text-white">
-            {suspended ? "Your account is suspended" : "Dashboard is temporarily unavailable"}
-          </h1>
-          <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-300">
-            {suspended
-              ? "Your account is currently paused and cannot access dashboard tools. Contact support if you believe this is a mistake."
-              : "We could not load your dashboard right now. Please try again, or contact support if the issue continues."}
-          </p>
-          <div className="mt-4 flex flex-wrap gap-3 text-sm font-black">
-            {!suspended ? (
-              <Link className="underline decoration-cyan-400 decoration-2 underline-offset-4" href="/report">
-                Contact support
-              </Link>
-            ) : null}
-            <Link className="underline decoration-cyan-400 decoration-2 underline-offset-4" href="/">
-              Back home
-            </Link>
-          </div>
-        </Card>
+      <div className="mx-auto max-w-7xl px-4 py-7 sm:px-6 lg:py-10">
+        <AnnouncementBanner />
+        <div className="mt-5 grid gap-6 lg:grid-cols-[218px_minmax(0,1fr)]">
+          <aside className="avrxt-panel h-fit rounded-2xl p-3 lg:sticky lg:top-24">
+            <div className="border-b border-white/10 px-3 pb-4 pt-2">
+              <p className="avrxt-eyebrow">nxtdev console</p>
+              <p className="mt-2 truncate text-sm font-medium text-white">{appUser.email}</p>
+              <div className="mt-3 flex items-center gap-2 text-[10px] font-mono uppercase tracking-[.16em] text-emerald-300"><span className="h-1.5 w-1.5 rounded-full bg-emerald-300 animate-signal-pulse" /> account active</div>
+            </div>
+            <nav className="mt-3 grid gap-1">
+              {nav.map(([label, href], index) => <Link key={href} href={href} className={`rounded-lg px-3 py-2.5 text-sm transition-colors hover:bg-white/[.07] hover:text-white ${index === 0 ? "bg-white/[.07] text-white" : "text-zinc-400"}`}>{label}</Link>)}
+            </nav>
+            <div className="mt-4 border-t border-white/10 px-3 pt-4">
+              {!isGithubVerified ? <Link href="/dashboard/verify" className="block rounded-lg border border-amber-300/30 bg-amber-300/10 px-3 py-2.5 text-xs font-medium text-amber-100">Connect GitHub to unlock DNS changes →</Link> : null}
+              {isAdmin ? <Link href="/admin" className="mt-2 block rounded-lg border border-violet-300/30 bg-violet-300/10 px-3 py-2.5 text-xs font-medium text-violet-100">Open admin control →</Link> : null}
+            </div>
+          </aside>
+          <main className="min-w-0">{children}</main>
+        </div>
       </div>
     );
+  } catch (error) {
+    unstable_rethrow(error);
+    return <div className="mx-auto max-w-xl px-4 py-24"><div className="avrxt-panel rounded-2xl p-8"><p className="avrxt-eyebrow">Console unavailable</p><h1 className="mt-3 text-3xl font-semibold tracking-[-.05em]">We could not open your workspace.</h1><p className="mt-3 text-sm leading-6 text-zinc-400">Sign in again or contact support if this continues.</p><Link className="mt-6 inline-flex rounded-lg bg-violet-300 px-4 py-2 text-sm font-semibold text-zinc-950" href="/sign-in">Sign in</Link></div></div>;
   }
-
-  return (
-    <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:py-16 animate-[fade-in_400ms_ease-out]">
-      <AnnouncementBanner />
-      <div className="mb-12 flex flex-col gap-8 border-b-2 border-zinc-950 pb-10 lg:flex-row lg:items-end lg:justify-between dark:border-white">
-        <div className="space-y-3">
-          <div className="flex items-center gap-3">
-            <h1 className="text-4xl font-black tracking-tight text-zinc-950 dark:text-white sm:text-5xl">
-              Dashboard
-            </h1>
-            {isAdmin ? (
-              <Badge className="bg-lime-300 px-2 py-0.5 text-[10px] text-zinc-950">
-                Admin
-              </Badge>
-            ) : null}
-          </div>
-          <p className="text-base font-medium leading-relaxed text-zinc-600 dark:text-zinc-400">
-            Signed in as{" "}
-            <span className="font-mono font-black text-zinc-950 underline decoration-cyan-400 decoration-2 underline-offset-4 dark:text-white">
-              {appUser.email}
-            </span>
-          </p>
-          {!isGithubVerified ? (
-            <div className="inline-flex items-center gap-3 border-2 border-zinc-950 bg-amber-200 px-4 py-2 shadow-[4px_4px_0_#18181b] dark:border-white dark:shadow-[4px_4px_0_#fafafa]">
-              <Badge tone="warn" className="border-zinc-950 bg-white text-zinc-950 shadow-none dark:border-zinc-950">
-                Unverified
-              </Badge>
-              <Link className="text-sm font-black text-zinc-950 hover:underline underline-offset-4" href="/dashboard/verify">
-                Verify with GitHub -&gt;
-              </Link>
-            </div>
-          ) : null}
-        </div>
-        <nav className="flex w-fit flex-wrap items-center gap-1 border-2 border-zinc-950 bg-white p-1.5 shadow-[5px_5px_0_#18181b] dark:border-white dark:bg-zinc-950 dark:shadow-[5px_5px_0_#fafafa]">
-          <Link className={navLink} href="/dashboard/domains">Domains</Link>
-          <Link className={navLink} href="/dashboard/email-aliases">Email Masks</Link>
-          <Link className={navLink} href="/dashboard/short-links">Short Links</Link>
-          <Link className={navLink} href="/dashboard/api-keys">API Keys</Link>
-          <Link className={navLink} href="/dashboard/reports">Reports</Link>
-          {!isGithubVerified ? <Link className={navLink} href="/dashboard/verify">Verify</Link> : null}
-          {isAdmin ? (
-            <Link className="bg-lime-300 px-4 py-2 text-sm font-black text-zinc-950 transition-all hover:bg-amber-300" href="/admin">
-              Admin
-            </Link>
-          ) : null}
-        </nav>
-      </div>
-      <div className="relative">{children}</div>
-    </div>
-  );
 }

@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import {
   Show,
   SignInButton,
@@ -45,19 +44,14 @@ export function NavClient(props: { rootDomain: string }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-[100] border-b-2 border-zinc-950 bg-[#f4f1e8]/90 backdrop-blur-xl transition-all duration-300 dark:border-white dark:bg-zinc-950/85">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
-        <div className="flex items-center gap-8">
-          <Link href="/" className="transition-transform hover:scale-105 active:scale-95">
-            <span className="inline-flex items-center gap-2">
-              <Image
-                src="/logo.svg"
-                alt="nxtdev"
-                width={40}
-                height={40}
-                priority
-                className="border-2 border-zinc-950 bg-white shadow-[3px_3px_0_#18181b] dark:border-white dark:shadow-[3px_3px_0_#fafafa]"
-              />
+    <header className="sticky top-0 z-[100] border-b border-white/10 bg-[#080809]/82 backdrop-blur-xl transition-all duration-300">
+      <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-4 sm:px-6">
+        <div className="flex items-center gap-5 lg:gap-9">
+          <Link href="/" className="group flex items-center gap-3" aria-label="nxtdev home">
+            <span className="grid h-9 w-9 place-items-center border border-violet-300/70 bg-violet-300 text-sm font-black text-zinc-950 transition-transform group-hover:-rotate-6">N</span>
+            <span className="hidden leading-none sm:block">
+              <span className="block text-sm font-black tracking-[-.06em] text-white">nxtdev</span>
+              <span className="mt-1 block font-mono text-[8px] font-bold uppercase tracking-[.24em] text-violet-200">by avrxt</span>
             </span>
           </Link>
 
@@ -71,7 +65,7 @@ export function NavClient(props: { rootDomain: string }) {
             ].map((link) => (
               <Link
                 key={link.href}
-                className="px-4 py-2 text-sm font-black text-zinc-600 transition-all hover:bg-zinc-950 hover:text-white dark:text-zinc-300 dark:hover:bg-white dark:hover:text-zinc-950"
+                className="rounded-md px-3 py-2 text-[11px] font-bold uppercase tracking-[.14em] text-zinc-400 transition-all hover:bg-white/[.06] hover:text-white"
                 href={link.href}
               >
                 {link.label}
@@ -84,32 +78,32 @@ export function NavClient(props: { rootDomain: string }) {
           <Show when="signed-out">
             <div className="hidden sm:block">
               <SignInButton mode="modal">
-                <Button variant="ghost" className="rounded-lg text-sm font-black text-zinc-700 dark:text-zinc-300">
+                <Button variant="ghost" className="text-sm">
                   Sign in
                 </Button>
               </SignInButton>
             </div>
             <SignInButton mode="modal">
-              <Button className="h-10 rounded-lg bg-zinc-950 px-6 text-sm font-black text-white shadow-[4px_4px_0_#facc15] transition-all hover:bg-zinc-800 dark:bg-white dark:text-zinc-950">
+              <Button className="h-10 px-5 text-xs uppercase tracking-[.12em]">
                 Start for free
               </Button>
             </SignInButton>
           </Show>
           <Show when="signed-in">
             <Link href="/dashboard" className="hidden sm:block">
-              <Button variant="secondary" className="h-10 rounded-lg border-2 border-zinc-950 text-sm font-black dark:border-white">
+              <Button variant="secondary" className="h-10 text-xs uppercase tracking-[.12em]">
                 Dashboard
               </Button>
             </Link>
             <div className="scale-110 active:scale-95 transition-transform">
-              <UserButton appearance={{ elements: { userButtonAvatarBox: "h-9 w-9 border-2 border-zinc-950 dark:border-white shadow-sm" } }} />
+              <UserButton appearance={{ elements: { userButtonAvatarBox: "h-9 w-9 border border-violet-300/60" } }} />
             </div>
           </Show>
 
           <Button
             variant="ghost"
             size="icon"
-            className="h-10 w-10 rounded-lg text-zinc-700 md:hidden dark:text-zinc-300"
+            className="h-10 w-10 text-zinc-200 md:hidden"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-label={open ? "Close menu" : "Open menu"}
@@ -120,8 +114,8 @@ export function NavClient(props: { rootDomain: string }) {
       </div>
 
       {open ? (
-        <div className="fixed inset-x-0 top-16 z-50 p-4 md:hidden animate-[fade-in-down_200ms_ease-out]">
-          <div className="grid gap-2 border-2 border-zinc-950 bg-[#f4f1e8] p-6 shadow-[8px_8px_0_#18181b] dark:border-white dark:bg-zinc-950 dark:shadow-[8px_8px_0_#fafafa]">
+        <div className="fixed inset-x-0 top-[72px] z-50 p-4 md:hidden animate-avrxt-enter">
+          <div className="avrxt-panel grid gap-2 rounded-xl p-3 shadow-2xl">
             {[
               { label: "Blog", href: "/blog" },
               { label: "Documentation", href: "/docs" },
@@ -131,7 +125,7 @@ export function NavClient(props: { rootDomain: string }) {
             ].map((link) => (
               <Link
                 key={link.href}
-                className="flex items-center justify-between px-4 py-4 text-base font-black text-zinc-900 transition-all hover:bg-zinc-950 hover:text-white dark:text-zinc-100 dark:hover:bg-white dark:hover:text-zinc-950"
+                className="flex items-center justify-between rounded-lg px-4 py-4 text-sm font-semibold text-zinc-200 transition-all hover:bg-white/[.07] hover:text-white"
                 href={link.href}
                 onClick={() => setOpen(false)}
               >
@@ -140,33 +134,33 @@ export function NavClient(props: { rootDomain: string }) {
               </Link>
             ))}
 
-            <div className="mt-4 flex flex-col gap-3 border-t-2 border-zinc-950 pt-6 dark:border-white">
+            <div className="mt-3 flex flex-col gap-3 border-t border-white/10 pt-4">
               <Show when="signed-out">
                 <SignInButton mode="modal">
-                  <Button className="h-14 w-full rounded-lg font-black" size="lg">
+                  <Button className="h-12 w-full text-xs uppercase tracking-[.12em]" size="lg">
                     Start for free
                   </Button>
                 </SignInButton>
                 <SignInButton mode="modal">
-                  <Button className="h-14 w-full rounded-lg font-black" variant="secondary" size="lg">
+                  <Button className="h-12 w-full text-xs uppercase tracking-[.12em]" variant="secondary" size="lg">
                     Sign in
                   </Button>
                 </SignInButton>
               </Show>
               <Show when="signed-in">
                 <Link href="/dashboard" onClick={() => setOpen(false)}>
-                  <Button className="h-14 w-full rounded-lg font-black" size="lg">
+                  <Button className="h-12 w-full text-xs uppercase tracking-[.12em]" size="lg">
                     Dashboard
                   </Button>
                 </Link>
-                <div className="flex h-14 items-center justify-between border-2 border-zinc-950 bg-white px-4 dark:border-white dark:bg-zinc-900">
-                  <span className="text-base font-bold text-zinc-900 dark:text-zinc-100">
+                <div className="flex h-12 items-center justify-between rounded-lg border border-white/10 bg-white/[.04] px-4">
+                  <span className="text-sm font-medium text-zinc-100">
                     Your Account
                   </span>
                   <UserButton />
                 </div>
                 <SignOutButton>
-                  <Button className="h-14 w-full rounded-lg font-black" variant="ghost" size="lg">
+                  <Button className="h-12 w-full text-xs uppercase tracking-[.12em]" variant="ghost" size="lg">
                     Sign out
                   </Button>
                 </SignOutButton>

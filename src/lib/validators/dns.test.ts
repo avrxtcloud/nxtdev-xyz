@@ -8,35 +8,12 @@ describe("createRecordSchema", () => {
       host: "@",
       content: "1.1.1.1",
       ttl: 3600,
-      proxied: false,
     });
     expect(parsed.type).toBe("A");
   });
 
-  test("valid MX record", () => {
-    const parsed = createRecordSchema.parse({
-      type: "MX",
-      host: "@",
-      content: "mail.example.com",
-      priority: 10,
-      ttl: 3600,
-    });
-    expect(parsed.type).toBe("MX");
-  });
-
-  test("valid SRV record", () => {
-    const parsed = createRecordSchema.parse({
-      type: "SRV",
-      host: "@",
-      service: "_minecraft",
-      proto: "_tcp",
-      priority: 0,
-      weight: 0,
-      port: 25565,
-      target: "server.example.com",
-      ttl: 3600,
-    });
-    expect(parsed.type).toBe("SRV");
+  test("rejects unsupported record types", () => {
+    expect(() => createRecordSchema.parse({ type: "MX", host: "@", content: "mail.example.com" })).toThrow();
   });
 
   test("rejects invalid host", () => {

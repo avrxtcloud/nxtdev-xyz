@@ -6,7 +6,6 @@ export type CfDnsRecord = {
   name: string;
   content: string;
   ttl: number;
-  proxied?: boolean;
   priority?: number;
   data?: unknown;
 };
@@ -16,7 +15,6 @@ export type CreateCfRecordInput = {
   name: string;
   content?: string;
   ttl: number;
-  proxied?: boolean;
   priority?: number;
   data?: unknown;
 };

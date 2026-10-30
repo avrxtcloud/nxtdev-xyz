@@ -26,25 +26,16 @@ export default async function DomainsPage() {
 
   const enriched = await Promise.all(
     (subdomains ?? []).map(async (s) => {
-      const [
-        { count: dnsCount, error: dnsErr },
-        { count: delegatedCount, error: delegatedErr },
-      ] = await Promise.all([
+      const [{ count: dnsCount, error: dnsErr }] = await Promise.all([
         supabaseAdmin
           .from("DnsRecord")
           .select("id", { head: true, count: "exact" })
           .eq("subdomainId", s.id),
-        supabaseAdmin
-          .from("DelegatedNameserver")
-          .select("id", { head: true, count: "exact" })
-          .eq("subdomainId", s.id),
       ]);
       if (dnsErr) throw new Error(dnsErr.message);
-      if (delegatedErr) throw new Error(delegatedErr.message);
       return {
         ...s,
         dnsCount: dnsCount ?? 0,
-        delegatedCount: delegatedCount ?? 0,
       };
     }),
   );
@@ -76,8 +67,8 @@ export default async function DomainsPage() {
           />
         </div>
         {!isGithubVerified ? (
-          <div className="border-2 border-zinc-950 bg-cyan-200 p-4 text-sm font-bold text-zinc-950 shadow-[4px_4px_0_#18181b] dark:border-white dark:shadow-[4px_4px_0_#fafafa]">
-            Flow update: claim your name first, then connect GitHub to unlock DNS record and nameserver management.
+          <div className="rounded-xl border border-violet-300/30 bg-violet-300/10 p-4 text-sm text-violet-100">
+            Claim your name first, then connect GitHub to unlock DNS management.
           </div>
         ) : null}
       </Card>
@@ -112,15 +103,12 @@ export default async function DomainsPage() {
                       ) : (
                         <Badge tone="bad" className="rounded-none px-3 py-0.5">Suspended</Badge>
                       )}
-                      {s.delegatedCount > 0 ? (
-                        <Badge tone="warn" className="rounded-none px-3 py-0.5">Delegated</Badge>
-                      ) : null}
                     </div>
 
                     <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs font-bold text-zinc-500 uppercase tracking-widest">
                       <div className="flex items-center gap-2">
                         <span className="h-1.5 w-1.5 rounded-none bg-amber-400"></span>
-                        <span>{s.dnsCount + s.delegatedCount} / 100 Records</span>
+                        <span>{s.dnsCount} / 100 Records</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <span className="h-1.5 w-1.5 rounded-none bg-orange-500"></span>
@@ -137,11 +125,6 @@ export default async function DomainsPage() {
                     <Link href={`/dashboard/domains/${s.id}/records`} className="flex-1 sm:flex-none">
                       <Button variant="secondary" size="md" className="w-full sm:w-auto rounded-lg group-hover:bg-zinc-950 group-hover:text-white transition-all">
                         DNS Records
-                      </Button>
-                    </Link>
-                    <Link href={`/dashboard/domains/${s.id}/nameservers`} className="flex-1 sm:flex-none">
-                      <Button variant="secondary" size="md" className="w-full sm:w-auto rounded-lg">
-                        Nameservers
                       </Button>
                     </Link>
                     <DeleteSubdomainButton

@@ -11,7 +11,6 @@ import { bumpRiskScore } from "@/lib/safety/risk";
 import { isDelegationEnabled, suspendSubdomain } from "@/lib/services/subdomains";
 import { assertFqdnWithinBase, fqdnForHost } from "@/lib/validators/domain";
 import {
-  assertProxiedAllowed,
   createRecordSchema,
   normalizeTtl,
   type CreateRecordInput,
@@ -102,10 +101,6 @@ async function maybeSuspendAndPurge(params: {
 }
 
 function computeFqdnForInput(input: CreateRecordInput, baseFqdn: string): string {
-  if (input.type === "SRV") {
-    const baseName = fqdnForHost(input.host, baseFqdn);
-    return `${input.service}.${input.proto}.${baseName}`;
-  }
   return fqdnForHost(input.host, baseFqdn);
 }
 
@@ -116,51 +111,7 @@ function buildCloudflareCreatePayload(
   const ttl = normalizeTtl(input.ttl);
   const fqdn = computeFqdnForInput(input, baseFqdn);
 
-  switch (input.type) {
-    case "SRV": {
-      const baseName = fqdnForHost(input.host, baseFqdn);
-      return {
-        type: "SRV",
-        name: fqdn,
-        ttl,
-        data: {
-          service: input.service,
-          proto: input.proto,
-          name: baseName,
-          priority: input.priority,
-          weight: input.weight,
-          port: input.port,
-          target: input.target,
-        },
-      };
-    }
-    case "MX":
-      return {
-        type: "MX",
-        name: fqdn,
-        content: input.content,
-        ttl,
-        priority: input.priority,
-      };
-    case "A":
-    case "AAAA":
-    case "CNAME":
-      return {
-        type: input.type,
-        name: fqdn,
-        content: input.content,
-        ttl,
-        proxied: input.proxied ?? false,
-      };
-    case "TXT":
-      return { type: "TXT", name: fqdn, content: input.content, ttl };
-    case "NS":
-      return { type: "NS", name: fqdn, content: input.content, ttl };
-    default: {
-      const exhaustive: never = input;
-      return exhaustive;
-    }
-  }
+  return { type: input.type, name: fqdn, content: input.content, ttl };
 }
 
 async function getOwnedSubdomainForDns(params: { subdomainId: string; userId: string }) {
@@ -191,9 +142,6 @@ export async function createUserDnsRecord(params: {
   if (!parsed.success) throw new Error(parsed.error.issues[0]?.message ?? "Invalid record");
   const input = parsed.data;
 
-  if (input.type === "NS") {
-    throw new Error("NS records can only be managed in Nameserver Settings");
-  }
 
   const subdomain = await getOwnedSubdomainForDns({
     subdomainId: params.subdomainId,
@@ -208,20 +156,10 @@ export async function createUserDnsRecord(params: {
 
   await enforceRecordLimit(subdomain.id);
 
-  const proxied = "proxied" in input ? input.proxied : undefined;
-  assertProxiedAllowed(input.type, proxied);
-
   const fqdn = computeFqdnForInput(input, subdomain.baseFqdn);
   assertFqdnWithinBase(fqdn, subdomain.baseFqdn);
 
-  const contentForKeyword =
-    input.type === "SRV"
-      ? input.target
-      : input.type === "MX"
-        ? input.content
-        : input.type === "TXT" || input.type === "CNAME" || input.type === "A" || input.type === "AAAA"
-          ? input.content
-          : "";
+  const contentForKeyword = input.content;
 
   const keyword =
     matchesPhishingKeyword(input.host) ??
@@ -266,23 +204,10 @@ export async function createUserDnsRecord(params: {
   const created = await createDnsRecord(cfPayload);
 
   const ttl = normalizeTtl(input.ttl);
-  const priority = input.type === "MX" ? input.priority : null;
-  const data =
-    input.type === "SRV"
-      ? {
-          service: input.service,
-          proto: input.proto,
-          priority: input.priority,
-          weight: input.weight,
-          port: input.port,
-          target: input.target,
-        }
-      : null;
-  const content = input.type === "SRV" ? input.target : input.content;
-  const proxiedForDb =
-    input.type === "A" || input.type === "AAAA" || input.type === "CNAME"
-      ? input.proxied ?? false
-      : null;
+  const priority = null;
+  const data = null;
+  const content = input.content;
+  const proxiedForDb = false;
 
   const now = new Date().toISOString();
   const { data: db, error: dbError } = await supabaseAdmin
@@ -354,22 +279,11 @@ export async function updateUserDnsRecord(params: {
   const input = parsed.data;
 
   if (input.type !== record.type) throw new Error("Record type cannot be changed");
-  if (input.type === "NS") throw new Error("NS records cannot be edited here");
-
-  const proxied = "proxied" in input ? input.proxied : undefined;
-  assertProxiedAllowed(input.type, proxied);
 
   const fqdn = computeFqdnForInput(input, subdomain.baseFqdn);
   assertFqdnWithinBase(fqdn, subdomain.baseFqdn);
 
-  const contentForKeyword =
-    input.type === "SRV"
-      ? input.target
-      : input.type === "MX"
-        ? input.content
-        : input.type === "TXT" || input.type === "CNAME" || input.type === "A" || input.type === "AAAA"
-          ? input.content
-          : "";
+  const contentForKeyword = input.content;
 
   const keyword =
     matchesPhishingKeyword(input.host) ??
@@ -414,23 +328,10 @@ export async function updateUserDnsRecord(params: {
   const updatedCf = await updateDnsRecord(record.cloudflareRecordId, cfPayload);
 
   const ttl = normalizeTtl(input.ttl);
-  const priority = input.type === "MX" ? input.priority : null;
-  const data =
-    input.type === "SRV"
-      ? {
-          service: input.service,
-          proto: input.proto,
-          priority: input.priority,
-          weight: input.weight,
-          port: input.port,
-          target: input.target,
-        }
-      : null;
-  const content = input.type === "SRV" ? input.target : input.content;
-  const proxiedForDb =
-    input.type === "A" || input.type === "AAAA" || input.type === "CNAME"
-      ? input.proxied ?? false
-      : null;
+  const priority = null;
+  const data = null;
+  const content = input.content;
+  const proxiedForDb = false;
 
   const { data: db, error: dbError } = await supabaseAdmin
     .from("DnsRecord")

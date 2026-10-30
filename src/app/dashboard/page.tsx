@@ -1,42 +1,18 @@
 import Link from "next/link";
-import { Card } from "@/components/ui/card";
+
+const routes = [
+  { label: "Domains", href: "/dashboard/domains", detail: "Claim a name and configure A, AAAA, CNAME, or TXT records.", code: "DNS" },
+  { label: "Dynamic DNS", href: "/dashboard/api-keys", detail: "Keep a changing connection pointed at a stable address.", code: "DDNS" },
+  { label: "Email masks", href: "/dashboard/email-aliases", detail: "Create a private relay address without exposing your inbox.", code: "MAIL" },
+  { label: "Short links", href: "/dashboard/short-links", detail: "Manage compact, shareable links for your project.", code: "LINK" },
+];
 
 export default function DashboardHome() {
-  return (
-    <div className="grid gap-8 md:grid-cols-2">
-      <Link href="/dashboard/domains" className="group">
-        <Card className="p-8 h-full rounded-lg border-zinc-950 dark:border-white/20 shadow-sm transition-all hover:translate-y-[-4px] hover:shadow-xl hover:shadow-cyan-400/20 group-hover:border-cyan-400">
-          <div className="flex items-start justify-between mb-6">
-            <div className="h-14 w-14 rounded-lg bg-amber-100 dark:bg-zinc-900 flex items-center justify-center text-zinc-950 group-hover:scale-110 transition-transform">
-              <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
-            </div>
-            <div className="text-zinc-950 dark:text-lime-300 opacity-0 group-hover:opacity-100 transition-opacity">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-            </div>
-          </div>
-          <div className="text-2xl font-black text-zinc-900 dark:text-white mb-3 tracking-tight">Manage Domains</div>
-          <p className="text-base text-zinc-600 dark:text-zinc-400 font-medium leading-relaxed">
-            Claim up to 2 base subdomains and manage multiple DNS records including CNAME, A, TXT, and SRV.
-          </p>
-        </Card>
-      </Link>
-
-      <Link href="/dashboard/reports" className="group">
-        <Card className="p-8 h-full rounded-lg border-zinc-950 dark:border-white/20 shadow-sm transition-all hover:translate-y-[-4px] hover:shadow-xl hover:shadow-orange-500/10 group-hover:border-orange-500/30">
-          <div className="flex items-start justify-between mb-6">
-            <div className="h-14 w-14 rounded-lg bg-orange-50 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 group-hover:scale-110 transition-transform">
-              <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-            </div>
-            <div className="text-orange-600 dark:text-orange-400 opacity-0 group-hover:opacity-100 transition-opacity">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-            </div>
-          </div>
-          <div className="text-2xl font-black text-zinc-900 dark:text-white mb-3 tracking-tight">Abuse Reports</div>
-          <p className="text-base text-zinc-600 dark:text-zinc-400 font-medium leading-relaxed">
-            Monitor and respond to abuse reports filed against your domains to ensure compliance and avoid suspension.
-          </p>
-        </Card>
-      </Link>
-    </div>
-  );
+  return <div className="space-y-6">
+    <section className="avrxt-panel overflow-hidden rounded-2xl p-6 sm:p-9">
+      <div className="flex flex-col gap-7 sm:flex-row sm:items-end sm:justify-between"><div><p className="avrxt-eyebrow">Workspace / overview</p><h1 className="mt-4 text-4xl font-semibold tracking-[-.07em] text-white sm:text-6xl">Build on a name<br className="hidden sm:block" /> that stays yours.</h1><p className="mt-5 max-w-xl text-sm leading-7 text-zinc-400 sm:text-base">A focused workspace for developer identities and DNS. Records are always DNS-only, provider controls stay behind the platform.</p></div><Link href="/dashboard/domains" className="inline-flex h-11 items-center justify-center rounded-lg bg-violet-300 px-5 text-sm font-semibold text-zinc-950 transition hover:bg-violet-200">Claim a domain <span className="ml-2">↗</span></Link></div>
+      <div className="mt-9 grid grid-cols-3 border-t border-white/10 pt-5 text-center sm:max-w-md"><div><p className="avrxt-eyebrow text-zinc-600">Names</p><p className="mt-2 text-2xl font-semibold">02</p></div><div className="border-x border-white/10"><p className="avrxt-eyebrow text-zinc-600">Record types</p><p className="mt-2 text-2xl font-semibold">04</p></div><div><p className="avrxt-eyebrow text-zinc-600">Mode</p><p className="mt-2 text-2xl font-semibold">DNS</p></div></div>
+    </section>
+    <section><div className="mb-4 flex items-center justify-between"><p className="avrxt-eyebrow">Workspace tools</p><span className="font-mono text-[10px] uppercase tracking-[.18em] text-zinc-600">Select a module</span></div><div className="grid gap-3 sm:grid-cols-2">{routes.map((route) => <Link className="avrxt-grid-card group rounded-2xl p-5 sm:p-6" href={route.href} key={route.href}><div className="flex items-start justify-between"><span className="font-mono text-[11px] font-bold tracking-[.18em] text-violet-200">{route.code}</span><span className="text-zinc-600 transition group-hover:translate-x-1 group-hover:text-violet-200">→</span></div><h2 className="mt-9 text-xl font-semibold tracking-[-.04em] text-white">{route.label}</h2><p className="mt-2 max-w-sm text-sm leading-6 text-zinc-400">{route.detail}</p></Link>)}</div></section>
+  </div>;
 }

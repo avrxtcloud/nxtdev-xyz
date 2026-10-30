@@ -1,10 +1,7 @@
 import Link from "next/link";
 import { supabaseAdmin } from "@/db/supabaseAdmin";
 import { getOrCreateAppUser } from "@/lib/auth";
-import {
-  getOwnedSubdomainOrThrow,
-  isDelegationEnabled,
-} from "@/lib/services/subdomains";
+import { getOwnedSubdomainOrThrow } from "@/lib/services/subdomains";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Table, Td, Th } from "@/components/ui/table";
@@ -29,7 +26,6 @@ export default async function RecordsPage({
     userId: appUser.id,
     subdomainId,
   });
-  const delegated = await isDelegationEnabled(subdomain.id);
   const flags = await getSystemFlags();
 
   const { data: records, error } = await supabaseAdmin
@@ -49,9 +45,6 @@ export default async function RecordsPage({
               Managing records for <span className="font-mono text-zinc-950 dark:text-lime-300">@{subdomain.baseFqdn}</span>
             </p>
           </div>
-          {delegated ? (
-            <Badge tone="warn" className="rounded-none px-4 py-1 text-xs font-black uppercase tracking-widest self-start sm:self-auto shrink-0">Delegation Active</Badge>
-          ) : null}
         </div>
 
         <div className="bg-zinc-50 dark:bg-zinc-900/50 rounded-lg p-4 sm:p-6 border border-zinc-950/20 dark:border-white/20">
@@ -61,11 +54,6 @@ export default async function RecordsPage({
               <Link className="ml-2 font-black underline decoration-cyan-400 decoration-2 underline-offset-4" href="/dashboard/verify">
                 Connect GitHub
               </Link>
-            </div>
-          ) : delegated ? (
-            <div className="flex items-center gap-3 p-4 rounded-lg bg-orange-50 dark:bg-orange-900/20 border border-orange-100 dark:border-orange-900/40 text-sm font-bold text-orange-800 dark:text-orange-200">
-              <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-              Standard DNS editing is disabled while custom nameservers are active.
             </div>
           ) : !flags.dnsEditingEnabled ? (
             <div className="p-4 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-sm font-bold text-zinc-600 dark:text-zinc-400">
@@ -121,23 +109,11 @@ export default async function RecordsPage({
                         <Td className="py-5">
                           <div className="max-w-[340px] break-words font-medium text-zinc-600 dark:text-zinc-400 text-xs leading-relaxed">
                             {r.content}
-                            {r.type === "MX" && r.priority !== null ? (
-                              <span className="ml-2 inline-flex items-center rounded-md bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 font-bold text-zinc-500">
-                                {r.priority}
-                              </span>
-                            ) : null}
                           </div>
                         </Td>
                         <Td className="py-5 font-bold text-zinc-500 text-xs">{r.ttl}</Td>
                         <Td className="py-5">
-                          {r.proxied ? (
-                            <div className="flex items-center gap-1.5 text-orange-500 font-bold text-[10px] uppercase tracking-wider">
-                              <span className="h-1.5 w-1.5 rounded-none bg-orange-500 animate-pulse"></span>
-                              Proxied
-                            </div>
-                          ) : (
-                            <div className="text-zinc-400 font-bold text-[10px] uppercase tracking-wider">DNS Only</div>
-                          )}
+                          <div className="text-zinc-400 font-bold text-[10px] uppercase tracking-wider">DNS only</div>
                         </Td>
                         <Td className="py-5 text-right">
                           <div className="flex justify-end items-center gap-2">
@@ -153,7 +129,7 @@ export default async function RecordsPage({
                               subdomainId={subdomain.id}
                               recordId={r.id}
                               fqdn={r.fqdn}
-                              disabled={!isGithubVerified || delegated || subdomain.status !== "active"}
+                              disabled={!isGithubVerified || subdomain.status !== "active"}
                             />
                           </div>
                         </Td>
@@ -172,21 +148,12 @@ export default async function RecordsPage({
                       <span className="font-black font-mono text-zinc-950 dark:text-lime-300 text-sm">{r.type}</span>
                       <span className="font-bold text-zinc-900 dark:text-white truncate block max-w-[200px] text-sm">{r.fqdn}</span>
                     </div>
-                    {r.proxied ? (
-                      <Badge tone="warn" className="text-[9px] uppercase tracking-tighter">Proxied</Badge>
-                    ) : (
-                      <Badge tone="neutral" className="text-[9px] uppercase tracking-tighter">DNS Only</Badge>
-                    )}
+                    <Badge tone="neutral" className="text-[9px] uppercase tracking-tighter">DNS only</Badge>
                   </div>
 
                   <div className="space-y-4">
                     <div className="bg-zinc-50 dark:bg-zinc-800/50 rounded-lg p-3 text-xs font-medium text-zinc-600 dark:text-zinc-400 break-words leading-relaxed">
                       {r.content}
-                      {r.type === "MX" && r.priority !== null ? (
-                        <span className="ml-2 inline-flex items-center rounded-md bg-zinc-200 dark:bg-zinc-700 px-1.5 py-0.5 font-bold text-zinc-500">
-                          PRIO: {r.priority}
-                        </span>
-                      ) : null}
                     </div>
 
                     <div className="flex items-center justify-between gap-4 pt-2 border-t border-zinc-50 dark:border-white/20">
@@ -204,7 +171,7 @@ export default async function RecordsPage({
                           subdomainId={subdomain.id}
                           recordId={r.id}
                           fqdn={r.fqdn}
-                          disabled={!isGithubVerified || delegated || subdomain.status !== "active"}
+                          disabled={!isGithubVerified || subdomain.status !== "active"}
                         />
                       </div>
                     </div>

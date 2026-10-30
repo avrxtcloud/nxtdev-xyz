@@ -21,49 +21,11 @@ function getInt(fd: FormData, key: string): number | undefined {
   return parsed;
 }
 
-function getBool(fd: FormData, key: string): boolean | undefined {
-  const raw = fd.get(key);
-  if (raw === null) return undefined;
-  const v = String(raw);
-  return v === "on" || v === "true" || v === "1";
-}
-
 function parseRecordFormData(fd: FormData) {
   const type = getString(fd, "type").toUpperCase();
   const host = getString(fd, "host") || "@";
   const ttl = getInt(fd, "ttl");
-
-  if (type === "MX") {
-    return {
-      type,
-      host,
-      content: getString(fd, "content"),
-      ttl,
-      priority: getInt(fd, "priority") ?? 10,
-    };
-  }
-  if (type === "SRV") {
-    return {
-      type,
-      host,
-      service: getString(fd, "service"),
-      proto: getString(fd, "proto"),
-      ttl,
-      priority: getInt(fd, "priority") ?? 0,
-      weight: getInt(fd, "weight") ?? 0,
-      port: getInt(fd, "port") ?? 0,
-      target: getString(fd, "target"),
-    };
-  }
-
-  const proxied = getBool(fd, "proxied");
-  return {
-    type,
-    host,
-    content: getString(fd, "content"),
-    ttl,
-    ...(type === "A" || type === "AAAA" || type === "CNAME" ? { proxied } : {}),
-  };
+  return { type, host, content: getString(fd, "content"), ttl };
 }
 
 export async function createRecordAction(subdomainId: string, state: any, fd: FormData) {

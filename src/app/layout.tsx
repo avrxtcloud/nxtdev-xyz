@@ -31,13 +31,13 @@ const description =
 
 const clerkAppearance = {
   variables: {
-    colorPrimary: "#18181b",
-    colorBackground: "#ffffff",
-    colorText: "#18181b",
-    colorTextSecondary: "#52525b",
-    colorInputBackground: "#ffffff",
-    colorInputText: "#18181b",
-    borderRadius: "0px",
+    colorPrimary: "#a78bfa",
+    colorBackground: "#111114",
+    colorText: "#f5f5f4",
+    colorTextSecondary: "#a1a1aa",
+    colorInputBackground: "#17171a",
+    colorInputText: "#f5f5f4",
+    borderRadius: "0.75rem",
     fontFamily: "var(--font-space-grotesk), ui-sans-serif, system-ui",
     fontFamilyButtons: "var(--font-space-grotesk), ui-sans-serif, system-ui",
   },
@@ -85,14 +85,11 @@ export const metadata: Metadata = {
     "developer subdomains",
     "free subdomain",
     "dns",
-    "cloudflare dns",
+    "managed dns",
     "subdomain",
     "cname",
     "a record",
-    "mx",
     "txt",
-    "srv",
-    "ns delegation",
   ],
   appleWebApp: {
     capable: true,
@@ -145,8 +142,8 @@ export default function RootLayout({
       >
         <ClerkProvider appearance={clerkAppearance}>
           <Nav />
-          <div className="pointer-events-none fixed inset-0 -z-10 bg-[linear-gradient(135deg,rgba(250,204,21,0.16),transparent_32%),linear-gradient(315deg,rgba(34,211,238,0.14),transparent_38%)] dark:bg-[linear-gradient(135deg,rgba(250,204,21,0.08),transparent_32%),linear-gradient(315deg,rgba(34,211,238,0.08),transparent_38%)]" />
-          <div className="min-h-[calc(100vh-4rem)] text-zinc-900 dark:text-zinc-50 animate-[fade-in_420ms_ease-out]">
+          <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_90%_0%,rgba(124,58,237,.08),transparent_28%)]" />
+          <div className="min-h-[calc(100vh-4rem)] text-zinc-100 animate-avrxt-enter">
             {children}
             <Footer />
           </div>

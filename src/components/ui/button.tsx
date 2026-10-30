@@ -16,7 +16,7 @@ export const Button = React.forwardRef<
   const { className, variant = "primary", size = "md", ...rest } = props;
 
   const base =
-    "inline-flex items-center justify-center gap-2 rounded-lg border-2 font-black transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/70 disabled:pointer-events-none disabled:opacity-50 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none";
+    "inline-flex items-center justify-center gap-2 rounded-lg border font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-300/70 disabled:pointer-events-none disabled:opacity-50 active:scale-[.98]";
 
   const sizes: Record<ButtonSize, string> = {
     sm: "h-9 px-4 text-xs tracking-tight",
@@ -27,15 +27,15 @@ export const Button = React.forwardRef<
 
   const variants: Record<ButtonVariant, string> = {
     primary:
-      "border-zinc-950 bg-zinc-950 text-white shadow-[4px_4px_0_#facc15] hover:bg-zinc-800 dark:border-white dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200",
+      "border-violet-300/50 bg-violet-300 text-zinc-950 shadow-[0_10px_30px_rgba(167,139,250,.18)] hover:bg-violet-200",
     secondary:
-      "border-zinc-950 bg-white text-zinc-950 shadow-[4px_4px_0_#22d3ee] hover:bg-zinc-100 dark:border-white dark:bg-zinc-950 dark:text-white dark:hover:bg-zinc-900",
+      "border-white/15 bg-white/[.06] text-white hover:border-violet-300/50 hover:bg-white/[.1]",
     outline:
-      "border-zinc-950 bg-transparent text-zinc-950 hover:bg-white dark:border-white dark:text-white dark:hover:bg-zinc-900",
+      "border-white/15 bg-transparent text-zinc-100 hover:border-white/30 hover:bg-white/[.06]",
     ghost:
-      "border-transparent bg-transparent text-zinc-700 shadow-none hover:border-zinc-950 hover:bg-white dark:text-zinc-300 dark:hover:border-white dark:hover:bg-zinc-900 dark:hover:text-white",
+      "border-transparent bg-transparent text-zinc-300 shadow-none hover:bg-white/[.06] hover:text-white",
     danger:
-      "border-zinc-950 bg-red-500 text-white shadow-[4px_4px_0_#18181b] hover:bg-red-600 dark:border-white dark:shadow-[4px_4px_0_#fafafa]",
+      "border-red-400/40 bg-red-500/90 text-white hover:bg-red-500",
   };
 
   return (
