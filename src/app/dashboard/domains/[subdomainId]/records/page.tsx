@@ -72,6 +72,10 @@ export default async function RecordsPage({
         </div>
       </Card>
 
+      <aside className="rounded-2xl border border-violet-300/20 bg-violet-300/[.055] p-4 sm:p-5">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between"><div><p className="avrxt-eyebrow text-violet-200">Vercel deployment</p><h3 className="mt-2 text-sm font-semibold text-white">Verify this domain without leaving the workspace.</h3><p className="mt-1 max-w-2xl text-xs leading-5 text-zinc-400">For a Vercel TXT verification request, add a TXT record with host <code className="text-violet-100">@</code> when Vercel asks for the domain root, or <code className="text-violet-100">_vercel</code> when it provides that host. For production routing, use a CNAME value of <code className="text-violet-100">cname.vercel-dns.com</code> when Vercel specifies it.</p></div><a className="shrink-0 text-xs font-medium text-violet-200 underline underline-offset-4" href="https://vercel.com/docs/domains/working-with-domains/add-a-domain" target="_blank" rel="noreferrer">Vercel guide ↗</a></div>
+      </aside>
+
       <section className="space-y-6">
         <div className="flex items-center justify-between px-2">
           <h3 className="text-lg font-black text-zinc-900 dark:text-white uppercase tracking-widest">Active Records</h3>

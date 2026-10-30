@@ -11,6 +11,7 @@ export default function RecordTypesPage() {
                     <p className="text-zinc-600 dark:text-zinc-400">
                         We support the four records most projects need. Every record is DNS-only and managed through the platform.
                     </p>
+                    <div className="rounded-xl border border-violet-300/20 bg-violet-300/[.06] p-4 text-sm leading-6 text-zinc-300"><strong className="text-violet-100">Vercel:</strong> add a TXT record at host <code>@</code> when its verification token is for your claimed subdomain root. If Vercel supplies <code>_vercel</code>, use that as the host. A Vercel production CNAME normally targets <code>cname.vercel-dns.com</code>.</div>
                 </section>
 
                 <div className="grid gap-6">
